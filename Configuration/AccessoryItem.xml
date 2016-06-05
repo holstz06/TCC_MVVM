@@ -1,0 +1,22 @@
+<AccessoryItem>
+	<Item name="Shelf">
+		<AccItem req="ShelfType" value="Adjustable" name="Shelf Pin" quantity="4" />
+		<AccItem req="ShelfType" value="Fixed" name="Cam" quantity="4" />
+		<AccItem req="ShelfType" value="Fixed" name="Panel Screw" quantity="4" />
+	</Item>
+	<Item name="Panel">
+		<AccItem req="null" value="null" name="Cover Bracket" quantity="1" />
+		<AccItem req="null" value="null" name="Top Bracket" quantity="1" />
+		<AccItem req="null" value="null" name="Bottom Bracket" quantity="1" />
+		<AccItem req="null" value="null" name="3/4 in Screw" quantity="1" />
+		<AccItem req="null" value="null" name="1/4 in Screw" quantity="2" />
+	</Item>
+	<Item name="Strip">
+		<AccItem name="Strip Cover" quantity="1" />
+		<AccItem name="Strip" quantity="1" />
+	</Item>
+	<Item name="Drawer Box">
+		<AccItem name="Drawer Glide" quantity="2" />
+		<AccItem name="1/4 in Screw" quantity="4" />
+	</Item>
+</AccessoryItem>

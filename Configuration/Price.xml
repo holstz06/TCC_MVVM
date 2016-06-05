@@ -1,0 +1,27 @@
+<Price>
+	<Items>
+		<!-- Calculates the price per square inch -->
+		<Wood name="White" price="1.25" static="true" />
+		<Wood name="Brown" price="1.25" static="true" />
+		<Wood name="Almond" price="1.25" static="true" />
+		<Wood name="Black" price="1.25" static="true" />
+		
+		<!-- Calculates the price by perimeter -->
+		<Banding name="White" price="0.32" static="true" />
+		<Banding name="Brown" price="0.32" static="true" />
+		<Banding name="Almond" price="0.32" static="true" />
+		<Banding name="Black" price="0.32" static="true" />
+		
+		<!-- Panel Items -->
+		<Item name="Top Bracket" static="true" price="1.34" />
+		<Item name="Cover Bracket (White)" static="true" price="0.61" />
+		<Item name="Cover Bracket (Brown)" static="true" price="0.61" />
+		<Item name="Cover Bracket (Almond)" static="true" price="0.62" />
+		<Item name="Bottom Bracket (White)" static="true" price="0.53" />
+		<Item name="Bottom Bracket (Brown)" static="true" price="0.53" />
+		<Item name="Bottom Bracket (Almond)" static="true" price="0.53" />
+		<Item name="1/2 in Screw" static="true" price="0.03" />
+		<Item name="1/4 in Screw" static="true" price="0.02" />
+	</Items>
+
+</Price>

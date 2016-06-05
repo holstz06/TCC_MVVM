@@ -1,0 +1,8 @@
+White, 0.04
+Antique, 0.11
+Almond, 0.12
+Beige, 0.13
+Chocolate, 0.14
+Cherry, 0.15
+Mahogany, 0.16
+Black, 0.20

@@ -1,0 +1,23 @@
+<Shelf>
+	<SizeDepth>
+		<Attr value="12" />
+		<Attr value="14" />
+		<Attr value="16" />
+	</SizeDepth>
+	<SizeWidth>
+		<Attr value="12" />
+		<Attr value="18" />
+		<Attr value="24" />
+		<Attr value="32" />
+		<Attr value="48" />
+	</SizeWidth>
+	<Color>
+		<Attr value="White" />
+		<Attr value="Chocolate" />
+		<Attr value="Beige" />
+	</Color>
+	<ShelfType>
+		<Attr value="Fixed" />
+		<Attr value="Adjustable" />
+	</ShelfType>
+</Shelf>

@@ -1,0 +1,7 @@
+Top Cover Bracket (White),0.01
+Top Cover Bracket (Almond),0.02
+Top Cover Bracket (Chocolate),0.03
+Bottom Bracket (White),0.01
+Bottom Bracket (Almond),0.02
+Bottom Bracket (Chocolate),0.03
+Top Bracket,0.32

@@ -1,0 +1,7 @@
+Panel (White),Top Cover Bracket (White),Bottom Bracket (White),Top Bracket
+Panel (Almond),Top Cover Bracket (Almond),Bottom Bracket (Almond),Top Bracket,
+Panel (Beige),Top Cover Bracket (Almond),Bottom Bracket (Almond),Top Bracket
+Panel (Antique),Top Cover Bracket (White),Bottom Bracket (White),Top Bracket
+Panel (Cherry),Top Cover Bracket (Almond),Bottom Bracket (Almond),Top Bracket
+Panel (Chocolate),Top Cover Bracket (Chocolate),Bottom Bracket (Chocolate),Top Bracket
+Panel (Mahogany),Top Cover Bracket (Chocolate),Bottom Bracket (Chocolate),Top Bracket

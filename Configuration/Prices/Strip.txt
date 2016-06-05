@@ -1,0 +1,4 @@
+White,0.32
+Almond,0.10
+Chocolate,0.31
+Metal,1.10

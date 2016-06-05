@@ -1,0 +1,7 @@
+<Price>
+	<!-- Price is calculated per square inch of board -->
+	<Wood color="White" price="1.25" />
+	<Wood color="Almond" price="1.26" />
+	<Wood color="Chocolate" price="1.27" />
+	<Wood color="Antique" price="1.28" />
+</Price>

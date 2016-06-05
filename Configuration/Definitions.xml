@@ -1,0 +1,18 @@
+<Strip>
+	<Key value="Category A">
+		<Definition value="White" />
+		<Definition value="Almond" />
+		<Definition value="Beige" />
+	</Key>
+	<Key value="Category B">
+		<Definition value="Black" />
+		<Definition value="Brown" />
+		<Definition value="Chocolate" />
+	</Key>
+	<Key value="Cam">
+		<Definition value="White" />
+		<Definition value="Black" />
+		<Definition value="Chrome" />
+	</Key>
+	<Key value="Cam White"
+</Strip>

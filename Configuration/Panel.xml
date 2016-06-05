@@ -1,0 +1,23 @@
+<Panel>
+	<SizeDepth>
+		<Attr value="12" />
+		<Attr value="14" />
+		<Attr value="16" />
+		<Attr value="18" />
+	</SizeDepth>
+	<SizeHeight>
+		<Attr value="12" />
+		<Attr value="24" />
+		<Attr value="32" />
+		<Attr value="48" />
+		<Attr value="64" />
+		<Attr value="72" />
+	</SizeHeight>
+	<Color>
+		<Attr value="White" />
+		<Attr value="Antique" />
+		<Attr value="Almond" />
+		<Attr value="Beige" />
+		<Attr value="Chocolate" />
+	</Color>
+</Panel>

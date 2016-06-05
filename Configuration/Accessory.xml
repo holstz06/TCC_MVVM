@@ -1,0 +1,79 @@
+<Accessory>
+	<Item value="Drawer Box">
+		<Attr value="Width">
+			<Value value="18"/>
+			<Value value="24"/>
+			<Value value="36"/>
+		</Attr>
+		<Attr value="Height">
+			<Value value="18"/>
+			<Value value="24"/>
+			<Value value="36"/>
+		</Attr>
+		<Attr value="Depth">
+			<Value value="12"/>
+			<Value value="14"/>
+			<Value value="16"/>
+		</Attr>
+	</Item>
+	<Item value="Pole">
+		<Attr value="Length"/>
+	</Item>
+	<Item value="Valet">
+		<Attr value="Color">
+			<Value value="White"/>
+			<Value value="Brown"/>
+			<Value value="Biege"/>
+		</Attr>
+	</Item>
+	<Item value="Belt Rack">
+		<Attr value="Color">
+			<Value value="White"/>
+			<Value value="Brown"/>
+			<Value value="Biege"/>
+		</Attr>
+	</Item>
+	<Item value="Tie Rack">
+		<Attr value="Color">
+			<Value value="White"/>
+			<Value value="Brown"/>
+			<Value value="Biege"/>
+		</Attr>
+	</Item>
+	<Item value="Hook Bar">
+		<Attr value="Length"/>
+	</Item>
+	<Item value="Shoe Shelf">
+		<Attr value="Width">
+			<Value value="18"/>
+			<Value value="24"/>
+			<Value value="36"/>
+		</Attr>
+		<Attr value="Depth">
+			<Value value="12"/>
+			<Value value="14"/>
+			<Value value="16"/>
+		</Attr>
+		<Attr value="Color">
+			<Value value="White"/>
+			<Value value="Antique"/>
+			<Value value="Brown"/>
+			<Value value="Beige"/>
+			<Value value="Black"/>
+		</Attr>
+	</Item>
+	<Item value="Corner Shelf">
+		<Attr value="Color">
+			<Value value="White"/>
+			<Value value="Antique"/>
+			<Value value="Brown"/>
+			<Value value="Beige"/>
+			<Value value="Black"/>
+		</Attr>
+		<Attr value="Depth">
+			<Value value="12"/>
+			<Value value="14"/>
+			<Value value="16"/>
+		</Attr>
+	</Item>
+</Accessory>
