@@ -64,7 +64,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Data\TCCData.cs" />
     <Compile Include="Model\Accessory.cs" />
     <Compile Include="Model\Banding.cs" />
     <Compile Include="Model\Proposal.cs" />
@@ -79,9 +78,6 @@
     <Compile Include="Model\Strip.cs" />
     <Compile Include="Model\Wire.cs" />
     <Compile Include="Model\Wood.cs" />
-    <Compile Include="Model\Price\BandingPrice.cs" />
-    <Compile Include="Model\Price\StripPrice.cs" />
-    <Compile Include="Model\Price\WoodPrice.cs" />
     <Compile Include="ViewModel\AccessoryVM.cs" />
     <Compile Include="ViewModel\Job\BrowseCommand.cs" />
     <Compile Include="ViewModel\Job\CreateJobCommand.cs" />

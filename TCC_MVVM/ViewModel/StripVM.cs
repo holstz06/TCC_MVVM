@@ -86,15 +86,8 @@ namespace TCC_MVVM.ViewModel
             }
             catch(Exception e)
             {
-                MessageBox.Show("No strip colors could be loaded from the xml. Loading default colors");
+                MessageBox.Show("No strip colors could be loaded from the xml.");
                 MessageBox.Show(e.ToString());
-
-                StripColorData.Columns.Add("StripColor", typeof(string));
-                StripColorData.Rows.Add("White");
-                StripColorData.Rows.Add("Beige");
-                StripColorData.Rows.Add("Brown");
-                StripColorData.Rows.Add("Black");
-                StripColorData.Rows.Add("Cherry");
             }
         }
 
