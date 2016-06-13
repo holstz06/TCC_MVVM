@@ -18,54 +18,19 @@ namespace TCC_MVVM.Model
         public string RoomName { get; set; }
         public string RoomColor { get; set; }
         public string StripColor { get; set; }
-        public string RoomDepth { get; set; }
+        public string ShelvingDepth { get; set; }
         public RoomTypes RoomType { get; set; }
 
         public ObservableCollection<string> WoodColorValues { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> StripColorValues { get; set; } = new ObservableCollection<string>();
-        public ObservableCollection<string> RoomDepthValues { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> ShelvingDepthValues { get; set; } = new ObservableCollection<string>();
 
         public DataTable Data { get; set; }
 
-        public Room(DataTable Data, string RoomName = null, int RoomNumber = 0)
+        public Room(string RoomName = null, int RoomNumber = 0)
         {
-            this.Data = Data;
             this.RoomName = RoomName;
             this.RoomNumber = RoomNumber;
-
-            SetRoomColorValues();
-            SetRoomDepthValues();
-            SetStripColorValues();
-        }
-
-        private void SetRoomDepthValues()
-        {
-            var query = (
-                from room in Data.AsEnumerable()
-                select room.Field<string>("RoomDepth")).Distinct();
-
-            foreach (string row in query)
-                RoomDepthValues.Add(row);
-        }
-
-        private void SetRoomColorValues()
-        {
-            var query = (
-                from room in Data.AsEnumerable()
-                select room.Field<string>("WoodColor")).Distinct();
-
-            foreach (string row in query)
-                WoodColorValues.Add(row);
-        }
-        
-        private void SetStripColorValues()
-        {
-            var query = (
-                from panel in Data.AsEnumerable()
-                select panel.Field<string>("StripColor")).Distinct();
-
-            foreach (string row in query)
-                StripColorValues.Add(row);
         }
 
         #region INotifyPropertyChanged Members

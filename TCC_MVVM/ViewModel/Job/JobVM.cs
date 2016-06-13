@@ -24,8 +24,6 @@ namespace TCC_MVVM.ViewModel.Job
         public ICommand CreateProposalCommand { get; private set; }
         public ICommand SamePremiseAddressCommand { get; private set; }
 
-        public Data.TCCData Data { get; set; }
-
         /// <summary>
         /// Set the premise address to the mailing address
         /// </summary>
@@ -63,9 +61,7 @@ namespace TCC_MVVM.ViewModel.Job
             SamePremiseAddressCommand = new SamePremiseAddressCommand(this);
             CreateProposalCommand = new CreateProposalCommand(this);
 
-            Data = new Data.TCCData("C:\\Users\\tyhol\\Desktop\\DataTable.xml");
-
-            AddRoom("Master Bedroom");
+            //AddRoom("Master Bedroom");
         }
 
         /// <summary>

@@ -8,7 +8,7 @@ namespace TCC_MVVM.Model
     public class Accessory : INotifyPropertyChanged
     {
         public int RoomNumber { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = "N/A";
         public string Color { get; set; } = "N/A";
         public string Width { get; set; } = "N/A";
         public string Height { get; set; } = "N/A";

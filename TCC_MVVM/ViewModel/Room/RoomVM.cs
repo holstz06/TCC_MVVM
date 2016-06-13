@@ -3,6 +3,11 @@ using System.ComponentModel;
 using TCC_MVVM.ViewModel.Room.Commands;
 using System.Data;
 using PropertyChanged;
+using System;
+using System.Windows;
+using System.Collections.Generic;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace TCC_MVVM.ViewModel.Room
 {
@@ -23,16 +28,33 @@ namespace TCC_MVVM.ViewModel.Room
     {
         public string ExcelFilePath { get; set; }
         public DataTable Data { get; set; }
+
+        /// <summary>
+        /// Data table that stores the shelving depth values
+        /// </summary>
+        private DataTable ShelvingDepthData;
+
+        /// <summary>
+        /// Data table that stores the strip color values;
+        /// </summary>
+        private DataTable StripColorData;
+
+        /// <summary>
+        /// Data table that stores the wood data values
+        /// </summary>
+        private DataTable WoodData;
+
+
         public decimal TotalPrice { get; set; }
 
         // Model
         public Model.Room Room { get; set; }
 
         // View Models
-        public StripVM StripViewModel { get; set; }
-        public PanelVM PanelViewModel { get; set; }
+        public StripVM StripViewModel { get; set; } = new StripVM();
+        public PanelVM PanelViewModel { get; set; } = new PanelVM();
         public ShelfVM ShelfViewModel { get; set; }
-        public AccessoryVM AccessoryViewModel { get; set; }
+        public AccessoryVM AccessoryViewModel { get; set; } = new AccessoryVM();
 
         /// <summary>
         /// Creates a new instance of a room view model
@@ -51,11 +73,7 @@ namespace TCC_MVVM.ViewModel.Room
             InitializeCommands();
             this.ExcelFilePath = ExcelFilePath;
 
-            // Initialize the view models
-            StripViewModel = new StripVM(ExcelFilePath);
-            PanelViewModel = new PanelVM(ExcelFilePath);
             ShelfViewModel = new ShelfVM(ExcelFilePath);
-            AccessoryViewModel = new AccessoryVM(ExcelFilePath);
 
             // Subscribe room to view model's properties
             StripViewModel.PropertyChanged += Shelving_PropertyChanged;
@@ -63,11 +81,73 @@ namespace TCC_MVVM.ViewModel.Room
             ShelfViewModel.PropertyChanged += Shelving_PropertyChanged;
             AccessoryViewModel.PropertyChanged += Shelving_PropertyChanged;
 
-            // Set the Room Model
-            Model.ExcelDataTable ExcelDataTable = new Model.ExcelDataTable();
-            Data = ExcelDataTable.GetData(ExcelFilePath, "Room");
-            Room = new Model.Room(Data, RoomName, RoomNumber);
+            /*
+             * Attempt to retrieve information from the StripColorData.xml
+             * If no information could be retrieved, do nothing but return the error message.
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("StripColorData.xml");
+                StripColorData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No strip colors could be gathered from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+
+            /*
+             * Attempt to retrieve information from the ShelvingDepthData.xml
+             * If no information could be retrieved, do nothing but return
+             * the error message.
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("ShelvingDepthData.xml");
+                ShelvingDepthData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No shelving depth values could be gathered from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+
+            /*
+             * Attempt to retrieve information from the WoodData.xml
+             * If no information could be retrieved, do nothing but return
+             * the error message.
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("WoodData.xml");
+                WoodData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No wood values could be gathered from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+
+            Room = new Model.Room(RoomName, RoomNumber)
+            {
+                WoodColorValues = new ObservableCollection<string>(GetWoodColorVales()),
+                StripColorValues = new ObservableCollection<string>(GetStripColorValues()),
+                ShelvingDepthValues = new ObservableCollection<string>(GetShelvingDepthValues())
+            };
+
         }
+
+        private List<string> GetWoodColorVales()
+            => WoodData.AsEnumerable().Select(row => row.Field<string>("WoodColor")).Distinct().ToList();
+
+        private List<string> GetShelvingDepthValues()
+            => ShelvingDepthData.AsEnumerable().Select(row => row.Field<string>("ShelvingDepth")).Distinct().ToList();
+
+        private List<string> GetStripColorValues()
+            => StripColorData.AsEnumerable().Select(row => row.Field<string>("StripColor")).Distinct().ToList();
 
         #region Commands
 
@@ -101,7 +181,7 @@ namespace TCC_MVVM.ViewModel.Room
             {
                 _IsPanelSameDepth = value;
                 if (value == true)
-                    PanelViewModel.SetAllPanelDepth(Room.RoomDepth);
+                    PanelViewModel.SetAllPanelDepth(Room.ShelvingDepth);
                 OnPropertyChanged("IsPanelSameDepth");
             }
         }
@@ -117,7 +197,7 @@ namespace TCC_MVVM.ViewModel.Room
             {
                 _IsShelfSameDepth = value;
                 if (value == true)
-                    ShelfViewModel.SetAllShelfDepth(Room.RoomDepth);
+                    ShelfViewModel.SetAllShelfDepth(Room.ShelvingDepth);
                 OnPropertyChanged("IsShelfSameDepth");
             }
         }
@@ -183,7 +263,7 @@ namespace TCC_MVVM.ViewModel.Room
             switch(shelvingType)
             {
                 case Model.ShelvingType.Panel:
-                     PanelViewModel.Add(Room.RoomNumber, PanelIndex++, IsPanelSameColor ? Room.RoomColor : null, IsPanelSameDepth ? Room.RoomDepth : null);
+                     PanelViewModel.Add(Room.RoomNumber, PanelIndex++, IsPanelSameColor ? Room.RoomColor : null, IsPanelSameDepth ? Room.ShelvingDepth : null);
                      break;
 
                 case Model.ShelvingType.Strip:
@@ -191,7 +271,7 @@ namespace TCC_MVVM.ViewModel.Room
                     break;
 
                 case Model.ShelvingType.Shelf:
-                    ShelfViewModel.Add(Room.RoomNumber, ShelfIndex++, IsShelfSameColor ? Room.RoomColor : null, IsPanelSameDepth ? Room.RoomDepth : null);
+                    ShelfViewModel.Add(Room.RoomNumber, ShelfIndex++, IsShelfSameColor ? Room.RoomColor : null, IsPanelSameDepth ? Room.ShelvingDepth : null);
                     break;
 
                 case Model.ShelvingType.Wire:

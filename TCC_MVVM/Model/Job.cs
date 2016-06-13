@@ -12,7 +12,7 @@ namespace TCC_MVVM.Model
     {
         public string FirstName { get; set; } = "Tyler";
         public string LastName { get; set; } = "Holstead";
-        public string PhoneNumber { get; set; } = "(920) 857-45440";
+        public string PhoneNumber { get; set; } = "(920) 857-4544";
         public string Email { get; set; } = "holstead@gmail.com";
         public string MailingAddress01 { get; set; } = "1471 Navigator Way";
         public string MailingAddress02 { get; set; } = "Unit 91";

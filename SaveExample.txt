@@ -1,8 +1,0 @@
-Rooms,2
-Job,FirstName=Tyler
-Job,LastName=Holstead
-Job,MailingAddress01=1471 Navigator Way
-Job,MailingAddress02=Unit 91
-Job,NumRooms=2
-Panel,RoomNumber=1,SizeDepth=14,SizeHeight=48,Color=White
-Strip,RoomNumber=1,Color=White,Length=97.5

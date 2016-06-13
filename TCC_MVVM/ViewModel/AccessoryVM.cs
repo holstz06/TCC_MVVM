@@ -5,22 +5,32 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Linq;
 using TCC_MVVM.Model;
+using System;
+using System.Windows;
 
 namespace TCC_MVVM.ViewModel
 {
     public class AccessoryVM : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Data table with the accessories and their attributes
+        /// </summary>
         private DataTable AccessoryData;
-        public int TotalPrice { get; set; }
+
+        /// <summary>
+        /// The total price of all the panels
+        /// </summary>
+        public decimal TotalPrice
+        {
+            get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
+            set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
+        }
+        private decimal _TotalPrice;
 
         /// <summary>
         /// Collection of accessories
         /// </summary>
-        public ObservableCollection<Accessory> Accessories { get; set; } 
-            = new ObservableCollection<Accessory>();
-
-        
-        private ICommand _RemoveCommand;
+        public ObservableCollection<Accessory> Accessories { get; set; } = new ObservableCollection<Accessory>();
 
         /// <summary>
         /// Removes an accessory from the collection
@@ -34,17 +44,28 @@ namespace TCC_MVVM.ViewModel
                 return _RemoveCommand;
             }
         }
+        private ICommand _RemoveCommand;
 
         /// <summary>
         /// Creates new instance of an accessory view model
         /// </summary>
-        /// <param name="ExcelFilePath">
-        /// The path to the Excel file
-        /// </param>
-        public AccessoryVM(string ExcelFilePath)
+        public AccessoryVM()
         {
-            ExcelDataTable Data = new ExcelDataTable();
-            AccessoryData = Data.GetData(ExcelFilePath, "Master");
+            /*
+             * Attempt to retrieve information from the AccessoryData.xml
+             * If no information could be retrieved, do nothing but return the error message.
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("AccessoryData.xml");
+                AccessoryData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No accessory items could be gathers from the xml.");
+                MessageBox.Show(e.ToString());
+            }
         }
         
         /// <summary>
@@ -84,70 +105,57 @@ namespace TCC_MVVM.ViewModel
 
         void Accessory_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Accessory accessory = (Accessory)sender;
-            switch(e.PropertyName)
+            try
             {
-                case "Name":
-                    // Set the values back to default when the accessory changes
-                    accessory.ColorValues = accessory.DepthValues = accessory.WidthValues = accessory.HeightValues = null;
-                    accessory.Length = 0;
-                    accessory.HasLength = false;
-                    accessory.ColorValues = new ObservableCollection<string>(GetColorValues(accessory.Name));
-                    accessory.HasLength = HasLength(accessory.Name);
-                    break;
-                case "Color":
-                    accessory.DepthValues = new ObservableCollection<string>(GetDepthValues(accessory.Name, accessory.Color));
-                    accessory.WidthValues = new ObservableCollection<string>(GetWidthValues(accessory.Name, accessory.Color));
-                    accessory.HeightValues = new ObservableCollection<string>(GetHeightValues(accessory.Name, accessory.Color));
-                    break;
+                Accessory accessory = (Accessory)sender;
+                switch (e.PropertyName)
+                {
+                    case "Name":
+                        accessory.ColorValues = accessory.DepthValues = accessory.WidthValues = accessory.HeightValues = null;
+                        accessory.Length = 0;
+                        accessory.HasLength = false;
+                        accessory.ColorValues = new ObservableCollection<string>(GetColorValues(accessory.Name));
+                        accessory.HasLength = HasLength(accessory.Name);
+                        break;
+                    case "Color":
+                        accessory.DepthValues = new ObservableCollection<string>(GetDepthValues(accessory.Name, accessory.Color));
+                        accessory.WidthValues = new ObservableCollection<string>(GetWidthValues(accessory.Name, accessory.Color));
+                        accessory.HeightValues = new ObservableCollection<string>(GetHeightValues(accessory.Name, accessory.Color));
+                        break;
+                }
+                accessory.Price = SetPrice(accessory);
             }
-            
-            accessory.Price = SetPrice(accessory);
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private decimal SetPrice(Accessory accessory)
         {
-            decimal price = (
-                from row in AccessoryData.AsEnumerable()
-                where row.Field<string>("ItemName") == accessory.Name
-                    && row.Field<string>("Color") == accessory.Color
-                    && row.Field<string>("Width") == accessory.Width
-                    && row.Field<string>("Height") == accessory.Height
-                    && row.Field<string>("Depth") == accessory.Depth
-                select row.Field<decimal>("Price")).First();
-
-            bool haslength = (
-                from row in AccessoryData.AsEnumerable()
-                where row.Field<string>("ItemName") == accessory.Name
-                    && row.Field<string>("Color") == accessory.Color
-                    && row.Field<string>("Width") == accessory.Width
-                    && row.Field<string>("Height") == accessory.Height
-                    && row.Field<string>("Depth") == accessory.Depth
-                select row.Field<bool>("Length")).First();
-
-            if (haslength)
-                price = price * (decimal)accessory.Length;
-            
-            return price;
+            return 0M;
         }
 
         /// <summary>
-        /// Gets a list of accessories
+        /// Retrieves a list of accessory names
         /// </summary>
-        private List<string> GetAccessories() =>
-            (from row in AccessoryData.AsEnumerable()
-             select row.Field<string>("ItemName")).Distinct().ToList();
+        /// <returns>
+        /// A list of accessory names
+        /// </returns>
+        private List<string> GetAccessories() 
+            => AccessoryData.AsEnumerable().Select(row => row.Field<string>("ItemName")).Distinct().ToList();
+
 
         /// <summary>
-        /// Gets a list of color values
+        /// Retrieves a list of color based on accessory name
         /// </summary>
         /// <param name="AccessoryName">
-        /// The name of the accessory to get the colors from
+        /// The name of the accessory
         /// </param>
-        private List<string> GetColorValues(string AccessoryName) => 
-            (from row in AccessoryData.AsEnumerable()
-            where row.Field<string>("ItemName") == AccessoryName
-            select row.Field<string>("Color")).Distinct().ToList();
+        private List<string> GetColorValues(string AccessoryName) 
+            => (from row in AccessoryData.AsEnumerable()
+                where row.Field<string>("ItemName") == AccessoryName
+                select row.Field<string>("Color")).Distinct().ToList();
 
         /// <summary>
         /// Gets the boolean value if the length should be set
@@ -155,10 +163,17 @@ namespace TCC_MVVM.ViewModel
         /// <param name="AccessoryName">
         /// The name of the accessory
         /// </param>
-        private bool HasLength(string AccessoryName) =>
-            bool.Parse((from row in AccessoryData.AsEnumerable()
+        private bool HasLength(string AccessoryName)
+        {
+            bool haslength = false; 
+            var query = (from row in AccessoryData.AsEnumerable()
                         where row.Field<string>("ItemName") == AccessoryName
-                        select row.Field<string>("Length")).Distinct().First());
+                        select row.Field<string>("Length")).Distinct().First();
+            if (query == "TRUE")
+                haslength = true;
+            return haslength;
+        }
+            
 
         /// <summary>
         /// Gets the height values for the accessory

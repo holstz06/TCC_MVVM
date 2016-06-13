@@ -7,27 +7,38 @@ using System.Windows.Input;
 using PropertyChanged;
 
 using TCC_MVVM.Model;
-using TCC_MVVM.Data;
+using System;
+using System.Windows;
 
 namespace TCC_MVVM.ViewModel
 {
     [ImplementPropertyChanged]
     public class StripVM : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Data table that contains the items that belong to strip shelving
+        /// </summary>
         private DataTable StripData;
-        private DataTable RoomData;
 
+        /// <summary>
+        /// Data table that contains colors of the strip
+        /// </summary>
+        private DataTable StripColorData;
+
+        /// <summary>
+        /// A collection of strip
+        /// </summary>
         public ObservableCollection<Strip> Strips { get; set; }
             = new ObservableCollection<Strip>();
 
+        /// <summary>
+        /// The total price of the collection of strip
+        /// </summary>
         public decimal TotalPrice { get; set; }
-
-        public TCCData Data { get; set; }
 
         /// <summary>
         /// Command to remove strip from the collection
         /// </summary>
-        private ICommand _RemoveCommand;
         public ICommand RemoveCommand
         {
             get
@@ -37,18 +48,54 @@ namespace TCC_MVVM.ViewModel
                 return _RemoveCommand;
             }
         }
+        private ICommand _RemoveCommand;
 
         /// <summary>
         /// Create new instance of strip view model
         /// </summary>
-        /// <param name="ExcelFilePath">
-        /// The path to the Excel file to pull data from
-        /// </param>
-        public StripVM(string ExcelFilePath = null)
+        public StripVM()
         {
-            ExcelDataTable ExcelDataTable = new ExcelDataTable();
-            StripData = ExcelDataTable.GetData(ExcelFilePath, "Strip");
-            RoomData = ExcelDataTable.GetData(ExcelFilePath, "Room");
+            /*
+             * Attempt to retrieve information from the StripData.xml
+             * If no information could be retrieved, do nothing but return
+             * the error message.
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("StripData.xml");
+                StripData = dataset.Tables[0];
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("No strip items could be gathers from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+            
+            /*
+             * Attempt to retrieve information from the StripColorData.xml
+             * 
+             * If no information could be retrieved, load a set of default color
+             * values and return the error message.
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("StripColorData.xml");
+                StripColorData = dataset.Tables[0];
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("No strip colors could be loaded from the xml. Loading default colors");
+                MessageBox.Show(e.ToString());
+
+                StripColorData.Columns.Add("StripColor", typeof(string));
+                StripColorData.Rows.Add("White");
+                StripColorData.Rows.Add("Beige");
+                StripColorData.Rows.Add("Brown");
+                StripColorData.Rows.Add("Black");
+                StripColorData.Rows.Add("Cherry");
+            }
         }
 
         /// <summary>
@@ -64,8 +111,8 @@ namespace TCC_MVVM.ViewModel
                 {
                     Name = row.Field<string>("ItemName"),
                     Color = row.Field<string>("Color"),
-                    Quantity = row.Field<int>("Quantity"),
-                    Price = row.Field<decimal>("Price")
+                    Quantity = int.Parse(row.Field<string>("Quantity")),
+                    Price = decimal.Parse(row.Field<string>("Price"))
                 }).ToList();
         }
 
@@ -77,13 +124,7 @@ namespace TCC_MVVM.ViewModel
         /// </returns>
         private List<string> GetStripColors()
         {
-            List<string> colorvalues = new List<string>();
-            var query = (from row in RoomData.AsEnumerable() select row.Field<string>("StripColor")).Distinct();
-
-            foreach(string row in query)
-                colorvalues.Add(row);
-
-            return colorvalues;
+            return StripColorData.AsEnumerable().Select(row => row.Field<string>("StripColor")).Distinct().ToList();
         }
 
         /// <summary>
@@ -151,14 +192,25 @@ namespace TCC_MVVM.ViewModel
             foreach(Strip strip in Strips)
                 strip.Color = Color;
         }
-
+        
         #region INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Notifies the observers of change, xalled by the Set accessor of a property to 
+        /// </summary>
+        /// <param name="propertyName">
+        /// The name of the property
+        /// </param>
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// Creates a new listener so the observer of this object can see this property
+        /// </summary>
         void Strip_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Price")

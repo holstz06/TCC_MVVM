@@ -179,7 +179,7 @@
                                         <TextBlock Grid.Row="2" Grid.Column="1" Text="Strip Color" />
                                         <ComboBox ToolTip="Select the default strip color" Grid.Row="2" Grid.Column="2" SelectedItem="{Binding Room.StripColor, Mode=TwoWay}" ItemsSource="{Binding Room.StripColorValues}" />
                                         <TextBlock Grid.Row="3" Grid.Column="1" Text="Shelving Depth" />
-                                        <ComboBox ToolTip="Select the default room depth" Grid.Row="3" Grid.Column="2" SelectedItem="{Binding Room.RoomDepth, Mode=TwoWay}" ItemsSource="{Binding Room.RoomDepthValues}" />
+                                        <ComboBox ToolTip="Select the default room depth" Grid.Row="3" Grid.Column="2" SelectedItem="{Binding Room.ShelvingDepth, Mode=TwoWay}" ItemsSource="{Binding Room.ShelvingDepthValues}" />
                                         <TextBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" BorderThickness="0,0,1,1" SpellCheck.IsEnabled="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
                                     </Grid>
                                 </DataTemplate>
@@ -407,7 +407,7 @@
                                                     <TextBox Grid.Column="4" BorderBrush="#ccc" BorderThickness="0,1,1,1" Text="{Binding Quantity, Mode=TwoWay}" />
                                                     <TextBlock Grid.Column="5">
                                                         <Run Text="$" />
-                                                        <Run Text="{Binding Price}" />
+                                                        <Run Text="{Binding Price, Mode=TwoWay}" />
                                                     </TextBlock>
                                                 </Grid>
                                             </DataTemplate>

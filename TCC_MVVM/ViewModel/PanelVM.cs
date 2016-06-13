@@ -7,30 +7,47 @@ using System.Data;
 using TCC_MVVM.Model;
 using PropertyChanged;
 using System;
+using System.Windows;
 
 namespace TCC_MVVM.ViewModel
 {
-    /// <summary>
-    /// Panel View Model
-    /// 
-    /// Creates a collection of panels that allows the view to display their
-    /// properties and create and change them upon request.
-    /// </summary>
     [ImplementPropertyChanged]
     public class PanelVM : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Data table of all the panel data (items)
+        /// </summary>
         private DataTable PanelData;
-        private DataTable RoomData;
+
+        /// <summary>
+        /// Data table of height values for panels
+        /// </summary>
+        private DataTable PanelHeightData;
+
+        /// <summary>
+        /// Data table of depth values for panels
+        /// </summary>
+        private DataTable ShelvingDepthData;
+
+        /// <summary>
+        /// Data table of wood values and prices
+        /// </summary>
+        private DataTable WoodData;
+
+        /// <summary>
+        /// Data table of banding values and prices
+        /// </summary>
+        private DataTable BandingData;
 
         /// <summary>
         /// The total price of all the panels
         /// </summary>
-        private decimal _TotalPrice;
         public decimal TotalPrice
         {
             get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
+        private decimal _TotalPrice;
 
         /// <summary>
         /// The collection of panels
@@ -53,21 +70,22 @@ namespace TCC_MVVM.ViewModel
         }
 
         /// <summary>
-        /// Retrieves a list of panel items
+        /// Retrieves a list of panel items that belong to the panel.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// A list of panel items
+        /// </returns>
         private List<PanelItem> GetPanelItems()
         {
-            List<PanelItem> panelitems = PanelData.AsEnumerable().Select(row =>
+            return PanelData.AsEnumerable().Select(row =>
                 new PanelItem
                 {
                     Name = row.Field<string>("ItemName"),
                     Color = row.Field<string>("Color"),
                     WoodColor = row.Field<string>("WoodColor"),
-                    Quantity = row.Field<int>("Quantity"),
-                    Price = row.Field<decimal>("Price")
+                    Quantity = int.Parse(row.Field<string>("Quantity")),
+                    Price = decimal.Parse(row.Field<string>("Price"))
                 }).ToList();
-            return panelitems;
         }
 
         /// <summary>
@@ -75,13 +93,15 @@ namespace TCC_MVVM.ViewModel
         /// key = color
         /// value = price
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// Dictionary of wood values
+        /// </returns>
         private Dictionary<string, decimal> GetWoodValues()
         {
-            return RoomData.AsEnumerable()
+            return WoodData.AsEnumerable()
                 .ToDictionary(
                     row => row.Field<string>("WoodColor"),
-                    row => row.Field<decimal>("WoodPrice"));
+                    row => decimal.Parse(row.Field<string>("WoodPrice")));
         }
 
         /// <summary>
@@ -89,59 +109,130 @@ namespace TCC_MVVM.ViewModel
         /// key = color
         /// value = price
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// Dictionary of banding values
+        /// </returns>
         private Dictionary<string, decimal> GetBandingValues()
         {
-            return RoomData.AsEnumerable()
+            return BandingData.AsEnumerable()
                 .ToDictionary(
                     row => row.Field<string>("BandingColor"),
-                    row => row.Field<decimal>("BandingPrice"));
+                    row => decimal.Parse(row.Field<string>("BandingPrice")));
         }
 
         /// <summary>
-        /// Retrieves a list of height values for a panel
+        /// Retrieves a list of wood color values.
+        /// These values are generated from the WoodData.xml
         /// </summary>
-        /// <returns></returns>
-        private List<string> GetColorValues()
-        {
-            List<string> colorvalues = new List<string>();
-            var query = (from row in RoomData.AsEnumerable() select row.Field<string>("WoodColor")).Distinct();
-            foreach (string row in query) colorvalues.Add(row);
-            return colorvalues;
-        }
+        /// <returns>
+        /// List of wood color values
+        /// </returns>
+        private List<string> GetColorValues() => WoodData.AsEnumerable().Select(row => row.Field<string>("WoodColor")).Distinct().ToList();
 
         /// <summary>
-        /// Retrieves a list of height values for a panel
+        /// Retrieves a list of height values. 
+        /// These values are generated from the PanelHeightData.xml
         /// </summary>
-        /// <returns></returns>
-        private List<string> GetHeightValues()
-        {
-            List<string> heightvalues = new List<string>();
-            var query = (from row in RoomData.AsEnumerable() select row.Field<string>("PanelHeight")).Distinct();
-            foreach (string row in query) heightvalues.Add(row);
-            return heightvalues;
-        }
+        /// <returns>
+        /// List of height values
+        /// </returns>
+        private List<string> GetHeightValues() => PanelHeightData.AsEnumerable().Select(row => row.Field<string>("PanelHeight")).Distinct().ToList();
+
 
         /// <summary>
-        /// Retrieves a list of depth values for a panel
+        /// Retrieves a list of depth values.
+        /// These values are generated from the ShelvingDepthData.xml
         /// </summary>
-        /// <returns></returns>
-        private List<string> GetDepthValues()
-        {
-            List<string> depthvalues = new List<string>();
-            var query = (from row in RoomData.AsEnumerable() select row.Field<string>("RoomDepth")).Distinct();
-            foreach (string row in query) depthvalues.Add(row);
-            return depthvalues;
-        }
+        /// <returns>
+        /// List of depth values
+        /// </returns>
+        private List<string> GetDepthValues() => ShelvingDepthData.AsEnumerable().Select(row => row.Field<string>("ShelvingDepth")).Distinct().ToList();
 
         /// <summary>
         /// Create a new instance of an Panel View Model
         /// </summary>
-        public PanelVM(string ExcelFilePath)
+        public PanelVM()
         {
-            ExcelDataTable ExcelDataTable = new ExcelDataTable();
-            PanelData = ExcelDataTable.GetData(ExcelFilePath, "Panel");
-            RoomData = ExcelDataTable.GetData(ExcelFilePath, "Room");
+            /*
+             * Attempt to retrieve information from the PanelData.xml
+             * If no information could be retrieved, do nothing but return
+             * the error message.
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("PanelData.xml");
+                PanelData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No panel items could be gathers from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+
+            /*
+             * Attempt to retrieve information from the PanelHeightData.xml
+             * If no information could be retrieved, do nothing and return error message
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("PanelHeightData.xml");
+                PanelHeightData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No panel height values could be loaded from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+
+            /*
+             * Attempt to retrieve information from the ShelvingDepthData.xml
+             * If no information could be retrieved, do nothing and return error message
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("ShelvingDepthData.xml");
+                ShelvingDepthData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No panel depth values could be loaded from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+
+            /*
+             * Attempt to retrieve information from the WoodData.xml
+             * If no information could be retrieved, do nothing and return error message
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("WoodData.xml");
+                WoodData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No wood values could be loaded from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+
+            /*
+             * Attempt to retrieve information from the BandingData.xml
+             * If no information could be retrieved, do nothing and return error message
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("BandingData.xml");
+                BandingData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No banding values could be loaded from the xml.");
+                MessageBox.Show(e.ToString());
+            }
         }
 
         /// <summary>
@@ -196,9 +287,7 @@ namespace TCC_MVVM.ViewModel
         public void SetAllPanelColor(string Color)
         {
             foreach (Panel panel in Panels)
-            {
                 panel.Color = Color;
-            }
         }
 
         /// <summary>
@@ -208,18 +297,26 @@ namespace TCC_MVVM.ViewModel
         public void SetAllPanelDepth(string SizeDepth)
         {
             foreach (Panel panel in Panels)
-            {
                 panel.SizeDepth = SizeDepth;
-            }
         }
 
         #region INotifyPropertyChanged Members
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Notifies the observers of change, xalled by the Set accessor of a property to 
+        /// </summary>
+        /// <param name="propertyName">
+        /// The name of the property
+        /// </param>
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// Creates a new listener so the observer of this object can see this property
+        /// </summary>
         void Panel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch(e.PropertyName)
