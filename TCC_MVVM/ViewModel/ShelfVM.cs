@@ -6,6 +6,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using PropertyChanged;
+using System;
 
 namespace TCC_MVVM.ViewModel
 {
@@ -17,7 +18,12 @@ namespace TCC_MVVM.ViewModel
 
         public ObservableCollection<Shelf> Shelves { get; set; }
 
-        public decimal TotalPrice { get; set; }
+        public decimal TotalPrice
+        {
+            get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
+            set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
+        }
+        private decimal _TotalPrice;
 
         /// <summary>
         /// Command to remove shelf from the collection
@@ -41,10 +47,6 @@ namespace TCC_MVVM.ViewModel
         /// </param>
         public ShelfVM(string ExcelFilePath = null)
         {
-            ExcelDataTable ExcelDataTable = new ExcelDataTable();
-            ShelfData = ExcelDataTable.GetData(ExcelFilePath, "Shelf");
-            RoomData = ExcelDataTable.GetData(ExcelFilePath, "Room");
-
             // Initialize the collections
             Shelves = new ObservableCollection<Shelf>();
         }

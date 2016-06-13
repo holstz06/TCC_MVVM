@@ -34,7 +34,12 @@ namespace TCC_MVVM.ViewModel
         /// <summary>
         /// The total price of the collection of strip
         /// </summary>
-        public decimal TotalPrice { get; set; }
+        public decimal TotalPrice
+        {
+            get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
+            set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
+        }
+        private decimal _TotalPrice;
 
         /// <summary>
         /// Command to remove strip from the collection

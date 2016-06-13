@@ -24,10 +24,7 @@ namespace TCC_MVVM.ViewModel.Job
         public void Execute(object parameter)
         {
             ViewModel.Rooms.Clear();
-            // Validate the job model
             bool validModel = ViewModel.Job.IsValid;
-
-            // Create the rooms
             if (validModel)
             {
                 for (int i = 1; i <= Job.NumRooms; i++)

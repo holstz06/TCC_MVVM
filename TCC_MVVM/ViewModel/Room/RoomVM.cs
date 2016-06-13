@@ -26,7 +26,6 @@ namespace TCC_MVVM.ViewModel.Room
     [ImplementPropertyChanged]
     public class RoomVM : INotifyPropertyChanged
     {
-        public string ExcelFilePath { get; set; }
         public DataTable Data { get; set; }
 
         /// <summary>
@@ -44,8 +43,15 @@ namespace TCC_MVVM.ViewModel.Room
         /// </summary>
         private DataTable WoodData;
 
-
-        public decimal TotalPrice { get; set; }
+        /// <summary>
+        /// The total price of all the shelving in this room
+        /// </summary>
+        public decimal TotalPrice
+        {
+            get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
+            set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
+        }
+        private decimal _TotalPrice;
 
         // Model
         public Model.Room Room { get; set; }
@@ -71,7 +77,6 @@ namespace TCC_MVVM.ViewModel.Room
         public RoomVM(string ExcelFilePath, string RoomName, int RoomNumber = 0)
         {
             InitializeCommands();
-            this.ExcelFilePath = ExcelFilePath;
 
             ShelfViewModel = new ShelfVM(ExcelFilePath);
 
