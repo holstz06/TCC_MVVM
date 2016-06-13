@@ -1,0 +1,57 @@
+<?xml version="1.0" standalone="yes"?>
+<StripSet>
+  <StripData>
+    <Category>Strip</Category>
+    <ItemName>Covering Strip</ItemName>
+    <Color>White</Color>
+    <HasLength>true</HasLength>
+    <Quantity>1</Quantity>
+    <Wholesale>0.0147422680412371</Wholesale>
+    <Price>0.02979167</Price>
+  </StripData>
+  <StripData>
+    <Category>Strip</Category>
+    <ItemName>Covering Strip</ItemName>
+    <Color>Beige</Color>
+    <HasLength>true</HasLength>
+    <Quantity>1</Quantity>
+    <Wholesale>0.0160824742268041</Wholesale>
+    <Price>0.0325</Price>
+  </StripData>
+  <StripData>
+    <Category>Strip</Category>
+    <ItemName>Covering Strip</ItemName>
+    <Color>Brown</Color>
+    <HasLength>true</HasLength>
+    <Quantity>1</Quantity>
+    <Wholesale>0.0170103092783505</Wholesale>
+    <Price>0.034375</Price>
+  </StripData>
+  <StripData>
+    <Category>Strip</Category>
+    <ItemName>Covering Strip</ItemName>
+    <Color>Black</Color>
+    <HasLength>true</HasLength>
+    <Quantity>1</Quantity>
+    <Wholesale>0.0161855670103093</Wholesale>
+    <Price>0.0327083</Price>
+  </StripData>
+  <StripData>
+    <Category>Strip</Category>
+    <ItemName>Covering Strip</ItemName>
+    <Color>Cherry</Color>
+    <HasLength>true</HasLength>
+    <Quantity>1</Quantity>
+    <Wholesale>0.0210309278350515</Wholesale>
+    <Price>0.0425</Price>
+  </StripData>
+  <StripData>
+    <Category>Strip</Category>
+    <ItemName>Wall Rail</ItemName>
+    <Color>N/A</Color>
+    <HasLength>true</HasLength>
+    <Quantity>1</Quantity>
+    <Wholesale>0.04</Wholesale>
+    <Price>0.17</Price>
+  </StripData>
+</StripSet>

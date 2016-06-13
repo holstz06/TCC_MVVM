@@ -1,0 +1,21 @@
+<?xml version="1.0" standalone="yes"?>
+<ShelfWidthSet>
+  <ShelfWidthData>
+    <ShelfWidth>12</ShelfWidth>
+  </ShelfWidthData>
+  <ShelfWidthData>
+    <ShelfWidth>18</ShelfWidth>
+  </ShelfWidthData>
+  <ShelfWidthData>
+    <ShelfWidth>24</ShelfWidth>
+  </ShelfWidthData>
+  <ShelfWidthData>
+    <ShelfWidth>30</ShelfWidth>
+  </ShelfWidthData>
+  <ShelfWidthData>
+    <ShelfWidth>36</ShelfWidth>
+  </ShelfWidthData>
+  <ShelfWidthData>
+    <ShelfWidth>42</ShelfWidth>
+  </ShelfWidthData>
+</ShelfWidthSet>

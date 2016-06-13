@@ -1,0 +1,24 @@
+<?xml version="1.0" standalone="yes"?>
+<ShelvingDepthSet>
+  <ShelvingDepthData>
+    <ShelvingDepth>12</ShelvingDepth>
+  </ShelvingDepthData>
+  <ShelvingDepthData>
+    <ShelvingDepth>14</ShelvingDepth>
+  </ShelvingDepthData>
+  <ShelvingDepthData>
+    <ShelvingDepth>16</ShelvingDepth>
+  </ShelvingDepthData>
+  <ShelvingDepthData>
+    <ShelvingDepth>18</ShelvingDepth>
+  </ShelvingDepthData>
+  <ShelvingDepthData>
+    <ShelvingDepth>20</ShelvingDepth>
+  </ShelvingDepthData>
+  <ShelvingDepthData>
+    <ShelvingDepth>22</ShelvingDepth>
+  </ShelvingDepthData>
+  <ShelvingDepthData>
+    <ShelvingDepth>24</ShelvingDepth>
+  </ShelvingDepthData>
+</ShelvingDepthSet>
