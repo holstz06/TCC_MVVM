@@ -357,7 +357,7 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="0" />
-                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="104" />
                                         <ColumnDefinition Width="100" />
                                         <ColumnDefinition Width="100" />
                                         <ColumnDefinition Width="100" />
@@ -373,11 +373,11 @@
                                             <CheckBox FontFamily="Calibri Light" FontSize="14" Content="Same Depth" IsChecked="{Binding IsShelfSameDepth}" ToolTip="When checked, all the shelves will be the same depth." />
                                         </StackPanel>
                                     </Border>
-                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="1,1,1,1" Content="Size Depth" Width="100" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Size Width" Width="100" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Color" Width="100" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Shelving Type" Width="100" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="5" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Quantity" Width="100" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="1,1,1,1" Content="Size Depth" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Size Width" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Shelving Type" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="5" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Quantity" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
                                     <Label Grid.Row="2" Grid.Column="6"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1"/>
                                     <ListView Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" ItemsSource="{Binding ShelfViewModel.Shelves}" x:Name="ShelfViewList" KeyboardNavigation.TabNavigation="Continue">
                                         <ListView.ItemContainerStyle>
@@ -413,8 +413,8 @@
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
-                                    <Button Grid.Row="4" Grid.Column="1" ToolTip="Add new shelf to this room" Width="100" Content="Add" Command="{Binding Command_AddShelf}" />
-                                    <Button Grid.Row="4" Grid.Column="2" ToolTip="Remove selected shelf from this room" Width="100" Content="Remove" Command="{Binding ShelfViewModel.RemoveCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=ShelfViewList,Path=SelectedItem}" />
+                                    <Button Grid.Row="4" Grid.Column="1" ToolTip="Add new shelf to this room" Content="Add" Command="{Binding Command_AddShelf}" />
+                                    <Button Grid.Row="4" Grid.Column="2" ToolTip="Remove selected shelf from this room" Content="Remove" Command="{Binding ShelfViewModel.RemoveCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=ShelfViewList,Path=SelectedItem}" />
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -570,6 +570,11 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock>
+                                                <Run Text="{Binding DisplayName, Mode=OneWay}" />
+                                                <Run Text=" | $"/>
+                                                <Run Text="{Binding Price}" />
+                                            </TextBlock> 
+                                            <!--<TextBlock>
                                                 <Run Text="{Binding Quantity}" />
                                                 <Run Text="x " />
                                                 <Run Text="{Binding ShelfType}" />
@@ -581,7 +586,7 @@
                                                 <Run Text="{Binding SizeDepth}" />
                                                 <Run Text="in., $ " />
                                                 <Run FontWeight="Bold" Text="{Binding Price}" />
-                                            </TextBlock>
+                                            </TextBlock>-->
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

@@ -17,7 +17,7 @@ namespace TCC_MVVM.ViewModel
         /// <summary>
         /// Data table that stores the shelf items data
         /// </summary>
-        private DataTable ShelfData { get; set; }
+        private DataTable ShelfData;
 
         /// <summary>
         /// Data table that stores the shelving depth values
@@ -45,18 +45,29 @@ namespace TCC_MVVM.ViewModel
         public ObservableCollection<Shelf> Shelves { get; set; } = new ObservableCollection<Shelf>();
 
         /// <summary>
-        /// The total price of all the shelves in the collection
+        /// A list of possible cam posts
         /// </summary>
+        private List<CamPost> CamPosts { get; set; } = new List<CamPost>();
+
+        /// <summary>
+        /// A list of possible fences
+        /// </summary>
+        private List<Fence> Fences { get; set; } = new List<Fence>();
+
+        /// <summary>
+        /// The total price of all the shelves in the collection (rounded to 2 decimal places)
+        /// </summary>
+        private decimal _TotalPrice;
         public decimal TotalPrice
         {
             get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
-        private decimal _TotalPrice;
 
         /// <summary>
         /// Command to remove a shelf from the collection
         /// </summary>
+        private ICommand _RemoveCommand;
         public ICommand RemoveCommand
         {
             get
@@ -66,7 +77,7 @@ namespace TCC_MVVM.ViewModel
                 return _RemoveCommand;
             }
         }
-        private ICommand _RemoveCommand;
+
 
         /// <summary>
         /// Creates a new instance of the shelf view model
@@ -75,8 +86,7 @@ namespace TCC_MVVM.ViewModel
         {
             /*
              * Attempt to retrieve information from the ShelfData.xml
-             * If no information could be retrieved, do nothing but return
-             * the error message.
+             * If no information could be retrieved, do nothing but return the error message.
              */
             try
             {
@@ -86,8 +96,7 @@ namespace TCC_MVVM.ViewModel
             }
             catch (Exception e)
             {
-                MessageBox.Show("No shelf items could be gathers from the xml.");
-                MessageBox.Show(e.ToString());
+                MessageBox.Show("No shelf items could be gathers from the xml." + e.ToString());
             }
 
             /*
@@ -102,8 +111,7 @@ namespace TCC_MVVM.ViewModel
             }
             catch (Exception e)
             {
-                MessageBox.Show("No shelf width values could be loaded from the xml.");
-                MessageBox.Show(e.ToString());
+                MessageBox.Show("No shelf width values could be loaded from the xml." + e.ToString());
             }
 
             /*
@@ -118,8 +126,7 @@ namespace TCC_MVVM.ViewModel
             }
             catch (Exception e)
             {
-                MessageBox.Show("No shelf depth values could be loaded from the xml.");
-                MessageBox.Show(e.ToString());
+                MessageBox.Show("No shelf depth values could be loaded from the xml." + e.ToString());
             }
 
             /*
@@ -134,8 +141,7 @@ namespace TCC_MVVM.ViewModel
             }
             catch (Exception e)
             {
-                MessageBox.Show("No wood values could be loaded from the xml.");
-                MessageBox.Show(e.ToString());
+                MessageBox.Show("No wood values could be loaded from the xml." + e.ToString());
             }
 
             /*
@@ -150,28 +156,11 @@ namespace TCC_MVVM.ViewModel
             }
             catch (Exception e)
             {
-                MessageBox.Show("No banding values could be loaded from the xml.");
-                MessageBox.Show(e.ToString());
+                MessageBox.Show("No banding values could be loaded from the xml." + e.ToString());
             }
-        }
 
-        /// <summary>
-        /// Gets a list of shelf items
-        /// </summary>
-        /// <returns>
-        /// A list of shelf items
-        /// </returns>
-        private List<CamPost> GetCamPostItems()
-        {
-            List<CamPost> camposts = ShelfData.AsEnumerable().Select(row =>
-                new CamPost
-                {
-                    Color = row.Field<string>("Color"),
-                    WoodColor = row.Field<string>("WoodColor"),
-                    Quantity = int.Parse(row.Field<string>("Quantity")),
-                    Price = decimal.Parse(row.Field<string>("Price"))
-                }).ToList();
-            return camposts;
+            CamPosts = GetCamPosts();
+            Fences = GetFences();
         }
 
         /// <summary>
@@ -201,11 +190,14 @@ namespace TCC_MVVM.ViewModel
             if (Color != null) HasColor = true;
             if (SizeDepth != null) HasDepth = true;
 
-            Shelf shelf = new Shelf(RoomNumber, HasColor ? Color : null, HasDepth ? SizeDepth : null);
-            shelf.ColorValues = new ObservableCollection<string>(GetColorValues());
-            shelf.WidthValues = new ObservableCollection<string>(GetWidthValues());
-            shelf.DepthValues = new ObservableCollection<string>(GetDepthValues());
-            shelf.CamPostList = new ObservableCollection<CamPost>(GetCamPostItems());
+            Shelf shelf = new Shelf(RoomNumber, HasColor ? Color : null, HasDepth ? SizeDepth : null)
+            {
+                ColorValues = new ObservableCollection<string>(GetColorValues()),
+                WidthValues = new ObservableCollection<string>(GetWidthValues()),
+                DepthValues = new ObservableCollection<string>(GetDepthValues()),
+                ShelfTypeValues = new ObservableCollection<string>(GetShelfType())
+            };
+
             shelf.Wood.WoodValues = GetWoodValues();
             shelf.Banding.BandingValues = GetBandingValues();
 
@@ -213,6 +205,37 @@ namespace TCC_MVVM.ViewModel
 
             Shelves.Add(shelf);
         }
+
+        /// <summary>
+        /// Retrieves a list of camposts
+        /// </summary>
+        /// <returns>
+        /// A list of camposts
+        /// </returns>
+        private List<CamPost> GetCamPosts()
+            => (from row in ShelfData.AsEnumerable()
+                where row.Field<string>("ItemName") == "Cam Post"
+                select new CamPost
+                {
+                    WoodColor = row.Field<string>("WoodColor"),
+                    Color = row.Field<string>("Color"),
+                    Price = decimal.Parse(row.Field<string>("Price"))
+                }).ToList();
+
+        /// <summary>
+        /// Retrieves a list of fences
+        /// </summary>
+        /// <returns>
+        /// A list of fences
+        /// </returns>
+        private List<Fence> GetFences()
+            => (from row in ShelfData.AsEnumerable()
+                where row.Field<string>("ItemName") == "Fence"
+                select new Fence
+                {
+                    Color = row.Field<string>("Color"),
+                    Price = decimal.Parse(row.Field<string>("Price"))
+                }).ToList();
 
         /// <summary>
         /// Retrieves a list of color values
@@ -261,9 +284,25 @@ namespace TCC_MVVM.ViewModel
             => BandingData.AsEnumerable().ToDictionary(row => row.Field<string>("BandingColor"), row => decimal.Parse(row.Field<string>("BandingPrice")));
 
         /// <summary>
-        /// Set each shelf color
+        /// Gets a list of shelftype values
         /// </summary>
-        /// <param name="Color"></param>
+        /// <returns>
+        /// A list of shelf type values
+        /// </returns>
+        private List<string> GetShelfType()
+        {
+            List<string> shelftype = new List<string>() { "Fixed", "Adjustable", "(Adj) Corner", "(Fixed) Corner" };
+            foreach (Fence fence in Fences)
+                shelftype.Add("(" + fence.Color + ") Shoe Shelf");
+            return shelftype;
+        }
+
+        /// <summary>
+        /// Sets all the shelves to the same color
+        /// </summary>
+        /// <param name="Color">
+        /// The color of the shelf to set
+        /// </param>
         public void SetAllShelfColor(string Color)
         {
             foreach(Shelf shelf in Shelves)
@@ -271,10 +310,10 @@ namespace TCC_MVVM.ViewModel
         }
 
         /// <summary>
-        /// Set each shelf depth
+        /// Sets all the shelves to the same depth
         /// </summary>
         /// <param name="SizeDepth">
-        /// The depth of the shelf
+        /// The depth of the shelf to set
         /// </param>
         public void SetAllShelfDepth(string SizeDepth)
         {
@@ -289,25 +328,81 @@ namespace TCC_MVVM.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// Event listener for properties of a shelf
+        /// </summary>
         void Shelf_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            Shelf shelf = (Shelf)sender;
             switch(e.PropertyName)
             {
-                case "Price": SetPriceProperty(sender); break;
-                case "Color": SetColorProperty(sender); break;
+                case "Price":
+                    SetPriceProperty(sender);
+                    break;
+                case "ShelfType":
+                    shelf.Fence = GetFence(shelf.ShelfType);
+                    break;
+                case "Color":
+                    shelf.CamPost = GetCamPost(shelf.Color);
+                    break;
             }
         }
 
+        /// <summary>
+        /// Selects the correct fence that belongs to the shelf
+        /// based on the shelf's type
+        /// </summary>
+        /// <param name="ShelfType">
+        /// The type of shelf
+        /// </param>
+        /// <returns>
+        /// The fence
+        /// </returns>
+        private Fence GetFence(string ShelfType)
+        {
+            if(ShelfType.Contains("Shoe Shelf"))
+            {
+                foreach(Fence fence in Fences)
+                {
+                    if (ShelfType.Contains(fence.Color))
+                        return fence;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Selects the correct campost that belongs to the shelf
+        /// based on the shelf's color
+        /// </summary>
+        /// <param name="color">
+        /// The color of the shelf
+        /// </param>
+        /// <returns>
+        /// The campost
+        /// </returns>
+        private CamPost GetCamPost(string color)
+        {
+            foreach(CamPost campost in CamPosts)
+            {
+                if (campost.WoodColor == color)
+                    return campost; 
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Reset the price of the view model when a shelf changes (added, deleted, or updated)
+        /// </summary>
+        /// <param name="sender">
+        /// The shelf that changes
+        /// </param>
         void SetPriceProperty(object sender)
         {
             TotalPrice = 0;
             foreach (Shelf shelf in Shelves)
                 TotalPrice += shelf.Price;
-        }
-
-        void SetColorProperty(object sender)
-        {
-            Shelf shelf = (Shelf)sender;
         }
         #endregion
     }
