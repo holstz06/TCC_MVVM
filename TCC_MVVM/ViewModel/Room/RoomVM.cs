@@ -59,7 +59,7 @@ namespace TCC_MVVM.ViewModel.Room
         // View Models
         public StripVM StripViewModel { get; set; } = new StripVM();
         public PanelVM PanelViewModel { get; set; } = new PanelVM();
-        public ShelfVM ShelfViewModel { get; set; }
+        public ShelfVM ShelfViewModel { get; set; } = new ShelfVM();
         public AccessoryVM AccessoryViewModel { get; set; } = new AccessoryVM();
 
         /// <summary>
@@ -77,8 +77,6 @@ namespace TCC_MVVM.ViewModel.Room
         public RoomVM(string ExcelFilePath, string RoomName, int RoomNumber = 0)
         {
             InitializeCommands();
-
-            ShelfViewModel = new ShelfVM(ExcelFilePath);
 
             // Subscribe room to view model's properties
             StripViewModel.PropertyChanged += Shelving_PropertyChanged;

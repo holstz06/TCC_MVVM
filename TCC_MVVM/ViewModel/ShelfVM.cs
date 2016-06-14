@@ -7,17 +7,46 @@ using System.Collections.Generic;
 using System.Linq;
 using PropertyChanged;
 using System;
+using System.Windows;
 
 namespace TCC_MVVM.ViewModel
 {
     [ImplementPropertyChanged]
     public class ShelfVM : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Data table that stores the shelf items data
+        /// </summary>
         private DataTable ShelfData { get; set; }
-        private DataTable RoomData { get; set; }
 
-        public ObservableCollection<Shelf> Shelves { get; set; }
+        /// <summary>
+        /// Data table that stores the shelving depth values
+        /// </summary>
+        private DataTable ShelvingDepthData;
 
+        /// <summary>
+        /// Data table that stores the shelf width values
+        /// </summary>
+        private DataTable ShelfWidthData;
+
+        /// <summary>
+        /// Data table that stores the wood data values
+        /// </summary>
+        private DataTable WoodData;
+
+        /// <summary>
+        /// Data table that stores the banding data values
+        /// </summary>
+        private DataTable BandingData;
+
+        /// <summary>
+        /// A collection of shelves
+        /// </summary>
+        public ObservableCollection<Shelf> Shelves { get; set; } = new ObservableCollection<Shelf>();
+
+        /// <summary>
+        /// The total price of all the shelves in the collection
+        /// </summary>
         public decimal TotalPrice
         {
             get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
@@ -26,9 +55,8 @@ namespace TCC_MVVM.ViewModel
         private decimal _TotalPrice;
 
         /// <summary>
-        /// Command to remove shelf from the collection
+        /// Command to remove a shelf from the collection
         /// </summary>
-        private ICommand _RemoveCommand;
         public ICommand RemoveCommand
         {
             get
@@ -38,17 +66,93 @@ namespace TCC_MVVM.ViewModel
                 return _RemoveCommand;
             }
         }
+        private ICommand _RemoveCommand;
 
         /// <summary>
         /// Creates a new instance of the shelf view model
         /// </summary>
-        /// <param name="ExcelFilePath">
-        /// The path to the excel file
-        /// </param>
-        public ShelfVM(string ExcelFilePath = null)
+        public ShelfVM()
         {
-            // Initialize the collections
-            Shelves = new ObservableCollection<Shelf>();
+            /*
+             * Attempt to retrieve information from the ShelfData.xml
+             * If no information could be retrieved, do nothing but return
+             * the error message.
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("ShelfData.xml");
+                ShelfData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No shelf items could be gathers from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+
+            /*
+             * Attempt to retrieve information from the ShelfWidthData.xml
+             * If no information could be retrieved, do nothing and return error message
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("ShelfWidthData.xml");
+                ShelfWidthData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No shelf width values could be loaded from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+
+            /*
+             * Attempt to retrieve information from the ShelvingDepthData.xml
+             * If no information could be retrieved, do nothing and return error message
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("ShelvingDepthData.xml");
+                ShelvingDepthData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No shelf depth values could be loaded from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+
+            /*
+             * Attempt to retrieve information from the WoodData.xml
+             * If no information could be retrieved, do nothing and return error message
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("WoodData.xml");
+                WoodData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No wood values could be loaded from the xml.");
+                MessageBox.Show(e.ToString());
+            }
+
+            /*
+             * Attempt to retrieve information from the BandingData.xml
+             * If no information could be retrieved, do nothing and return error message
+             */
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("BandingData.xml");
+                BandingData = dataset.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No banding values could be loaded from the xml.");
+                MessageBox.Show(e.ToString());
+            }
         }
 
         /// <summary>
@@ -64,38 +168,10 @@ namespace TCC_MVVM.ViewModel
                 {
                     Color = row.Field<string>("Color"),
                     WoodColor = row.Field<string>("WoodColor"),
-                    Quantity = (int)row.Field<double>("Quantity"),
-                    Price = row.Field<decimal>("Price")
+                    Quantity = int.Parse(row.Field<string>("Quantity")),
+                    Price = decimal.Parse(row.Field<string>("Price"))
                 }).ToList();
             return camposts;
-        }
-
-        /// <summary>
-        /// Gets the wood color values and prices
-        /// </summary>
-        /// <returns>
-        /// A dictionary of wood colors and prices
-        /// </returns>
-        private Dictionary<string, decimal> GetWoodValues()
-        {
-            return RoomData.AsEnumerable()
-                .ToDictionary(
-                    row => row.Field<string>("WoodColor"),
-                    row => row.Field<decimal>("WoodPrice"));
-        }
-
-        /// <summary>
-        /// Gets the banding color and prices
-        /// </summary>
-        /// <returns>
-        /// A dictionary of banding colors and prices
-        /// </returns>
-        private Dictionary<string, decimal> GetBandingValues()
-        {
-            return RoomData.AsEnumerable()
-                .ToDictionary(
-                    row => row.Field<string>("BandingColor"),
-                    row => row.Field<decimal>("BandingPrice"));
         }
 
         /// <summary>
@@ -139,40 +215,50 @@ namespace TCC_MVVM.ViewModel
         }
 
         /// <summary>
-        /// Retrieves a list of height values for a panel
+        /// Retrieves a list of color values
         /// </summary>
-        /// <returns></returns>
-        private List<string> GetColorValues()
-        {
-            List<string> colorvalues = new List<string>();
-            var query = (from row in RoomData.AsEnumerable() select row.Field<string>("WoodColor")).Distinct();
-            foreach (string row in query) colorvalues.Add(row);
-            return colorvalues;
-        }
+        /// <returns>
+        /// A list of color values
+        /// </returns>
+        private List<string> GetColorValues() => WoodData.AsEnumerable().Select(row => row.Field<string>("WoodColor")).Distinct().ToList();
 
         /// <summary>
-        /// Retrieves a list of height values for a panel
+        /// Retrieves a list of width values
         /// </summary>
-        /// <returns></returns>
-        private List<string> GetWidthValues()
-        {
-            List<string> widthvalues = new List<string>();
-            var query = (from row in RoomData.AsEnumerable() select row.Field<string>("ShelfWidth")).Distinct();
-            foreach (string row in query) widthvalues.Add(row);
-            return widthvalues;
-        }
+        /// <returns>
+        /// A list of width values
+        /// </returns>
+        private List<string> GetWidthValues() => ShelfWidthData.AsEnumerable().Select(row => row.Field<string>("ShelfWidth")).Distinct().ToList();
 
         /// <summary>
-        /// Retrieves a list of depth values for a panel
+        /// Retrieves a list of depth values
         /// </summary>
-        /// <returns></returns>
-        private List<string> GetDepthValues()
-        {
-            List<string> depthvalues = new List<string>();
-            var query = (from row in RoomData.AsEnumerable() select row.Field<string>("RoomDepth")).Distinct();
-            foreach (string row in query) depthvalues.Add(row);
-            return depthvalues;
-        }
+        /// <returns>
+        /// A list of depth values
+        /// </returns>
+        private List<string> GetDepthValues() => ShelvingDepthData.AsEnumerable().Select(row => row.Field<string>("ShelvingDepth")).Distinct().ToList();
+
+        /// <summary>
+        /// Gets a dictionary of wood prices by their color
+        /// Key = Wood Color
+        /// Value = Wood Price
+        /// </summary>
+        /// <returns>
+        /// A dictionary of wood colors and prices
+        /// </returns>
+        private Dictionary<string, decimal> GetWoodValues()
+            => WoodData.AsEnumerable().ToDictionary(row => row.Field<string>("WoodColor"), row => decimal.Parse(row.Field<string>("WoodPrice")));
+
+        /// <summary>
+        /// Gets a dictionary of banding prices by their color
+        /// Key = Banding Color
+        /// Value = Bandin Price
+        /// </summary>
+        /// <returns>
+        /// A dictionary of banding colors and prices
+        /// </returns>
+        private Dictionary<string, decimal> GetBandingValues()
+            => BandingData.AsEnumerable().ToDictionary(row => row.Field<string>("BandingColor"), row => decimal.Parse(row.Field<string>("BandingPrice")));
 
         /// <summary>
         /// Set each shelf color
@@ -181,9 +267,7 @@ namespace TCC_MVVM.ViewModel
         public void SetAllShelfColor(string Color)
         {
             foreach(Shelf shelf in Shelves)
-            {
                 shelf.Color = Color;
-            }
         }
 
         /// <summary>
@@ -195,9 +279,7 @@ namespace TCC_MVVM.ViewModel
         public void SetAllShelfDepth(string SizeDepth)
         {
             foreach (Shelf shelf in Shelves)
-            {
                 shelf.SizeDepth = SizeDepth;
-            }
         }
 
         #region INotifyPropertyChanged
