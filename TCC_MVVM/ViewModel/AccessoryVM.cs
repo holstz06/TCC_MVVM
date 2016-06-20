@@ -31,6 +31,7 @@ namespace TCC_MVVM.ViewModel
         /// Collection of accessories
         /// </summary>
         public ObservableCollection<Accessory> Accessories { get; set; } = new ObservableCollection<Accessory>();
+        private List<Accessory> AllAccessories { get; set; } = new List<Accessory>();
 
         /// <summary>
         /// Removes an accessory from the collection
@@ -51,21 +52,20 @@ namespace TCC_MVVM.ViewModel
         /// </summary>
         public AccessoryVM()
         {
-            /*
-             * Attempt to retrieve information from the AccessoryData.xml
-             * If no information could be retrieved, do nothing but return the error message.
-             */
-            try
+            DataSet dataset = new DataSet();
+            dataset.ReadXml("AccessoryData.xml");
+            AccessoryData = dataset.Tables[0];
+
+            // Create dictionary of prices by accessory name
+            AllAccessories = AccessoryData.AsEnumerable().Select(row => new Accessory()
             {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("AccessoryData.xml");
-                AccessoryData = dataset.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("No accessory items could be gathers from the xml.");
-                MessageBox.Show(e.ToString());
-            }
+                Name  = row.Field<string>("ItemName"),
+                Color = row.Field<string>("Color"),
+                Width  = row.Field<string>("Width"),
+                Height = row.Field<string>("Height"),
+                Depth  = row.Field<string>("Depth"),
+                Price = decimal.Parse(row.Field<string>("Price"))
+            }).ToList();
         }
         
         /// <summary>
@@ -123,7 +123,12 @@ namespace TCC_MVVM.ViewModel
                         accessory.HeightValues = new ObservableCollection<string>(GetHeightValues(accessory.Name, accessory.Color));
                         break;
                 }
-                accessory.Price = SetPrice(accessory);
+                if(!e.PropertyName.Equals("Price")
+                    && !string.IsNullOrEmpty(accessory.Color)
+                    && !string.IsNullOrEmpty(accessory.Width)
+                    && !string.IsNullOrEmpty(accessory.Depth)
+                    && !string.IsNullOrEmpty(accessory.Height))
+                    accessory.Price = SetPrice(accessory);
             }
             catch(Exception ex)
             {
@@ -131,8 +136,22 @@ namespace TCC_MVVM.ViewModel
             }
         }
 
-        private decimal SetPrice(Accessory accessory)
+        private decimal SetPrice(Accessory selectedAccessory)
         {
+            foreach(Accessory accessory in AllAccessories)
+            {
+                if (selectedAccessory.Color == accessory.Color
+                    && selectedAccessory.Width == accessory.Width
+                    && selectedAccessory.Depth == accessory.Depth
+                    && selectedAccessory.Height == accessory.Height
+                    && selectedAccessory.Name == accessory.Name)
+                {
+                    if (selectedAccessory.HasLength)
+                        return accessory.Price * (decimal)selectedAccessory.Length;
+                    else
+                        return accessory.Price;
+                }     
+            }
             return 0M;
         }
 
