@@ -1,0 +1,45 @@
+<?xml version="1.0" standalone="yes"?>
+<ShelfTypeDataSet>
+  <ShelfTypeData>
+    <ShelfType>Fixed</ShelfType>
+    <CamQuantity>4</CamQuantity>
+    <HasFencePost>false</HasFencePost>
+    <FencePostColor>N/A</FencePostColor>
+  </ShelfTypeData>
+  <ShelfTypeData>
+    <ShelfType>Adjustable</ShelfType>
+    <CamQuantity>0</CamQuantity>
+    <HasFencePost>false</HasFencePost>
+    <FencePostColor>N/A</FencePostColor>
+  </ShelfTypeData>
+  <ShelfTypeData>
+    <ShelfType>(Fixed) Corner</ShelfType>
+    <CamQuantity>6</CamQuantity>
+    <HasFencePost>false</HasFencePost>
+    <FencePostColor>N/A</FencePostColor>
+  </ShelfTypeData>
+  <ShelfTypeData>
+    <ShelfType>(Adj) Corner</ShelfType>
+    <CamQuantity>0</CamQuantity>
+    <HasFencePost>false</HasFencePost>
+    <FencePostColor>N/A</FencePostColor>
+  </ShelfTypeData>
+  <ShelfTypeData>
+    <ShelfType>(Chrome) Shoe Shelf</ShelfType>
+    <CamQuantity>2</CamQuantity>
+    <HasFencePost>true</HasFencePost>
+    <FencePostColor>Chrome</FencePostColor>
+  </ShelfTypeData>
+  <ShelfTypeData>
+    <ShelfType>(MN) Shoe Shelf</ShelfType>
+    <CamQuantity>2</CamQuantity>
+    <HasFencePost>true</HasFencePost>
+    <FencePostColor>MN</FencePostColor>
+  </ShelfTypeData>
+  <ShelfTypeData>
+    <ShelfType>(ORB) Shoe Shelf</ShelfType>
+    <CamQuantity>2</CamQuantity>
+    <HasFencePost>true</HasFencePost>
+    <FencePostColor>ORB</FencePostColor>
+  </ShelfTypeData>
+</ShelfTypeDataSet>

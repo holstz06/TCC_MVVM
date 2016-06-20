@@ -40,19 +40,20 @@ namespace TCC_MVVM.ViewModel
         private DataTable BandingData;
 
         /// <summary>
+        /// Data table that stores the shelf type data
+        /// </summary>
+        private DataTable ShelfTypeData;
+
+        /// <summary>
         /// A collection of shelves
         /// </summary>
         public ObservableCollection<Shelf> Shelves { get; set; } = new ObservableCollection<Shelf>();
 
-        /// <summary>
-        /// A list of possible cam posts
-        /// </summary>
+        // Shelf Items Lists
+        //======================================
         private List<CamPost> CamPosts { get; set; } = new List<CamPost>();
-
-        /// <summary>
-        /// A list of possible fences
-        /// </summary>
         private List<Fence> Fences { get; set; } = new List<Fence>();
+        private List<ShelfType> ShelfTypes { get; set; } = new List<ShelfType>();
 
         /// <summary>
         /// The total price of all the shelves in the collection (rounded to 2 decimal places)
@@ -84,83 +85,34 @@ namespace TCC_MVVM.ViewModel
         /// </summary>
         public ShelfVM()
         {
-            /*
-             * Attempt to retrieve information from the ShelfData.xml
-             * If no information could be retrieved, do nothing but return the error message.
-             */
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("ShelfData.xml");
-                ShelfData = dataset.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("No shelf items could be gathers from the xml." + e.ToString());
-            }
+            DataSet dataset = new DataSet();
+            dataset.ReadXml("ShelfData.xml");
+            ShelfData = dataset.Tables[0];
 
-            /*
-             * Attempt to retrieve information from the ShelfWidthData.xml
-             * If no information could be retrieved, do nothing and return error message
-             */
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("ShelfWidthData.xml");
-                ShelfWidthData = dataset.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("No shelf width values could be loaded from the xml." + e.ToString());
-            }
+            dataset = new DataSet();
+            dataset.ReadXml("ShelfWidthData.xml");
+            ShelfWidthData = dataset.Tables[0];
 
-            /*
-             * Attempt to retrieve information from the ShelvingDepthData.xml
-             * If no information could be retrieved, do nothing and return error message
-             */
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("ShelvingDepthData.xml");
-                ShelvingDepthData = dataset.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("No shelf depth values could be loaded from the xml." + e.ToString());
-            }
+            dataset = new DataSet();
+            dataset.ReadXml("ShelvingDepthData.xml");
+            ShelvingDepthData = dataset.Tables[0];
 
-            /*
-             * Attempt to retrieve information from the WoodData.xml
-             * If no information could be retrieved, do nothing and return error message
-             */
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("WoodData.xml");
-                WoodData = dataset.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("No wood values could be loaded from the xml." + e.ToString());
-            }
+            dataset = new DataSet();
+            dataset.ReadXml("WoodData.xml");
+            WoodData = dataset.Tables[0];
 
-            /*
-             * Attempt to retrieve information from the BandingData.xml
-             * If no information could be retrieved, do nothing and return error message
-             */
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("BandingData.xml");
-                BandingData = dataset.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("No banding values could be loaded from the xml." + e.ToString());
-            }
+            dataset = new DataSet();
+            dataset.ReadXml("BandingData.xml");
+            BandingData = dataset.Tables[0];
 
+            dataset = new DataSet();
+            dataset.ReadXml("ShelfTypeData.xml");
+            ShelfTypeData = dataset.Tables[0];
+
+            // Get shelf related items from datasets
             CamPosts = GetCamPosts();
             Fences = GetFences();
+            ShelfTypes = GetShelfTypes();
         }
 
         /// <summary>
@@ -195,7 +147,7 @@ namespace TCC_MVVM.ViewModel
                 ColorValues = new ObservableCollection<string>(GetColorValues()),
                 WidthValues = new ObservableCollection<string>(GetWidthValues()),
                 DepthValues = new ObservableCollection<string>(GetDepthValues()),
-                ShelfTypeValues = new ObservableCollection<string>(GetShelfType())
+                ShelfTypeValues = new ObservableCollection<ShelfType>(GetShelfTypes())
             };
 
             shelf.Wood.WoodValues = GetWoodValues();
@@ -205,6 +157,21 @@ namespace TCC_MVVM.ViewModel
 
             Shelves.Add(shelf);
         }
+
+        /// <summary>
+        /// Retrieves a list of shelf types
+        /// </summary>
+        /// <returns>
+        /// A list of shelf types
+        /// </returns>
+        private List<ShelfType> GetShelfTypes()
+            => ShelfTypeData.AsEnumerable().Select(row => new ShelfType()
+            {
+                Name = row.Field<string>("ShelfType"),
+                CamQuantity = int.Parse(row.Field<string>("CamQuantity")),
+                HasFencePost = bool.Parse(row.Field<string>("HasFencePost")),
+                FencePostColor = row.Field<string>("FencePostColor")
+            }).ToList();
 
         /// <summary>
         /// Retrieves a list of camposts
@@ -284,20 +251,6 @@ namespace TCC_MVVM.ViewModel
             => BandingData.AsEnumerable().ToDictionary(row => row.Field<string>("BandingColor"), row => decimal.Parse(row.Field<string>("BandingPrice")));
 
         /// <summary>
-        /// Gets a list of shelftype values
-        /// </summary>
-        /// <returns>
-        /// A list of shelf type values
-        /// </returns>
-        private List<string> GetShelfType()
-        {
-            List<string> shelftype = new List<string>() { "Fixed", "Adjustable", "(Adj) Corner", "(Fixed) Corner" };
-            foreach (Fence fence in Fences)
-                shelftype.Add("(" + fence.Color + ") Shoe Shelf");
-            return shelftype;
-        }
-
-        /// <summary>
         /// Sets all the shelves to the same color
         /// </summary>
         /// <param name="Color">
@@ -321,7 +274,10 @@ namespace TCC_MVVM.ViewModel
                 shelf.SizeDepth = SizeDepth;
         }
 
-        #region INotifyPropertyChanged
+        //====================================================================//
+        //                      PROPERTY CHANGED HANDELERS                    //
+        //====================================================================//
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -340,11 +296,57 @@ namespace TCC_MVVM.ViewModel
                     SetPriceProperty(sender);
                     break;
                 case "ShelfType":
-                    shelf.Fence = GetFence(shelf.ShelfType);
+                    ShelfType_PropertyChanged(shelf);
                     break;
                 case "Color":
-                    shelf.CamPost = GetCamPost(shelf.Color);
+                    Color_PropertyChanged(shelf);
+                    //shelf.CamPost = GetCamPost(shelf.Color);
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Event that triggers when 'ShelfType' property has been chaged
+        /// </summary>
+        /// <param name="shelf">
+        /// The Shelf model
+        /// </param>
+        private void ShelfType_PropertyChanged(Shelf shelf)
+        {
+            foreach(ShelfType shelftype in ShelfTypes)
+            {
+                if(shelftype.Name == shelf.ShelfType.Name)
+                {
+                    shelf.CamPostQuantity = shelftype.CamQuantity;
+                    shelf.HasFence = shelftype.HasFencePost;
+                    shelf.FenceColor = shelftype.FencePostColor;
+                    if(shelf.HasFence)
+                    {
+                        foreach(Fence fence in Fences)
+                        {
+                            if (fence.Color == shelf.FenceColor)
+                                shelf.FencePrice = fence.Price;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Event that triggers when 'Color' property has been changed
+        /// </summary>
+        /// <param name="shelf">
+        /// The shelf model
+        /// </param>
+        private void Color_PropertyChanged(Shelf shelf)
+        {
+            foreach(CamPost campost in CamPosts)
+            {
+                if(campost.WoodColor == shelf.Color)
+                {
+                    shelf.CamPostColor = campost.Color;
+                    shelf.CamPostPrice = campost.Price;
+                }
             }
         }
 
@@ -358,13 +360,13 @@ namespace TCC_MVVM.ViewModel
         /// <returns>
         /// The fence
         /// </returns>
-        private Fence GetFence(string ShelfType)
+        private Fence GetFence(ShelfType ShelfType)
         {
-            if(ShelfType.Contains("Shoe Shelf"))
+            if(ShelfType.HasFencePost)
             {
                 foreach(Fence fence in Fences)
                 {
-                    if (ShelfType.Contains(fence.Color))
+                    if (ShelfType.FencePostColor == fence.Color)
                         return fence;
                 }
             }
@@ -404,6 +406,5 @@ namespace TCC_MVVM.ViewModel
             foreach (Shelf shelf in Shelves)
                 TotalPrice += shelf.Price;
         }
-        #endregion
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Collections.ObjectModel;
-using System.Data;
 using PropertyChanged;
 using System;
 
@@ -35,9 +34,22 @@ namespace TCC_MVVM.Model
         public decimal Price { get; set; }
     }
 
+    /// <summary>
+    /// An object that describes the type of shelf
+    /// </summary>
+    public class ShelfType
+    {
+        public string Name { get; set; }
+        public int CamQuantity { get; set; }
+        public bool HasFencePost { get; set; }
+        public string FencePostColor { get; set; } = "";
+    }
+
     [ImplementPropertyChanged]
     public class Shelf : INotifyPropertyChanged
     {
+        // Shelving variables
+        //========================================
         private int RoomNumber { get; set; }
         public int ShelfNumber { get; set; }
         public int Quantity { get; set; }
@@ -45,6 +57,20 @@ namespace TCC_MVVM.Model
         public string SizeDepth { get; set; }
         public string SizeWidth { get; set; }
 
+        // Cam Post Variables
+        //========================================
+        public string CamPostColor { get; set; }
+        public int CamPostQuantity { get; set; }
+        public decimal CamPostPrice { get; set; }
+
+        // Fence Post Variables
+        //========================================
+        public bool HasFence { get; set; }
+        public string FenceColor { get; set; }
+        public decimal FencePrice { get; set; }
+
+        // Shelf Price
+        //========================================
         private decimal _Price;
         public decimal Price
         {
@@ -52,35 +78,19 @@ namespace TCC_MVVM.Model
             set { _Price = value; OnPropertyChanged("Price"); }
         }
 
+        // Dependancy Variables
+        //========================================
         public Wood Wood { get; set; } = new Wood();
         public Banding Banding { get; set; } = new Banding();
-        public CamPost CamPost { get; set; } = new CamPost();
-        public Fence Fence { get; set; } = new Fence();
+        public ShelfType ShelfType { get; set; } = new ShelfType();
 
-        /// <summary>
-        /// The shelf type (Fixed, Adjustable, etc.)
-        /// </summary>
-        public string ShelfType { get; set; }
 
-        /// <summary>
-        /// A collection of color values
-        /// </summary>
+        // Collection Variables
+        //========================================
         public ObservableCollection<string> ColorValues { get; set; } = new ObservableCollection<string>();
-
-        /// <summary>
-        /// A collection of widt values
-        /// </summary>
         public ObservableCollection<string> WidthValues { get; set; } = new ObservableCollection<string>();
-
-        /// <summary>
-        /// A collection of depth values
-        /// </summary>
         public ObservableCollection<string> DepthValues { get; set; } = new ObservableCollection<string>();
-
-        /// <summary>
-        /// A collection of the names of shelf types
-        /// </summary>
-        public ObservableCollection<string> ShelfTypeValues { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<ShelfType> ShelfTypeValues { get; set; } = new ObservableCollection<ShelfType>();
 
         /// <summary>
         /// Creates a new instance of a shelf
@@ -107,18 +117,7 @@ namespace TCC_MVVM.Model
         /// </summary>
         private void SetShelfItem()
         {
-            string tempShelfType = ShelfType;
-            if (tempShelfType.Contains("Shoe Shelf"))
-                tempShelfType = "Shoe";
-
-            switch (tempShelfType)
-            {
-                case "Adjustable":      CamPost.Quantity = 0; Fence.HasFence = false; break;
-                case "Fixed":           CamPost.Quantity = 4; Fence.HasFence = false; break;
-                case "(Adj) Corner":    CamPost.Quantity = 0; Fence.HasFence = false; break;
-                case "(Fixed) Corner":  CamPost.Quantity = 6; Fence.HasFence = false; break;
-                case "Shoe":            CamPost.Quantity = 2; Fence.HasFence = true; break;
-            }
+           
         }
 
         /// <summary>
@@ -126,23 +125,22 @@ namespace TCC_MVVM.Model
         /// </summary>
         private void SetPrice()
         {
-            decimal tempPrice = 0;
-            tempPrice = 0;
+            Price = 0; // Reset price
+
+            decimal SizeWidth = decimal.Parse(this.SizeWidth);
+            decimal SizeDepth = decimal.Parse(this.SizeDepth);
 
             // Get the price of the wood and banding
-            tempPrice += (decimal.Parse(SizeWidth) * decimal.Parse(SizeDepth)) * Wood.Price * (decimal)Wood.MARKUP;
-            tempPrice += (decimal.Parse(SizeWidth)) * Banding.Price;
+            Price += (SizeWidth * SizeDepth) * Wood.Price * (decimal)Wood.MARKUP;
+            Price += (SizeWidth) * Banding.Price;
 
-            // Get the price of the campost
-            tempPrice += (CamPost.Price * CamPost.Quantity);
+            Price += (CamPostQuantity * CamPostPrice);
 
-            // Get the price of the fence
-            if (Fence.HasFence)
-                tempPrice += Fence.Price;
-
+            if (HasFence)
+                Price += FencePrice;
+            
             // Get the price for all the boards
-            tempPrice += tempPrice * Quantity;
-            Price = tempPrice;
+            Price += Price * Quantity;
         }
 
         #region INotifyPropertyChanged Members
@@ -151,7 +149,7 @@ namespace TCC_MVVM.Model
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-            if (propertyName == "Color" && !string.IsNullOrEmpty(Color))
+            if (propertyName.Equals("Color") && !string.IsNullOrEmpty(Color))
             {
                 Wood.Color = Color;
                 Wood.Price = Wood.WoodValues[Color];
@@ -162,14 +160,14 @@ namespace TCC_MVVM.Model
             if (!string.IsNullOrEmpty(Color)
                 && !string.IsNullOrEmpty(SizeWidth)
                 && !string.IsNullOrEmpty(SizeDepth)
-                && !string.IsNullOrEmpty(ShelfType))
+                && !string.IsNullOrEmpty(ShelfType.Name))
                 SetShelfItem();
 
             if (!propertyName.Equals("Price")
                 && !string.IsNullOrEmpty(Color)
                 && !string.IsNullOrEmpty(SizeWidth)
                 && !string.IsNullOrEmpty(SizeDepth)
-                && !string.IsNullOrEmpty(ShelfType))
+                && !string.IsNullOrEmpty(ShelfType.Name))
                     SetPrice();
         }
         #endregion
@@ -181,20 +179,7 @@ namespace TCC_MVVM.Model
         {
             get
             {
-                string tempShelfType = ShelfType;
-                if (tempShelfType.Contains("Shoe Shelf"))
-                    tempShelfType = "Shoe";
-
-                switch(tempShelfType)
-                {
-                    case "Adjustable":  return Quantity + "x (" + Color + ") Adj. Shelf: " + SizeDepth + "in. x " + SizeWidth + "in. ";
-                    case "Fixed":       return Quantity + "x (" + Color + ") Fixed Shelf: " + SizeDepth + "in. x " + SizeWidth + "in. ";
-                    case "(Adj) Corner":   return Quantity + "x (" + Color + ") Adj. Corner Shelf: " + SizeDepth + "in. x " + SizeWidth + "in. ";
-                    case "(Fixed) Corner": return Quantity + "x (" + Color + ") Fixed Corner Shelf: " + SizeDepth + "in. x " + SizeWidth + "in. ";
-                    case "Shoe":        return Quantity + "x (" + Color + ") Shoe Shelf w/ " + Fence.Color + " Fence : " + SizeDepth + "in. x " + SizeWidth + "in. ";
-                }
-                return "Shelf";
-
+                return "";
             }
             private set
             {

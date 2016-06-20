@@ -136,5 +136,15 @@ namespace TCC_MVVM.Model
                 SetPrice();
         }
         #endregion
+
+        private string _DisplayName;
+        public string DisplayName
+        {
+            get
+            {
+                return "1x (" + Color + ") Hang Rail/Cover, " + Length.ToString() + "in. ";
+            }
+            set { _DisplayName = value; OnPropertyChanged("DisplayName"); }
+        }
     }
 }

@@ -7,16 +7,6 @@ using System;
 namespace TCC_MVVM.Model
 {
     /// <summary>
-    /// Type of drilled panel
-    /// </summary>
-    public enum PanelDrill
-    {
-        Right,  // Stop Drilled - Rght Hand
-        Left,   // Stop Drilled - Left Hand
-        Thru    // Thru Drilled
-    }
-
-    /// <summary>
     /// Accessory items that belong to the panel
     /// </summary>
     [ImplementPropertyChanged]
@@ -44,6 +34,7 @@ namespace TCC_MVVM.Model
         public string SizeHeight { get; set; }
         public string SizeDepth { get; set; }
         public string Color { get; set; } = null;
+        public bool IsHutch { get; set; } = false;
 
         private decimal _Price;
         public decimal Price
@@ -52,23 +43,36 @@ namespace TCC_MVVM.Model
             set { _Price = value; OnPropertyChanged("Price"); }
         }
 
-        public Wood Wood { get; set; }
-        public Banding Banding { get; set; }
+        public Wood Wood { get; set; } = new Wood();
+        public Banding Banding { get; set; } = new Banding();
 
-        public ObservableCollection<string> ColorValues { get; set; }
-        public ObservableCollection<string> HeightValues { get; set; }
-        public ObservableCollection<string> DepthValues { get; set; }
-        public ObservableCollection<PanelItem> PanelItems { get; set; }
-        public List<PanelItem> PanelItemsList { get; set; }
+        /// <summary>
+        /// A collection of color values
+        /// </summary>
+        public ObservableCollection<string> ColorValues { get; set; } = new ObservableCollection<string>();
+
+        /// <summary>
+        /// A collection of height values
+        /// </summary>
+        public ObservableCollection<string> HeightValues { get; set; } = new ObservableCollection<string>();
+
+        /// <summary>
+        /// A collection of depth values
+        /// </summary>
+        public ObservableCollection<string> DepthValues { get; set; } = new ObservableCollection<string>();
+
+        /// <summary>
+        /// A collection of panel items, these panel items 
+        /// </summary>
+        public ObservableCollection<PanelItem> PanelItems { get; set; } = new ObservableCollection<PanelItem>();
+
+        /// <summary>
+        /// A total collection of panel items that can belong to any panel
+        /// </summary>
+        public List<PanelItem> PanelItemsList { get; set; } = new List<PanelItem>();
 
         public Panel(int RoomNumber, string Color = null, string SizeDepth = null)
         {
-            // Initialize the collections
-            ColorValues = new ObservableCollection<string>();
-            HeightValues = new ObservableCollection<string>();
-            DepthValues = new ObservableCollection<string>();
-            PanelItems = new ObservableCollection<PanelItem>();
-            PanelItemsList = new List<PanelItem>();
 
             Wood = new Wood();
             Banding = new Banding();
@@ -108,10 +112,11 @@ namespace TCC_MVVM.Model
         {
             decimal price = 0;
             decimal fees = (decimal)(Wood.PANEL_INSTALL + Wood.ROUTER_FEE + Wood.DRILLBIT_FEE);
-
-            // Calculate the cost of wood and banding
             decimal WoodPrice = (decimal.Parse(SizeHeight) * decimal.Parse(SizeDepth)) * Wood.Price;
             decimal BandingPrice = (decimal.Parse(SizeHeight) + (2 * decimal.Parse(SizeDepth))) * Banding.Price;
+
+            if (IsHutch)
+                BandingPrice = (decimal.Parse(SizeHeight)) * Banding.Price;
 
             price += ((WoodPrice + BandingPrice) * (decimal)Wood.MARKUP) + fees;
 
@@ -143,5 +148,18 @@ namespace TCC_MVVM.Model
                 Price = SetPrice();
         }
         #endregion
+
+        private string _DisplayName;
+        public string DisplayName
+        {
+            get
+            {
+                if (IsHutch)
+                    return Quantity + "x (" + Color + ") Hutch Panel: " + SizeDepth + "in. x " + SizeHeight + "in";
+                else
+                    return Quantity + "x (" + Color + ") Panel: " + SizeDepth + "in. x " + SizeHeight + "in.";
+            }
+            set { _DisplayName = value; OnPropertyChanged("DisplayName"); }
+        }
     }
 }

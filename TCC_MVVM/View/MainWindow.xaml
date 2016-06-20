@@ -18,7 +18,16 @@
         <Style TargetType="TextBlock" >
             <Setter Property="Foreground" Value="#888" />
         </Style>
+
+        <!-- Object Data Provider - Gives XAML the ability to read enum values-->
+        <ObjectDataProvider x:Key="alignments" MethodName="GetEnums" ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="VerticalAlignment" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
     </Window.Resources>
+    
     <Grid HorizontalAlignment="Stretch">
         <Grid.DataContext>
             <JobVM:JobVM/>
@@ -278,6 +287,7 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="0" />
+                                        <ColumnDefinition Width="104" />
                                         <ColumnDefinition Width="100" />
                                         <ColumnDefinition Width="100" />
                                         <ColumnDefinition Width="100" />
@@ -296,9 +306,10 @@
                                     <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="1,1,1,1" Content="Size Depth" Width="100" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
                                     <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Size Height" Width="100" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
                                     <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Color" Width="100" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Quantity" Width="100" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="5"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1"/>
-                                    <ListView Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" ItemsSource="{Binding PanelViewModel.Panels}" x:Name="PanelListView" KeyboardNavigation.TabNavigation="Continue">
+                                    <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Hutch" Width="100" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="5" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Quantity" Width="100" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="6"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1"/>
+                                    <ListView Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="7" ItemsSource="{Binding PanelViewModel.Panels}" x:Name="PanelListView" KeyboardNavigation.TabNavigation="Continue">
                                         <ListView.ItemContainerStyle>
                                             <Style TargetType="ListViewItem">
                                                 <Setter Property="Padding" Value="0,0,0,0" />
@@ -317,12 +328,14 @@
                                                         <ColumnDefinition Width="100" />
                                                         <ColumnDefinition Width="100" />
                                                         <ColumnDefinition Width="100" />
+                                                        <ColumnDefinition Width="100" />
                                                     </Grid.ColumnDefinitions>
                                                     <ComboBox Grid.Column="0" BorderBrush="#ccc" BorderThickness="1,1,1,1" ItemsSource="{Binding DepthValues}" SelectedItem="{Binding SizeDepth, Mode=TwoWay}"/>
                                                     <ComboBox Grid.Column="1" BorderBrush="#ccc" BorderThickness="0,1,1,1" ItemsSource="{Binding HeightValues}" SelectedItem="{Binding SizeHeight, Mode=TwoWay}"/>
                                                     <ComboBox Grid.Column="2" BorderBrush="#ccc" BorderThickness="0,1,1,1" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}" />
-                                                    <TextBox Grid.Column="3" BorderBrush="#ccc" BorderThickness="0,1,1,1" Text="{Binding Quantity, Mode=TwoWay}" />
-                                                    <TextBlock Grid.Column="4">
+                                                    <CheckBox Grid.Column="3" BorderBrush="#ccc" BorderThickness="0,1,1,1" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding IsHutch}"/>
+                                                    <TextBox Grid.Column="4" BorderBrush="#ccc" BorderThickness="0,1,1,1" Text="{Binding Quantity, Mode=TwoWay}" />
+                                                    <TextBlock Grid.Column="5">
                                                         <Run Text="$" />
                                                         <Run Text="{Binding Price}" />
                                                     </TextBlock>
@@ -403,7 +416,7 @@
                                                     <ComboBox Grid.Column="0" BorderBrush="#ccc" BorderThickness="1,1,1,1" ItemsSource="{Binding DepthValues}" SelectedItem="{Binding SizeDepth, Mode=TwoWay}"/>
                                                     <ComboBox Grid.Column="1" BorderBrush="#ccc" BorderThickness="0,1,1,1" ItemsSource="{Binding WidthValues}" SelectedItem="{Binding SizeWidth, Mode=TwoWay}"/>
                                                     <ComboBox Grid.Column="2" BorderBrush="#ccc" BorderThickness="0,1,1,1" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="3" BorderBrush="#ccc" BorderThickness="0,1,1,1" ItemsSource="{Binding ShelfTypeValues}" SelectedItem="{Binding ShelfType, Mode=TwoWay}" />
+                                                    <ComboBox Grid.Column="3" BorderBrush="#ccc" BorderThickness="0,1,1,1" ItemsSource="{Binding ShelfTypeValues}" SelectedItem="{Binding ShelfType, Mode=TwoWay}" DisplayMemberPath="Name" />
                                                     <TextBox Grid.Column="4" BorderBrush="#ccc" BorderThickness="0,1,1,1" Text="{Binding Quantity, Mode=TwoWay}" />
                                                     <TextBlock Grid.Column="5">
                                                         <Run Text="$" />
@@ -531,12 +544,9 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock>
-                                                <Run Text="Hang Rail/Cover (" />
-                                                <Run Text="{Binding Color}" />
-                                                <Run Text="), " />
-                                                <Run Text="{Binding Length}" />
-                                                <Run Text="in., $" />
-                                                <Run FontWeight="Bold" Text="{Binding Price}" />
+                                                <Run Text="{Binding DisplayName}" />
+                                                <Run Text="- $" />
+                                                <Run Text="{Binding Price}" />
                                             </TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
@@ -549,15 +559,9 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock>
-                                                <Run Text="{Binding Quantity}" />
-                                                <Run Text="x Panel (" />
-                                                <Run Text="{Binding Color}" />
-                                                <Run Text="), " />
-                                                <Run Text="{Binding SizeHeight}" />
-                                                <Run Text="in. x " />
-                                                <Run Text="{Binding SizeDepth}" />
-                                                <Run Text="in., $" />
-                                                <Run FontWeight="Bold" Text="{Binding Price}" />
+                                                <Run Text="{Binding DisplayName}" />
+                                                <Run Text=" - $" />
+                                                <Run Text="{Binding Price}" />
                                             </TextBlock>
                                         </StackPanel>
                                     </DataTemplate>

@@ -42,18 +42,22 @@ namespace TCC_MVVM.ViewModel
         /// <summary>
         /// The total price of all the panels
         /// </summary>
+        private decimal _TotalPrice;
         public decimal TotalPrice
         {
             get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
-        private decimal _TotalPrice;
 
         /// <summary>
         /// The collection of panels
         /// </summary>
-        public ObservableCollection<Panel> Panels { get; set; }
-            = new ObservableCollection<Panel>();
+        public ObservableCollection<Panel> Panels { get; set; } = new ObservableCollection<Panel>();
+
+        /// <summary>
+        /// A list of panel items
+        /// </summary>
+        private List<PanelItem> PanelItems { get; set; } = new List<PanelItem>();
 
         /// <summary>
         /// Command to remove panel from collection
@@ -153,11 +157,6 @@ namespace TCC_MVVM.ViewModel
         /// </summary>
         public PanelVM()
         {
-            /*
-             * Attempt to retrieve information from the PanelData.xml
-             * If no information could be retrieved, do nothing but return
-             * the error message.
-             */
             try
             {
                 DataSet dataset = new DataSet();
@@ -170,10 +169,6 @@ namespace TCC_MVVM.ViewModel
                 MessageBox.Show(e.ToString());
             }
 
-            /*
-             * Attempt to retrieve information from the PanelHeightData.xml
-             * If no information could be retrieved, do nothing and return error message
-             */
             try
             {
                 DataSet dataset = new DataSet();
@@ -186,10 +181,6 @@ namespace TCC_MVVM.ViewModel
                 MessageBox.Show(e.ToString());
             }
 
-            /*
-             * Attempt to retrieve information from the ShelvingDepthData.xml
-             * If no information could be retrieved, do nothing and return error message
-             */
             try
             {
                 DataSet dataset = new DataSet();
@@ -202,10 +193,6 @@ namespace TCC_MVVM.ViewModel
                 MessageBox.Show(e.ToString());
             }
 
-            /*
-             * Attempt to retrieve information from the WoodData.xml
-             * If no information could be retrieved, do nothing and return error message
-             */
             try
             {
                 DataSet dataset = new DataSet();
@@ -218,10 +205,6 @@ namespace TCC_MVVM.ViewModel
                 MessageBox.Show(e.ToString());
             }
 
-            /*
-             * Attempt to retrieve information from the BandingData.xml
-             * If no information could be retrieved, do nothing and return error message
-             */
             try
             {
                 DataSet dataset = new DataSet();
@@ -233,6 +216,9 @@ namespace TCC_MVVM.ViewModel
                 MessageBox.Show("No banding values could be loaded from the xml.");
                 MessageBox.Show(e.ToString());
             }
+
+            // Initialize the panel items
+            PanelItems = GetPanelItems();
         }
 
         /// <summary>
