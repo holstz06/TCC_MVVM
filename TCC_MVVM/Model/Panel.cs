@@ -111,14 +111,18 @@ namespace TCC_MVVM.Model
         private decimal SetPrice()
         {
             decimal price = 0;
+
+            decimal SizeHeight = decimal.Parse(this.SizeHeight);
+            decimal SizeDepth = decimal.Parse(this.SizeDepth);
+
+            decimal woodPrice = (SizeHeight * SizeDepth) * Wood.Price;
+            decimal bandingPrice = (SizeHeight + (2 * SizeDepth)) * Banding.Price;
             decimal fees = (decimal)(Wood.PANEL_INSTALL + Wood.ROUTER_FEE + Wood.DRILLBIT_FEE);
-            decimal WoodPrice = (decimal.Parse(SizeHeight) * decimal.Parse(SizeDepth)) * Wood.Price;
-            decimal BandingPrice = (decimal.Parse(SizeHeight) + (2 * decimal.Parse(SizeDepth))) * Banding.Price;
 
             if (IsHutch)
-                BandingPrice = (decimal.Parse(SizeHeight)) * Banding.Price;
+                bandingPrice = SizeHeight * Banding.Price;
 
-            price += ((WoodPrice + BandingPrice) * (decimal)Wood.MARKUP) + fees;
+            price += ((woodPrice + bandingPrice) * (decimal)Wood.MARKUP) + fees;
 
             // Add on the additional prices from the panel items
             foreach (PanelItem item in PanelItems)
