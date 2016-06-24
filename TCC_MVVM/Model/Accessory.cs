@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using PropertyChanged;
+using System;
 
 namespace TCC_MVVM.Model
 {
@@ -14,7 +15,13 @@ namespace TCC_MVVM.Model
         public string Height { get; set; } = "N/A";
         public string Depth { get; set; } = "N/A";
         public double Length { get; set; } = 0;
-        public decimal Price { get; set; } = 0M;
+
+        private decimal _Price = 0M;
+        public decimal Price
+        {
+            get { return Math.Round(_Price, 2, MidpointRounding.AwayFromZero); }
+            set { _Price = value; OnPropertyChanged("Price"); }
+        }
 
         public ObservableCollection<string> Accessories { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> ColorValues { get; set; } = new ObservableCollection<string>();
