@@ -86,7 +86,7 @@ namespace TCC_MVVM.Model
             int rowCount = Range.Rows.Count;
             int colCount = Range.Columns.Count;
             int roomnumber = -1;
-            RoomVM currentRoom = new RoomVM(null, null, 0);
+            RoomVM currentRoom = new RoomVM(null, 0);
 
             for(int row = 0; row < rowCount; row++)
             {

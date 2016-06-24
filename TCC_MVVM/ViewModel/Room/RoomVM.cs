@@ -74,7 +74,7 @@ namespace TCC_MVVM.ViewModel.Room
         /// <param name="RoomNumber">
         /// The number of this room
         /// </param>
-        public RoomVM(string ExcelFilePath, string RoomName, int RoomNumber = 0)
+        public RoomVM(string RoomName, int RoomNumber = 0)
         {
             InitializeCommands();
 

@@ -4,12 +4,11 @@ using PropertyChanged;
 
 namespace TCC_MVVM.Model
 {
-    /// <summary>
-    /// Job Model represents the information to construct a job
-    /// </summary>
     [ImplementPropertyChanged]
     public class Job : INotifyPropertyChanged, IDataErrorInfo
     {
+        // Contact Information Variables
+        //======================================
         public string FirstName { get; set; } = "Tyler";
         public string LastName { get; set; } = "Holstead";
         public string PhoneNumber { get; set; } = "(920) 857-4544";
@@ -19,14 +18,20 @@ namespace TCC_MVVM.Model
         public string MailingCity { get; set; } = "De Pere";
         public string MailingState { get; set; } = "WI";
         public string MailingZip { get; set; } = "54115";
+
+        // Premise Information Variables
+        //======================================
         public string PremiseAddress01 { get; set; }
         public string PremiseAddress02 { get; set; }
         public string PremiseCity { get; set; }
         public string PremiseState { get; set; }
         public string PremiseZip { get; set; }
-        public int NumRooms { get; set; } = 1;
+        public string[] ProjectType { get; set; } = { "New Construction", "Remodel", "Other" };
         public double Distance { get; set; }
-        public string ExcelAppPath { get; set; } = @"C:\\Users\\tyhol\\Downloads\\OneDrive-2016-05-14\\Item Inventory - The Closet Company.xlsx";
+
+        // Job Information Variables
+        //======================================
+        public int NumRooms { get; set; } = 1;
         public string ProposalOutputPath { get; set; }
         public string ItemListOutputPath { get; set; }
 
@@ -67,7 +72,6 @@ namespace TCC_MVVM.Model
                 case "PremiseState": PremiseState = PropertyValue; break;
                 case "PremiseZip": PremiseZip = PropertyValue; break;
                 case "Distance": Distance = double.Parse(PropertyValue); break;
-                case "ExcelAppPath": ExcelAppPath = PropertyValue; break;
             }
         }
 
@@ -100,7 +104,6 @@ namespace TCC_MVVM.Model
                 case "PremiseZip": return PremiseZip;
                 case "NumRooms": return NumRooms;
                 case "Distance": return Distance;
-                case "ExcelAppPath": return ExcelAppPath;
             }
             return null;
         }
@@ -156,14 +159,6 @@ namespace TCC_MVVM.Model
             }
         }
 
-        private string ValidateExcelAppPath()
-        {
-            if (string.IsNullOrEmpty(ExcelAppPath))
-                return "A path to an Excel file is needed";
-            else
-                return null;
-        }
-
         private string ValidateNumRooms()
         {
             if (NumRooms < 1)
@@ -211,7 +206,6 @@ namespace TCC_MVVM.Model
             switch (propertyName)
             {
                 case "NumRooms": error = ValidateNumRooms(); break;
-                case "ExcelAppPath": error = ValidateExcelAppPath(); break;
                 case "FirstName": error = ValidateFirstName(); break;
                 case "LastName": error = ValidateLastName(); break;
                 case "MailingAddress01": error = ValidateMailingAddress(); break;

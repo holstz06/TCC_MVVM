@@ -22,9 +22,7 @@ namespace TCC_MVVM.ViewModel.Job
 
         public void Execute(object parameter)
         {
-            OpenFileDialog FileDialog = new OpenFileDialog();
-            FileDialog.ShowDialog();
-            ViewModel.Job.ExcelAppPath = FileDialog.FileName;
+
         }
     }
 }

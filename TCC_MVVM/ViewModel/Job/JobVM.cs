@@ -75,7 +75,7 @@ namespace TCC_MVVM.ViewModel.Job
             bool HasRoomName = false;
             if (RoomName != null) HasRoomName = true;
 
-            RoomVM roomVM = new RoomVM(Job.ExcelAppPath, HasRoomName ? RoomName : "Room" + CurrentRoomNumber.ToString(), CurrentRoomNumber);
+            RoomVM roomVM = new RoomVM(HasRoomName ? RoomName : "Room" + CurrentRoomNumber.ToString(), CurrentRoomNumber);
             roomVM.PropertyChanged += RoomPropertyChanged;
 
             Rooms.Add(roomVM);
