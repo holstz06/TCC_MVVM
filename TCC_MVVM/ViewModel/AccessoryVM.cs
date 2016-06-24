@@ -122,6 +122,11 @@ namespace TCC_MVVM.ViewModel
                         accessory.WidthValues = new ObservableCollection<string>(GetWidthValues(accessory.Name, accessory.Color));
                         accessory.HeightValues = new ObservableCollection<string>(GetHeightValues(accessory.Name, accessory.Color));
                         break;
+                    case "Price":
+                        TotalPrice = 0;
+                        foreach (Accessory accessoryModel in Accessories)
+                            TotalPrice += accessoryModel.Price;
+                        break;
                 }
                 if(!e.PropertyName.Equals("Price")
                     && !string.IsNullOrEmpty(accessory.Color)

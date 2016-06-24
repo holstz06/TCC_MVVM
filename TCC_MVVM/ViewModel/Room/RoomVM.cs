@@ -301,8 +301,8 @@ namespace TCC_MVVM.ViewModel.Room
                 TotalPrice +=
                     StripViewModel.TotalPrice +
                     PanelViewModel.TotalPrice +
-                    ShelfViewModel.TotalPrice;
-                    //AccessoryViewModel.TotalPrice;
+                    ShelfViewModel.TotalPrice +
+                    AccessoryViewModel.TotalPrice;
             }
         }
         #endregion
