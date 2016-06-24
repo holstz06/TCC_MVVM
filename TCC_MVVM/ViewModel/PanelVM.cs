@@ -14,29 +14,12 @@ namespace TCC_MVVM.ViewModel
     [ImplementPropertyChanged]
     public class PanelVM : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Data table of all the panel data (items)
-        /// </summary>
+        // Data Tables Vairables
+        //================================
         private DataTable PanelData;
-
-        /// <summary>
-        /// Data table of height values for panels
-        /// </summary>
         private DataTable PanelHeightData;
-
-        /// <summary>
-        /// Data table of depth values for panels
-        /// </summary>
         private DataTable ShelvingDepthData;
-
-        /// <summary>
-        /// Data table of wood values and prices
-        /// </summary>
         private DataTable WoodData;
-
-        /// <summary>
-        /// Data table of banding values and prices
-        /// </summary>
         private DataTable BandingData;
 
         /// <summary>
@@ -101,12 +84,10 @@ namespace TCC_MVVM.ViewModel
         /// Dictionary of wood values
         /// </returns>
         private Dictionary<string, decimal> GetWoodValues()
-        {
-            return WoodData.AsEnumerable()
+            => WoodData.AsEnumerable()
                 .ToDictionary(
                     row => row.Field<string>("WoodColor"),
                     row => decimal.Parse(row.Field<string>("WoodPrice")));
-        }
 
         /// <summary>
         /// Retrieves a dictionary of banding colors and price
@@ -117,12 +98,10 @@ namespace TCC_MVVM.ViewModel
         /// Dictionary of banding values
         /// </returns>
         private Dictionary<string, decimal> GetBandingValues()
-        {
-            return BandingData.AsEnumerable()
+            => BandingData.AsEnumerable()
                 .ToDictionary(
                     row => row.Field<string>("BandingColor"),
                     row => decimal.Parse(row.Field<string>("BandingPrice")));
-        }
 
         /// <summary>
         /// Retrieves a list of wood color values.
@@ -157,65 +136,25 @@ namespace TCC_MVVM.ViewModel
         /// </summary>
         public PanelVM()
         {
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("PanelData.xml");
-                PanelData = dataset.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("No panel items could be gathers from the xml.");
-                MessageBox.Show(e.ToString());
-            }
+            DataSet dataset = new DataSet();
+            dataset.ReadXml("PanelData.xml");
+            PanelData = dataset.Tables[0];
 
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("PanelHeightData.xml");
-                PanelHeightData = dataset.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("No panel height values could be loaded from the xml.");
-                MessageBox.Show(e.ToString());
-            }
+            dataset = new DataSet();
+            dataset.ReadXml("PanelHeightData.xml");
+            PanelHeightData = dataset.Tables[0];
 
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("ShelvingDepthData.xml");
-                ShelvingDepthData = dataset.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("No panel depth values could be loaded from the xml.");
-                MessageBox.Show(e.ToString());
-            }
+            dataset = new DataSet();
+            dataset.ReadXml("ShelvingDepthData.xml");
+            ShelvingDepthData = dataset.Tables[0];
 
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("WoodData.xml");
-                WoodData = dataset.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("No wood values could be loaded from the xml.");
-                MessageBox.Show(e.ToString());
-            }
+            dataset = new DataSet();
+            dataset.ReadXml("WoodData.xml");
+            WoodData = dataset.Tables[0];
 
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("BandingData.xml");
-                BandingData = dataset.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("No banding values could be loaded from the xml.");
-                MessageBox.Show(e.ToString());
-            }
+            dataset = new DataSet();
+            dataset.ReadXml("BandingData.xml");
+            BandingData = dataset.Tables[0];
 
             // Initialize the panel items
             PanelItems = GetPanelItems();
