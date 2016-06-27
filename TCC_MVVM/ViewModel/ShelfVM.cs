@@ -14,50 +14,26 @@ namespace TCC_MVVM.ViewModel
     [ImplementPropertyChanged]
     public class ShelfVM : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Data table that stores the shelf items data
-        /// </summary>
+        // Data Tables Vairables
+        //================================
         private DataTable ShelfData;
-
-        /// <summary>
-        /// Data table that stores the shelving depth values
-        /// </summary>
         private DataTable ShelvingDepthData;
-
-        /// <summary>
-        /// Data table that stores the shelf width values
-        /// </summary>
         private DataTable ShelfWidthData;
-
-        /// <summary>
-        /// Data table that stores the wood data values
-        /// </summary>
         private DataTable WoodData;
-
-        /// <summary>
-        /// Data table that stores the banding data values
-        /// </summary>
         private DataTable BandingData;
-
-        /// <summary>
-        /// Data table that stores the shelf type data
-        /// </summary>
         private DataTable ShelfTypeData;
 
-        /// <summary>
-        /// A collection of shelves
-        /// </summary>
+        // Collections Variables
+        //=================================
         public ObservableCollection<Shelf> Shelves { get; set; } = new ObservableCollection<Shelf>();
-
-        // Shelf Items Lists
-        //======================================
         private List<CamPost> CamPosts { get; set; } = new List<CamPost>();
         private List<Fence> Fences { get; set; } = new List<Fence>();
         private List<ShelfType> ShelfTypes { get; set; } = new List<ShelfType>();
+        private Dictionary<string, decimal> Woodvalues;
+        private Dictionary<string, decimal> BandingValues;
 
-        /// <summary>
-        /// The total price of all the shelves in the collection (rounded to 2 decimal places)
-        /// </summary>
+        // Total Price of all shelves
+        //=================================
         private decimal _TotalPrice;
         public decimal TotalPrice
         {
@@ -65,9 +41,8 @@ namespace TCC_MVVM.ViewModel
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
 
-        /// <summary>
-        /// Command to remove a shelf from the collection
-        /// </summary>
+        // Commands
+        //=================================
         private ICommand _RemoveCommand;
         public ICommand RemoveCommand
         {
@@ -113,6 +88,8 @@ namespace TCC_MVVM.ViewModel
             CamPosts = GetCamPosts();
             Fences = GetFences();
             ShelfTypes = GetShelfTypes();
+            Woodvalues = GetWoodValues();
+            BandingValues = GetBandingValues();
         }
 
         /// <summary>
@@ -348,6 +325,14 @@ namespace TCC_MVVM.ViewModel
                     shelf.CamPostPrice = campost.Price;
                 }
             }
+
+            // Set the value of the wood (color and price)
+            shelf.Wood.Color = shelf.Color;
+            shelf.Wood.Price = Woodvalues[shelf.Color];
+
+            // Set the value of the banding (color and price)
+            shelf.Banding.Color = shelf.Color;
+            shelf.Banding.Price = BandingValues[shelf.Color];
         }
 
         /// <summary>

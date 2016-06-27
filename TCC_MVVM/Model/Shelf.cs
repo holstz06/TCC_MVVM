@@ -149,14 +149,6 @@ namespace TCC_MVVM.Model
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-            if (propertyName.Equals("Color") && !string.IsNullOrEmpty(Color))
-            {
-                Wood.Color = Color;
-                Wood.Price = Wood.WoodValues[Color];
-                Banding.Color = Color;
-                Banding.Price = Banding.BandingValues[Color];
-            }
-
             if (!string.IsNullOrEmpty(Color)
                 && !string.IsNullOrEmpty(SizeWidth)
                 && !string.IsNullOrEmpty(SizeDepth)
