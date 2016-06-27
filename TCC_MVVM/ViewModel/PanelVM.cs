@@ -22,9 +22,15 @@ namespace TCC_MVVM.ViewModel
         private DataTable WoodData;
         private DataTable BandingData;
 
-        /// <summary>
-        /// The total price of all the panels
-        /// </summary>
+        // Collections Variables
+        //=================================
+        public ObservableCollection<Panel> Panels { get; set; } = new ObservableCollection<Panel>();
+        private List<PanelItem> PanelItems { get; set; } = new List<PanelItem>();
+        private Dictionary<string, decimal> Woodvalues;
+        private Dictionary<string, decimal> BandingValues;
+
+        // Total Price of all panels
+        //=================================
         private decimal _TotalPrice;
         public decimal TotalPrice
         {
@@ -32,19 +38,8 @@ namespace TCC_MVVM.ViewModel
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
 
-        /// <summary>
-        /// The collection of panels
-        /// </summary>
-        public ObservableCollection<Panel> Panels { get; set; } = new ObservableCollection<Panel>();
-
-        /// <summary>
-        /// A list of panel items
-        /// </summary>
-        private List<PanelItem> PanelItems { get; set; } = new List<PanelItem>();
-
-        /// <summary>
-        /// Command to remove panel from collection
-        /// </summary>
+        // Commands
+        //=================================
         private ICommand _RemoveCommand;
         public ICommand RemoveCommand
         {
@@ -54,6 +49,37 @@ namespace TCC_MVVM.ViewModel
                     _RemoveCommand = new CollectionChangeCommand(param => Remove((Panel)param));
                 return _RemoveCommand;
             }
+        }
+
+        /// <summary>
+        /// Create a new instance of an Panel View Model
+        /// </summary>
+        public PanelVM()
+        {
+            DataSet dataset = new DataSet();
+            dataset.ReadXml("PanelData.xml");
+            PanelData = dataset.Tables[0];
+
+            dataset = new DataSet();
+            dataset.ReadXml("PanelHeightData.xml");
+            PanelHeightData = dataset.Tables[0];
+
+            dataset = new DataSet();
+            dataset.ReadXml("ShelvingDepthData.xml");
+            ShelvingDepthData = dataset.Tables[0];
+
+            dataset = new DataSet();
+            dataset.ReadXml("WoodData.xml");
+            WoodData = dataset.Tables[0];
+
+            dataset = new DataSet();
+            dataset.ReadXml("BandingData.xml");
+            BandingData = dataset.Tables[0];
+
+            // Initialize the panel items
+            PanelItems = GetPanelItems();
+            Woodvalues = GetWoodValues();
+            BandingValues = GetBandingValues();
         }
 
         /// <summary>
@@ -131,34 +157,7 @@ namespace TCC_MVVM.ViewModel
         /// </returns>
         private List<string> GetDepthValues() => ShelvingDepthData.AsEnumerable().Select(row => row.Field<string>("ShelvingDepth")).Distinct().ToList();
 
-        /// <summary>
-        /// Create a new instance of an Panel View Model
-        /// </summary>
-        public PanelVM()
-        {
-            DataSet dataset = new DataSet();
-            dataset.ReadXml("PanelData.xml");
-            PanelData = dataset.Tables[0];
-
-            dataset = new DataSet();
-            dataset.ReadXml("PanelHeightData.xml");
-            PanelHeightData = dataset.Tables[0];
-
-            dataset = new DataSet();
-            dataset.ReadXml("ShelvingDepthData.xml");
-            ShelvingDepthData = dataset.Tables[0];
-
-            dataset = new DataSet();
-            dataset.ReadXml("WoodData.xml");
-            WoodData = dataset.Tables[0];
-
-            dataset = new DataSet();
-            dataset.ReadXml("BandingData.xml");
-            BandingData = dataset.Tables[0];
-
-            // Initialize the panel items
-            PanelItems = GetPanelItems();
-        }
+        
 
         /// <summary>
         /// Add a new panel to the collection
@@ -242,14 +241,24 @@ namespace TCC_MVVM.ViewModel
         /// <summary>
         /// Creates a new listener so the observer of this object can see this property
         /// </summary>
-        void Panel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        void Panel_PropertyChanged(object SenderPanel, PropertyChangedEventArgs e)
         {
+            Panel sender = (Panel)SenderPanel;
             switch(e.PropertyName)
             {
                 case "Price":
                     TotalPrice = 0;
                     foreach (Panel panel in Panels)
                         TotalPrice += panel.Price;
+                    break;
+                case "Color":
+                    // Set the value of the wood (color and price)
+                    sender.Wood.Color = sender.Color;
+                    sender.Wood.Price = Woodvalues[sender.Color];
+
+                    // Set the value of the banding (color and price)
+                    sender.Banding.Color = sender.Color;
+                    sender.Banding.Price = BandingValues[sender.Color];
                     break;
             }
         }
