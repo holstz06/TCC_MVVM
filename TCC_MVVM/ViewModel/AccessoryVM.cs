@@ -90,10 +90,12 @@ namespace TCC_MVVM.ViewModel
         /// Remove accessory from the collection
         /// </summary>
         /// <param name="AccessoryModel"></param>
-        public void Remove(Accessory AccessoryModel)
+        public void Remove(Accessory Accessory)
         {
-            if (Accessories.Contains(AccessoryModel))
-                Accessories.Remove(AccessoryModel);
+            // Remove the price before you remove the accessory, otherwise the price will stay the same
+            TotalPrice -= Accessory.Price;
+            if (Accessories.Contains(Accessory))
+                Accessories.Remove(Accessory);
         }
 
         #region INotifyPropertyChanged Members

@@ -98,10 +98,12 @@ namespace TCC_MVVM.ViewModel
         /// <param name="ShelfModel">
         /// The shelf to remove
         /// </param>
-        public void Remove(Shelf ShelfModel)
+        public void Remove(Shelf Shelf)
         {
-            if (Shelves.Contains(ShelfModel))
-                Shelves.Remove(ShelfModel);
+            // Remove the price before you remove the shelf, otherwise the price will stay the same
+            TotalPrice -= Shelf.Price;
+            if (Shelves.Contains(Shelf))
+                Shelves.Remove(Shelf);
         }
 
         /// <summary>

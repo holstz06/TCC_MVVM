@@ -198,6 +198,8 @@ namespace TCC_MVVM.ViewModel
         /// </param>
         public void Remove(Panel Panel)
         {
+            // Remove the price before you remove the panel, otherwise the price will stay the same
+            TotalPrice -= Panel.Price;
             if (Panels.Contains(Panel))
                 Panels.Remove(Panel);
         }

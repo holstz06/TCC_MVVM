@@ -173,10 +173,12 @@ namespace TCC_MVVM.ViewModel
         /// <param name="StripModel">
         /// The strip to remove from the collection
         /// </param>
-        public void Remove(Strip StripModel)
+        public void Remove(Strip Strip)
         {
-            if (Strips.Contains(StripModel))
-                Strips.Remove(StripModel);
+            // Remove the price before you remove the strip, otherwise the price will stay the same
+            TotalPrice -= Strip.Price;
+            if (Strips.Contains(Strip))
+                Strips.Remove(Strip);
         }
 
         /// <summary>
