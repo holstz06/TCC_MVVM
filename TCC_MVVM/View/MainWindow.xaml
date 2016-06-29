@@ -47,14 +47,12 @@
                     <ColumnDefinition Width="1.5*" />
                     <ColumnDefinition Width="1.0*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" VerticalAlignment="Center" Foreground="#eee" HorizontalAlignment="Left" FontWeight="Bold" Margin="10,0,0,0" FontSize="14">
-                    <Run Text="The Closet Company Quote for: " />
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Foreground="#eee" HorizontalAlignment="Left" FontWeight="Bold" Margin="10,0,0,0" FontSize="18">
                     <Run Text="{Binding Job.FirstName}" />
                     <Run Text="{Binding Job.LastName}" />
                     <Run Text=", $" />
                     <Run Text="{Binding TotalPrice}" />
                 </TextBlock>
-                <Button Grid.Column="1" Background="#666" Foreground="#eee" FontWeight="Bold" BorderThickness="0,0,0,0" FontSize="14" Content="Proposals" />
             </Grid>
         </Border>
 
