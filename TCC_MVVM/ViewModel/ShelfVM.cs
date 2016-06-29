@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using PropertyChanged;
 using System;
-using System.Windows;
 
 namespace TCC_MVVM.ViewModel
 {
@@ -41,8 +40,9 @@ namespace TCC_MVVM.ViewModel
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
 
-        // Commands
-        //=================================
+        //====================================================================//
+        //                              COMMANDS                              //
+        //====================================================================//
         private ICommand _RemoveCommand;
         public ICommand RemoveCommand
         {
@@ -53,7 +53,6 @@ namespace TCC_MVVM.ViewModel
                 return _RemoveCommand;
             }
         }
-
 
         /// <summary>
         /// Creates a new instance of the shelf view model
