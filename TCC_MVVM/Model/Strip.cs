@@ -36,7 +36,6 @@ namespace TCC_MVVM.Model
     public class Strip : INotifyPropertyChanged
     {
         public int RoomNumber { get; set; }
-        public int StripNumber { get; set; }
         public double Length { get; set; }
         public string Color { get; set; }
 
@@ -48,12 +47,17 @@ namespace TCC_MVVM.Model
             set { _Price = value; OnPropertyChanged("Price"); }
         }
 
-        public ObservableCollection<string> ColorValues { get; set; }
-            = new ObservableCollection<string>();
-        public ObservableCollection<StripItem> StripItems { get; set; }
-            = new ObservableCollection<StripItem>();
-        public List<StripItem> StripItemList { get; set; }
-            = new List<StripItem>();
+        public ObservableCollection<string> ColorValues { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<StripItem> StripItems { get; set; } = new ObservableCollection<StripItem>();
+        public List<StripItem> StripItemList { get; set; } = new List<StripItem>();
+
+        /// <summary>
+        /// Creates a new instance of a strip
+        /// </summary>
+        public Strip()
+        {
+
+        }
 
         /// <summary>
         /// Creates a new instance of a strip
@@ -62,20 +66,12 @@ namespace TCC_MVVM.Model
         /// The room number this strip belongs to
         /// </param>
         /// <param name="Color">
-        /// The color this strip belongs to
+        /// The color of the strip
         /// </param>
         public Strip(int RoomNumber, string Color = null)
         {
             this.RoomNumber = RoomNumber;
             this.Color = Color;
-        }
-
-        /// <summary>
-        /// Creates a new instnace of a strip
-        /// </summary>
-        public Strip()
-        {
-
         }
 
         /// <summary>
@@ -92,9 +88,8 @@ namespace TCC_MVVM.Model
         }
         
         /// <summary>
-        /// Sets the price of the strip by adding all the sub item prices
-        /// 
-        /// * Note: Price is rounded to two deciaml places
+        /// Sets the price of the strip by adding all the subitem prices.
+        /// These include the wall rail and cover strip
         /// </summary>
         private void SetPrice()
         {

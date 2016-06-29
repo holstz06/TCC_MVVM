@@ -270,7 +270,7 @@ namespace TCC_MVVM.ViewModel.Room
                      break;
 
                 case Model.ShelvingType.Strip:
-                    StripViewModel.Add(Room.RoomNumber, StripIndex++, IsStripSameColor ? Room.StripColor : null);
+                    StripViewModel.Add(Room.RoomNumber, IsStripSameColor ? Room.StripColor : null);
                     break;
 
                 case Model.ShelvingType.Shelf:
