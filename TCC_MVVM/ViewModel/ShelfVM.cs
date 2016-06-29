@@ -133,6 +133,8 @@ namespace TCC_MVVM.ViewModel
 
             shelf.PropertyChanged += Shelf_PropertyChanged;
 
+            if(Color != null)
+                Color_PropertyChanged(shelf);
             Shelves.Add(shelf);
         }
 

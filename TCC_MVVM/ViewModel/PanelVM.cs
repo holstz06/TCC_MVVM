@@ -183,10 +183,9 @@ namespace TCC_MVVM.ViewModel
                 PanelItemsList = GetPanelItems()
             };
 
-            panel.Wood.WoodValues = GetWoodValues();
-            panel.Banding.BandingValues = GetBandingValues();
             panel.PropertyChanged += Panel_PropertyChanged;
-
+            if(Color != null)
+                Color_PropertyChange(panel);
             Panels.Add(panel);
         }
 
@@ -254,15 +253,20 @@ namespace TCC_MVVM.ViewModel
                         TotalPrice += panel.Price;
                     break;
                 case "Color":
-                    // Set the value of the wood (color and price)
-                    sender.Wood.Color = sender.Color;
-                    sender.Wood.Price = Woodvalues[sender.Color];
-
-                    // Set the value of the banding (color and price)
-                    sender.Banding.Color = sender.Color;
-                    sender.Banding.Price = BandingValues[sender.Color];
+                    Color_PropertyChange(sender);
                     break;
             }
+        }
+
+        void Color_PropertyChange(Panel panel)
+        {
+            // Set the value of the wood (color and price)
+            panel.Wood.Color = panel.Color;
+            panel.Wood.Price = Woodvalues[panel.Color];
+
+            // Set the value of the banding (color and price)
+            panel.Banding.Color = panel.Color;
+            panel.Banding.Price = BandingValues[panel.Color];
         }
         #endregion
     }
