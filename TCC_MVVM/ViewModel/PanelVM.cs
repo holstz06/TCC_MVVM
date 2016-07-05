@@ -189,6 +189,16 @@ namespace TCC_MVVM.ViewModel
             Panels.Add(panel);
         }
 
+        public void Add(Panel panel)
+        {
+            panel.ColorValues = new ObservableCollection<string>(GetColorValues());
+            panel.HeightValues = new ObservableCollection<string>(GetHeightValues());
+            panel.DepthValues = new ObservableCollection<string>(GetDepthValues());
+            panel.PanelItemsList = GetPanelItems();
+            panel.PropertyChanged += Panel_PropertyChanged;
+            Panels.Add(panel);
+        }
+
         /// <summary>
         /// Removes a panel from the collection
         /// </summary>

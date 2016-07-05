@@ -9,17 +9,11 @@ namespace TCC_MVVM.Model
     [ImplementPropertyChanged]
     public class Room : INotifyPropertyChanged
     {
-        /// <summary>
-        /// The types of room that a closet could be
-        /// </summary>
-        public enum RoomTypes { ReachIn, WalkIn, Garage, Pantry, Office, MurphyBed, Laundry }
-
         public int RoomNumber { get; set; }
         public string RoomName { get; set; }
         public string RoomColor { get; set; }
         public string StripColor { get; set; }
         public string ShelvingDepth { get; set; }
-        public RoomTypes RoomType { get; set; }
 
         public ObservableCollection<string> WoodColorValues { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> StripColorValues { get; set; } = new ObservableCollection<string>();
@@ -27,7 +21,15 @@ namespace TCC_MVVM.Model
 
         public DataTable Data { get; set; }
 
-        public Room(string RoomName = null, int RoomNumber = 0)
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public Room()
+        {
+
+        }
+
+        public Room(string RoomName, int RoomNumber)
         {
             this.RoomName = RoomName;
             this.RoomNumber = RoomNumber;

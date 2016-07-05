@@ -23,6 +23,7 @@ namespace TCC_MVVM.ViewModel.Job
         public ICommand CreateJobCommand { get; private set; }
         public ICommand CreateProposalCommand { get; private set; }
         public ICommand SamePremiseAddressCommand { get; private set; }
+        public ICommand LoadCommand { get; private set; }
 
         /// <summary>
         /// Set the premise address to the mailing address
@@ -60,6 +61,7 @@ namespace TCC_MVVM.ViewModel.Job
             CreateJobCommand = new CreateJobCommand(this);
             SamePremiseAddressCommand = new SamePremiseAddressCommand(this);
             CreateProposalCommand = new CreateProposalCommand(this);
+            LoadCommand = new LoadCommand(this);
 
             //AddRoom("Master Bedroom");
         }
@@ -88,8 +90,10 @@ namespace TCC_MVVM.ViewModel.Job
         /// </summary>
         public void CreateProposal()
         {
-            Proposal proposal = new Proposal(this) { ItemListPath = "C:\\Users\\tyhol\\Desktop\\Proposal1.xlsx" };
-            proposal.CreateItemList();
+            SaveFile savefile = new SaveFile();
+            savefile.Save(this);
+            //Proposal proposal = new Proposal(this) { ItemListPath = "C:\\Users\\tyhol\\Desktop\\Proposal1.xlsx" };
+            //proposal.CreateItemList();
         }
 
         #region INotifyPropertyChanged Members

@@ -7,18 +7,20 @@ namespace TCC_MVVM.Model
     [ImplementPropertyChanged]
     public class Job : INotifyPropertyChanged, IDataErrorInfo
     {
+        //======================================
         // Contact Information Variables
         //======================================
         public string FirstName { get; set; } = "Tyler";
         public string LastName { get; set; } = "Holstead";
         public string PhoneNumber { get; set; } = "(920) 857-4544";
-        public string Email { get; set; } = "holstead@gmail.com";
+        public string Email { get; set; }
         public string MailingAddress01 { get; set; } = "1471 Navigator Way";
-        public string MailingAddress02 { get; set; } = "Unit 91";
-        public string MailingCity { get; set; } = "De Pere";
-        public string MailingState { get; set; } = "WI";
-        public string MailingZip { get; set; } = "54115";
+        public string MailingAddress02 { get; set; }
+        public string MailingCity { get; set; }
+        public string MailingState { get; set; }
+        public string MailingZip { get; set; }
 
+        //======================================
         // Premise Information Variables
         //======================================
         public string PremiseAddress01 { get; set; }
@@ -26,9 +28,11 @@ namespace TCC_MVVM.Model
         public string PremiseCity { get; set; }
         public string PremiseState { get; set; }
         public string PremiseZip { get; set; }
-        public string[] ProjectType { get; set; } = { "New Construction", "Remodel", "Other" };
+        public string[] ProjectTypeValues { get; set; } = { "New Construction", "Remodel", "Other" };
+        public string ProjectType { get; set; }
         public double Distance { get; set; }
 
+        //======================================
         // Job Information Variables
         //======================================
         public int NumRooms { get; set; } = 1;
@@ -40,9 +44,22 @@ namespace TCC_MVVM.Model
         /// </summary>
         public readonly string[] Properties =
         {
-            "FistName","LastName","PhoneNumber","Email","MailingAddress01","MailingAddress02",
-            "MailingCity","MailingState","MailingZip","PremiseAddress01","PremiseAddress02",
-            "PremiseCity","PremiseState","PremiseZip","NumRooms","Distance","ExcelAppPath"
+            "FirstName",
+            "LastName",
+            "PhoneNumber",
+            "Email",
+            "MailingAddress01",
+            "MailingAddress02",
+            "MailingCity",
+            "MailingState",
+            "MailingZip",
+            "PremiseAddress01",
+            "PremiseAddress02",
+            "PremiseCity",
+            "PremiseState",
+            "PremiseZip",
+            "NumRooms",
+            "Distance"
         };
 
         /// <summary>
@@ -60,6 +77,7 @@ namespace TCC_MVVM.Model
             {
                 case "FirstName": FirstName = PropertyValue; break;
                 case "LastName": LastName = PropertyValue; break;
+                case "PhoneNumber": PhoneNumber = PropertyValue; break;
                 case "NumRooms": NumRooms = int.Parse(PropertyValue); break;
                 case "MailingAddress01": MailingAddress01 = PropertyValue; break;
                 case "MailingAddress02": MailingAddress02 = PropertyValue; break;
@@ -88,7 +106,7 @@ namespace TCC_MVVM.Model
         {
             switch(PropertyName)
             {
-                case "FistName": return FirstName;
+                case "FirstName": return FirstName;
                 case "LastName": return LastName;
                 case "PhoneNumber": return PhoneNumber;
                 case "Email": return Email;

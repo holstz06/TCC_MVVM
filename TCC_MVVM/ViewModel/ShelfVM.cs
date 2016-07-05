@@ -138,6 +138,16 @@ namespace TCC_MVVM.ViewModel
             Shelves.Add(shelf);
         }
 
+        public void Add(Shelf shelf)
+        {
+            shelf.ColorValues = new ObservableCollection<string>(GetColorValues());
+            shelf.WidthValues = new ObservableCollection<string>(GetWidthValues());
+            shelf.DepthValues = new ObservableCollection<string>(GetDepthValues());
+            shelf.ShelfTypeValues = new ObservableCollection<ShelfType>(GetShelfTypes());
+            shelf.PropertyChanged += Shelf_PropertyChanged;
+            Shelves.Add(shelf);
+        }
+
         /// <summary>
         /// Retrieves a list of shelf types
         /// </summary>
