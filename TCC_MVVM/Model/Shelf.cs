@@ -48,27 +48,31 @@ namespace TCC_MVVM.Model
     [ImplementPropertyChanged]
     public class Shelf : INotifyPropertyChanged
     {
+        //========================================
         // Shelving variables
         //========================================
-        private int RoomNumber { get; set; }
+        public int RoomNumber { get; set; }
         public int ShelfNumber { get; set; }
         public int Quantity { get; set; }
         public string Color { get; set; }
         public string SizeDepth { get; set; }
         public string SizeWidth { get; set; }
 
+        //========================================
         // Cam Post Variables
         //========================================
         public string CamPostColor { get; set; }
         public int CamPostQuantity { get; set; }
         public decimal CamPostPrice { get; set; }
 
+        //========================================
         // Fence Post Variables
         //========================================
         public bool HasFence { get; set; }
         public string FenceColor { get; set; }
         public decimal FencePrice { get; set; }
 
+        //========================================
         // Shelf Price
         //========================================
         private decimal _Price;
@@ -78,19 +82,28 @@ namespace TCC_MVVM.Model
             set { _Price = value; OnPropertyChanged("Price"); }
         }
 
+        //========================================
         // Dependancy Variables
         //========================================
         public Wood Wood { get; set; } = new Wood();
         public Banding Banding { get; set; } = new Banding();
         public ShelfType ShelfType { get; set; } = new ShelfType();
 
-
+        //========================================
         // Collection Variables
         //========================================
         public ObservableCollection<string> ColorValues { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> WidthValues { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> DepthValues { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<ShelfType> ShelfTypeValues { get; set; } = new ObservableCollection<ShelfType>();
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public Shelf()
+        {
+
+        }
 
         /// <summary>
         /// Creates a new instance of a shelf
@@ -110,14 +123,6 @@ namespace TCC_MVVM.Model
             this.RoomNumber = RoomNumber;
             this.Color = Color;
             this.SizeDepth = SizeDepth;
-        }
-
-        /// <summary>
-        /// Sets the campost and fence information
-        /// </summary>
-        private void SetShelfItem()
-        {
-           
         }
 
         /// <summary>
@@ -148,12 +153,6 @@ namespace TCC_MVVM.Model
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-            if (!string.IsNullOrEmpty(Color)
-                && !string.IsNullOrEmpty(SizeWidth)
-                && !string.IsNullOrEmpty(SizeDepth)
-                && !string.IsNullOrEmpty(ShelfType.Name))
-                SetShelfItem();
 
             if (!propertyName.Equals("Price")
                 && !string.IsNullOrEmpty(Color)

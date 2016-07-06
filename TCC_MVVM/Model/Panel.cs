@@ -149,6 +149,9 @@ namespace TCC_MVVM.Model
         }
         #endregion
 
+        /// <summary>
+        /// The display text for this panel
+        /// </summary>
         private string _DisplayName;
         public string DisplayName
         {

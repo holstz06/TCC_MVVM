@@ -15,35 +15,30 @@ namespace TCC_MVVM.ViewModel
     [ImplementPropertyChanged]
     public class StripVM : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Data table that contains the items that belong to strip shelving
-        /// </summary>
+        // Data Table Variables
+        //=====================================
         private DataTable StripData;
-
-        /// <summary>
-        /// Data table that contains colors of the strip
-        /// </summary>
         private DataTable StripColorData;
 
         /// <summary>
         /// A collection of strip
         /// </summary>
-        public ObservableCollection<Strip> Strips { get; set; }
-            = new ObservableCollection<Strip>();
+        public ObservableCollection<Strip> Strips { get; set; } = new ObservableCollection<Strip>();
 
         /// <summary>
-        /// The total price of the collection of strip
+        /// The total price of the all the strip in the collection
         /// </summary>
+        private decimal _TotalPrice;
         public decimal TotalPrice
         {
             get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
-        private decimal _TotalPrice;
 
         /// <summary>
-        /// Command to remove strip from the collection
+        /// Command to remove a strip from the collection
         /// </summary>
+        private ICommand _RemoveCommand;
         public ICommand RemoveCommand
         {
             get
@@ -53,47 +48,19 @@ namespace TCC_MVVM.ViewModel
                 return _RemoveCommand;
             }
         }
-        private ICommand _RemoveCommand;
 
         /// <summary>
         /// Create new instance of strip view model
         /// </summary>
         public StripVM()
         {
-            /*
-             * Attempt to retrieve information from the StripData.xml
-             * If no information could be retrieved, do nothing but return
-             * the error message.
-             */
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("StripData.xml");
-                StripData = dataset.Tables[0];
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("No strip items could be gathers from the xml.");
-                MessageBox.Show(e.ToString());
-            }
-            
-            /*
-             * Attempt to retrieve information from the StripColorData.xml
-             * 
-             * If no information could be retrieved, load a set of default color
-             * values and return the error message.
-             */
-            try
-            {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("StripColorData.xml");
-                StripColorData = dataset.Tables[0];
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("No strip colors could be loaded from the xml.");
-                MessageBox.Show(e.ToString());
-            }
+            DataSet dataset = new DataSet();
+            dataset.ReadXml("StripData.xml");
+            StripData = dataset.Tables[0];
+
+            dataset = new DataSet();
+            dataset.ReadXml("StripColorData.xml");
+            StripColorData = dataset.Tables[0];
         }
 
         /// <summary>
@@ -120,10 +87,7 @@ namespace TCC_MVVM.ViewModel
         /// <returns>
         /// Return a list of color values
         /// </returns>
-        private List<string> GetStripColors()
-        {
-            return StripColorData.AsEnumerable().Select(row => row.Field<string>("StripColor")).Distinct().ToList();
-        }
+        private List<string> GetStripColors() => StripColorData.AsEnumerable().Select(row => row.Field<string>("StripColor")).Distinct().ToList();
 
         /// <summary>
         /// Sets the properties of a new strip then adds it to the collection
@@ -137,7 +101,7 @@ namespace TCC_MVVM.ViewModel
         /// <param name="Color">
         /// The color of this strip
         /// </param>
-        public void Add(int RoomNumber, int StripNumber, string Color = null)
+        public void Add(int RoomNumber, string Color = null)
         {
             bool HasColor = false;
             if(Color != null) HasColor = true;
@@ -173,10 +137,12 @@ namespace TCC_MVVM.ViewModel
         /// <param name="StripModel">
         /// The strip to remove from the collection
         /// </param>
-        public void Remove(Strip StripModel)
+        public void Remove(Strip Strip)
         {
-            if (Strips.Contains(StripModel))
-                Strips.Remove(StripModel);
+            // Remove the price before you remove the strip, otherwise the price will stay the same
+            TotalPrice -= Strip.Price;
+            if (Strips.Contains(Strip))
+                Strips.Remove(Strip);
         }
 
         /// <summary>
@@ -194,13 +160,6 @@ namespace TCC_MVVM.ViewModel
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Notifies the observers of change, xalled by the Set accessor of a property to 
-        /// </summary>
-        /// <param name="propertyName">
-        /// The name of the property
-        /// </param>
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -211,11 +170,14 @@ namespace TCC_MVVM.ViewModel
         /// </summary>
         void Strip_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Price")
+            Strip senderStrip = (Strip)sender;
+            switch(e.PropertyName)
             {
-                TotalPrice = 0;
-                foreach (Strip strip in Strips)
-                    TotalPrice += strip.Price;
+                case "Price":
+                    TotalPrice = 0;
+                    foreach (Strip strip in Strips)
+                        TotalPrice += strip.Price;
+                    break;
             }
         }
         #endregion

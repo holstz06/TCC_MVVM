@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using PropertyChanged;
 using System;
-using System.Windows;
 
 namespace TCC_MVVM.ViewModel
 {
@@ -41,8 +40,9 @@ namespace TCC_MVVM.ViewModel
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
 
-        // Commands
-        //=================================
+        //====================================================================//
+        //                              COMMANDS                              //
+        //====================================================================//
         private ICommand _RemoveCommand;
         public ICommand RemoveCommand
         {
@@ -53,7 +53,6 @@ namespace TCC_MVVM.ViewModel
                 return _RemoveCommand;
             }
         }
-
 
         /// <summary>
         /// Creates a new instance of the shelf view model
@@ -98,10 +97,12 @@ namespace TCC_MVVM.ViewModel
         /// <param name="ShelfModel">
         /// The shelf to remove
         /// </param>
-        public void Remove(Shelf ShelfModel)
+        public void Remove(Shelf Shelf)
         {
-            if (Shelves.Contains(ShelfModel))
-                Shelves.Remove(ShelfModel);
+            // Remove the price before you remove the shelf, otherwise the price will stay the same
+            TotalPrice -= Shelf.Price;
+            if (Shelves.Contains(Shelf))
+                Shelves.Remove(Shelf);
         }
 
         /// <summary>
@@ -132,6 +133,18 @@ namespace TCC_MVVM.ViewModel
 
             shelf.PropertyChanged += Shelf_PropertyChanged;
 
+            if(Color != null)
+                Color_PropertyChanged(shelf);
+            Shelves.Add(shelf);
+        }
+
+        public void Add(Shelf shelf)
+        {
+            shelf.ColorValues = new ObservableCollection<string>(GetColorValues());
+            shelf.WidthValues = new ObservableCollection<string>(GetWidthValues());
+            shelf.DepthValues = new ObservableCollection<string>(GetDepthValues());
+            shelf.ShelfTypeValues = new ObservableCollection<ShelfType>(GetShelfTypes());
+            shelf.PropertyChanged += Shelf_PropertyChanged;
             Shelves.Add(shelf);
         }
 

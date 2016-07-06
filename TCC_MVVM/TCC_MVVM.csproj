@@ -81,6 +81,7 @@
     <Compile Include="ViewModel\Job\BrowseCommand.cs" />
     <Compile Include="ViewModel\Job\CreateJobCommand.cs" />
     <Compile Include="ViewModel\Job\CreateProposalCommand.cs" />
+    <Compile Include="ViewModel\Job\LoadCommand.cs" />
     <Compile Include="ViewModel\Job\SamePremiseAddressCommand.cs" />
     <Compile Include="ViewModel\Room\Commands\Command_AddAccessory.cs" />
     <Compile Include="ViewModel\Room\Commands\Command_AddPanel.cs" />
