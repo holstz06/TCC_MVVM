@@ -141,7 +141,10 @@ namespace TCC_MVVM.Model
 
             if (!string.IsNullOrEmpty(Color) && !string.IsNullOrEmpty(SizeHeight) && !string.IsNullOrEmpty(SizeDepth))
                 SelectPanelItems();
-            if (propertyName != "Price" && !string.IsNullOrEmpty(Color) && !string.IsNullOrEmpty(SizeHeight) && !string.IsNullOrEmpty(SizeDepth))
+            if (propertyName != "Price" 
+                && !string.IsNullOrEmpty(Color) 
+                && !string.IsNullOrEmpty(SizeHeight) 
+                && !string.IsNullOrEmpty(SizeDepth))
                 Price = SetPrice();
         }
         #endregion
