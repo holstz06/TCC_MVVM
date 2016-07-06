@@ -139,10 +139,16 @@ namespace TCC_MVVM.ViewModel
         /// </param>
         public void Remove(Strip Strip)
         {
-            // Remove the price before you remove the strip, otherwise the price will stay the same
-            TotalPrice -= Strip.Price;
-            if (Strips.Contains(Strip))
-                Strips.Remove(Strip);
+            if (Strip != null)
+            {
+                // Remove the price before you remove the strip, otherwise the price will stay the same
+                TotalPrice -= Strip.Price;
+                if (Strips.Contains(Strip))
+                    Strips.Remove(Strip);
+            }
+            else
+                MessageBox.Show("You must select an item before removing it.");
+            
         }
 
         /// <summary>

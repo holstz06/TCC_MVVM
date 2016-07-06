@@ -43,15 +43,17 @@
                         FontWeight="ExtraBold" 
                         FontSize="16" 
                         Height="auto"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
                        Foreground="#eeeeee"/>
-                <Label Grid.Column="1" FontWeight="Bold" FontSize="16" Background="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                <Label Grid.Column="1" FontWeight="Normal" FontFamily="Segoe UI" FontSize="16" Background="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                     <TextBlock>
-                        <Run Text="{Binding Job.FirstName}" />
-                        <Run Text="{Binding Job.LastName}" />
-                    <Run Text=", $" />
-                    <Run Text="{Binding TotalPrice}" />
+                        <Run Text="Personal Quote for: " />
+                        <Run FontWeight="Bold" Text="{Binding Job.FirstName}" />
+                        <Run FontWeight="Bold"  Text="{Binding Job.LastName}" />
+                        <Run Text=" - " />
+                        <Run Text="$" />
+                        <Run Text="{Binding TotalPrice}" />
                     </TextBlock>
                 </Label>
                 <!--<Button Grid.Column="1" Content="Load Proposal" Command="{Binding LoadCommand, Mode=TwoWay}" />-->
@@ -261,7 +263,7 @@
                     <ItemsControl ItemsSource="{Binding Rooms}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="5,10,0,0">
+                                <Grid Margin="5,10,0,25">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="28" />
                                         <RowDefinition Height="Auto" />
@@ -277,15 +279,15 @@
                                         <ColumnDefinition Width="15" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="#ccc" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" FontSize="14" />
-                                    <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="#ccc" BorderThickness="0,0,0,0">
+                                    <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
+                                    <!--<Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="#ccc" BorderThickness="0,0,0,0">
                                         <StackPanel Orientation="Vertical" Margin="0,15,0,15">
                                             <CheckBox Content="Same Color" FontWeight="Normal" ToolTip="When checked, all strip will be the same color" IsChecked="{Binding IsStripSameColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
                                         </StackPanel>
-                                    </Border>
-                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="2"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Length" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="3"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" />
+                                    </Border>-->
+                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,0,0,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="2"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,0,0,1" Content="Length" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="3"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,0,0,1" />
                                     <ListView Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" ItemsSource="{Binding StripViewModel.Strips}" x:Name="StripListView" KeyboardNavigation.TabNavigation="Continue">
                                         <ListView.Resources>
                                             <Style TargetType="ListViewItem">
@@ -327,8 +329,8 @@
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
-                                    <Button Grid.Row="4" Grid.Column="1" ToolTip="Add new strip to this room." Content="Add" Command="{Binding Command_AddStrip, Mode=OneWay}" />
-                                    <Button Grid.Row="4" Grid.Column="2" ToolTip="Remove selected strip" Content="Remove" Command="{Binding StripViewModel.RemoveCommand}" CommandParameter="{Binding ElementName=StripListView,Path=SelectedItem}" />
+                                    <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new strip to this room." FontSize="16" Content=" + " Command="{Binding Command_AddStrip, Mode=OneWay}" />
+                                    <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected strip" FontSize="18" Content=" - " Command="{Binding StripViewModel.RemoveCommand}" CommandParameter="{Binding ElementName=StripListView,Path=SelectedItem}" />
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -614,7 +616,48 @@
                 <RowDefinition Height="25" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Button Content="Create Proposal" Command="{Binding CreateProposalCommand}" />
+            <!--<Button Content="Create Proposal" Command="{Binding CreateProposalCommand}" />-->
+            <Grid Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".33*" />
+                    <ColumnDefinition Width=".33*" />
+                    <ColumnDefinition Width=".33*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="#333">
+                    <StackPanel Orientation="Vertical">
+                        <Label HorizontalContentAlignment="Center" Content="Labor Fees" />
+                        <Label HorizontalContentAlignment="Center">
+                            <TextBlock>
+                                <Run Text="$" />
+                                <Run Text="{Binding LaborFees}" />
+                            </TextBlock>
+                        </Label>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1"  BorderThickness="0,0,1,0" BorderBrush="#333">
+                    <StackPanel Orientation="Vertical">
+                        <Label HorizontalContentAlignment="Center" Content="Equipment Fees" />
+                        <Label HorizontalContentAlignment="Center">
+                            <TextBlock>
+                                <Run Text="$" />
+                                <Run Text="{Binding EquipmentFees}" />
+                            </TextBlock>
+                        </Label>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" BorderThickness="0,0,0,0">
+                    <StackPanel Orientation="Vertical">
+                        <Label HorizontalContentAlignment="Center" Content="Markup Costs" />
+                        <Label HorizontalContentAlignment="Center">
+                            <TextBlock>
+                                <Run Text="$" />
+                                <Run Text="{Binding MarkupCosts}" />
+                            </TextBlock>
+                        </Label>
+                    </StackPanel>
+                </Border>
+            </Grid>
             <ItemsControl Grid.Row="1" ItemsSource="{Binding Rooms}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
