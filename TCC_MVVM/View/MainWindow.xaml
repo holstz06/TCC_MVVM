@@ -48,8 +48,8 @@
                 <Label Grid.Column="1" FontWeight="Normal" FontFamily="Segoe UI" FontSize="16" Background="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                     <TextBlock>
                         <Run Text="Personal Quote for: " />
-                        <Run FontWeight="Bold" Text="{Binding Job.FirstName}" />
-                        <Run FontWeight="Bold"  Text="{Binding Job.LastName}" />
+                        <Run Text="{Binding Job.FirstName}" />
+                        <Run Text="{Binding Job.LastName}" />
                         <Run Text=" - " />
                         <Run Text="$" />
                         <Run Text="{Binding TotalPrice}" />
@@ -220,7 +220,7 @@
             ==========================================================================================-->
             <TabItem Header="Rooms" Margin="-2,-2,0,0" Padding="7,7,7,7">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <Grid>
+                    <Grid Background="White">
                         <ItemsControl ItemsSource="{Binding Rooms}" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="702">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -259,7 +259,7 @@
                                                         Strip Information
             ==========================================================================================-->
             <TabItem Header="Strip" Margin="-2,-2,0,0" Padding="7,7,7,7">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
                     <ItemsControl ItemsSource="{Binding Rooms}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -346,7 +346,7 @@
                     <ItemsControl ItemsSource="{Binding Rooms}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="5,10,0,0">
+                                <Grid Margin="5,10,0,25">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="28" />
                                         <RowDefinition Height="Auto" />
@@ -365,13 +365,13 @@
                                         <ColumnDefinition Width="15" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" ToolTip="Type in the name of the room." BorderBrush="#ccc" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" FontSize="14" />
-                                    <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" BorderBrush="#ccc" BorderThickness="0,0,0,0">
+                                    <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
+                                    <!--<Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" BorderBrush="#ccc" BorderThickness="0,0,0,0">
                                         <StackPanel Orientation="Horizontal" Margin="0,15,0,15">
                                             <CheckBox FontFamily="Calibri Light" FontSize="14" x:Name="cbIsSameColor" Margin="0,0,30,0" Content="Same Color" IsChecked="{Binding IsPanelSameColor, Mode=TwoWay}" ToolTip="When checked, all the panels will be the same color." />
                                             <CheckBox FontFamily="Calibri Light" FontSize="14" x:Name="cbIsSameDepth"  Content="Same Depth" IsChecked="{Binding IsPanelSameDepth, Mode=TwoWay}" ToolTip="When checked, all the panels will be the same depth." />
                                         </StackPanel>
-                                    </Border>
+                                    </Border>-->
                                     <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Size Depth" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
                                     <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Size Height" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
                                     <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
@@ -425,8 +425,8 @@
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
-                                    <Button Grid.Row="4" Grid.Column="1" Content="Add" Command="{Binding Command_AddPanel}" ToolTip="Add new panel to this room." />
-                                    <Button Grid.Row="4" Grid.Column="2" Content="Remove" Command="{Binding PanelViewModel.RemoveCommand}" CommandParameter="{Binding ElementName=PanelListView,Path=SelectedItem}" ToolTip="Remove selected item from this room"  />
+                                    <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new panel to this room" FontSize="16" Content=" + " Command="{Binding Command_AddPanel, Mode=OneWay}" />
+                                    <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected panel" FontSize="18" Content=" - " Command="{Binding PanelViewModel.RemoveCommand}" CommandParameter="{Binding ElementName=PanelListView,Path=SelectedItem}" />
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -442,7 +442,7 @@
                     <ItemsControl ItemsSource="{Binding Rooms}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="5,10,0,0">
+                                <Grid Margin="5,10,0,25">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="28" />
                                         <RowDefinition Height="Auto" />
@@ -461,39 +461,42 @@
                                         <ColumnDefinition Width="0" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" Text="{Binding Room.RoomName}" ToolTip="Type in the name of the room." BorderBrush="#ccc" BorderThickness="0,0,0,1" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" FontSize="14"/>
-                                    <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#ccc" BorderThickness="0,0,0,0">
+                                    <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
+                                    <!--<Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#ccc" BorderThickness="0,0,0,0">
                                         <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
                                             <CheckBox FontFamily="Calibri Light" FontSize="14" Margin="0,0,5,0" Content="Same Color" IsChecked="{Binding IsShelfSameColor}" ToolTip="When checked, all the shelves will be the same color." />
                                             <CheckBox FontFamily="Calibri Light" FontSize="14" Content="Same Depth" IsChecked="{Binding IsShelfSameDepth}" ToolTip="When checked, all the shelves will be the same depth." />
                                         </StackPanel>
-                                    </Border>
-                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="1,1,1,1" Content="Size Depth" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Size Width" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Shelving Type" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="5" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Quantity" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="6"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1"/>
+                                    </Border>-->
+                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="1,1,0,1" Content="Size Depth" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Size Width" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Shelving Type" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="5" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Quantity" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="6"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1"/>
                                     <ListView Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" ItemsSource="{Binding ShelfViewModel.Shelves}" x:Name="ShelfViewList" KeyboardNavigation.TabNavigation="Continue">
-                                        <ListView.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="Add Toe Kick" />
-                                                <MenuItem Header="Add Adjustable" />
-                                                <Separator />
-                                                <MenuItem Header="Duplicate Selected" />
-                                                <Separator />
-                                                <MenuItem Header="Remove Item" Command="{Binding ShelfViewModel.RemoveCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=ShelfViewList,Path=SelectedItem}" />
-                                            </ContextMenu>
-                                        </ListView.ContextMenu>
-                                        <ListView.ItemContainerStyle>
+                                        <ListView.Resources>
                                             <Style TargetType="ListViewItem">
                                                 <Setter Property="Padding" Value="0,0,0,0" />
                                                 <Setter Property="FontFamily" Value="Calibri Light" />
                                                 <Setter Property="FontSize" Value="14" />
                                                 <Setter Property="IsSelected" Value="False" />
                                                 <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
+                                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                <Setter Property="BorderThickness" Value="0,0,0,0" />
                                             </Style>
-                                        </ListView.ItemContainerStyle>
+                                            <Style TargetType="ListView">
+                                                <Setter Property="BorderThickness" Value="0,0,0,0" />
+                                            </Style>
+                                            <Style TargetType="ComboBox">
+                                                <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            </Style>
+                                            <Style TargetType="TextBox">
+                                                <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            </Style>
+                                        </ListView.Resources>
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid>
@@ -505,11 +508,11 @@
                                                         <ColumnDefinition Width="100" />
                                                         <ColumnDefinition Width="100" />
                                                     </Grid.ColumnDefinitions>
-                                                    <ComboBox Grid.Column="0" BorderBrush="#ccc" BorderThickness="1,1,1,1" ItemsSource="{Binding DepthValues}" SelectedItem="{Binding SizeDepth, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="1" BorderBrush="#ccc" BorderThickness="0,1,1,1" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="2" BorderBrush="#ccc" BorderThickness="0,1,1,1" ItemsSource="{Binding WidthValues}" SelectedItem="{Binding SizeWidth, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="3" BorderBrush="#ccc" BorderThickness="0,1,1,1" ItemsSource="{Binding ShelfTypeValues}" SelectedItem="{Binding ShelfType, Mode=TwoWay}" DisplayMemberPath="Name" />
-                                                    <TextBox Grid.Column="4" BorderBrush="#ccc" BorderThickness="0,1,1,1" Text="{Binding Quantity, Mode=TwoWay}" />
+                                                    <ComboBox Grid.Column="0" ItemsSource="{Binding DepthValues}" SelectedItem="{Binding SizeDepth, Mode=TwoWay}"/>
+                                                    <ComboBox Grid.Column="1" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}"/>
+                                                    <ComboBox Grid.Column="2" ItemsSource="{Binding WidthValues}" SelectedItem="{Binding SizeWidth, Mode=TwoWay}"/>
+                                                    <ComboBox Grid.Column="3" ItemsSource="{Binding ShelfTypeValues}" SelectedItem="{Binding ShelfType, Mode=TwoWay}" DisplayMemberPath="Name" />
+                                                    <TextBox Grid.Column="4" Text="{Binding Quantity, Mode=TwoWay}" />
                                                     <TextBlock Grid.Column="5">
                                                         <Run Text="$" />
                                                         <Run Text="{Binding Price, Mode=TwoWay}" />
@@ -518,8 +521,8 @@
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
-                                    <Button Grid.Row="4" Grid.Column="1" ToolTip="Add new shelf to this room" Content="Add" Command="{Binding Command_AddShelf}" />
-                                    <Button Grid.Row="4" Grid.Column="2" ToolTip="Remove selected shelf from this room" Content="Remove" Command="{Binding ShelfViewModel.RemoveCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=ShelfViewList,Path=SelectedItem}" />
+                                    <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new panel to this room" FontSize="16" Content=" + " Command="{Binding Command_AddShelf, Mode=OneWay}" />
+                                    <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected panel" FontSize="18" Content=" - " Command="{Binding ShelfViewModel}" CommandParameter="{Binding ElementName=ShelfViewList,Path=SelectedItem}" />
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -613,30 +616,58 @@
 
         <Grid Grid.Column="1" Grid.Row="1" Background="White">
             <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
+                <RowDefinition Height="200" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <!--<Button Content="Create Proposal" Command="{Binding CreateProposalCommand}" />-->
             <Grid Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".5*" />
+                    <RowDefinition Height=".5*" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width=".33*" />
                     <ColumnDefinition Width=".33*" />
                     <ColumnDefinition Width=".33*" />
                 </Grid.ColumnDefinitions>
 
-                <Border Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="#333">
+                <Border Grid.Column="0" Grid.Row="0" BorderThickness="0,0,1,0" BorderBrush="#333">
                     <StackPanel Orientation="Vertical">
-                        <Label HorizontalContentAlignment="Center" Content="Labor Fees" />
+                        <Label Content="Labor Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="$55.36" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                        <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
                     </StackPanel>
                 </Border>
-                <Border Grid.Column="1"  BorderThickness="0,0,1,0" BorderBrush="#333">
+                <Border Grid.Column="1" Grid.Row="0" BorderThickness="0,0,1,0" BorderBrush="#333">
                     <StackPanel Orientation="Vertical">
-                        <Label HorizontalContentAlignment="Center" Content="Equipment Fees" />
+                        <Label Content="Equipment Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="$16.25" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                        <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
                     </StackPanel>
                 </Border>
-                <Border Grid.Column="2" BorderThickness="0,0,0,0">
+                <Border Grid.Column="2" Grid.Row="0">
                     <StackPanel Orientation="Vertical">
-                        <Label HorizontalContentAlignment="Center" Content="Markup Costs" />
+                        <Label Content="Markup Cost" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="$302.09" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                        <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="0" Grid.Row="1" BorderThickness="0,0,1,0" BorderBrush="#333">
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Travel Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="$1.23" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="1" BorderThickness="0,0,1,0" BorderBrush="#333">
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Shelving Costs" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="$16.25" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" Grid.Row="1">
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Markup Cost" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="$302.09" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
                     </StackPanel>
                 </Border>
             </Grid>
@@ -645,22 +676,24 @@
                     <DataTemplate>
                         <!-- List all the rooms in the job-->
                         <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal" Background="#49c5d4">
-                                <Label Content="{Binding Room.RoomName}" FontWeight="Bold" Foreground="#fff" VerticalAlignment="Center" />
-                                <TextBlock VerticalAlignment="Center" FontWeight="Bold" Foreground="#fff">
-                                    <Run Text="$" />
-                                    <Run Text="{Binding TotalPrice}" />
-                                </TextBlock>
+                            <StackPanel Orientation="Horizontal" ><!--Background="#49c5d4"-->
+                                <Label Content="{Binding Room.RoomName}" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                                <Label FontFamily="Segoe UI" FontSize="16" Foreground="#444" >
+                                    <TextBlock>
+                                        <Run Text="-  $" />
+                                        <Run Text="{Binding TotalPrice}" />
+                                    </TextBlock>
+                                </Label>
                             </StackPanel>
 
                             <!-- List all the strip in the room -->
-                            <ItemsControl ItemsSource="{Binding StripViewModel.Strips}" Margin="15,0,0,0">
+                            <ItemsControl ItemsSource="{Binding StripViewModel.Strips}" Margin="15,0,0,0" FontFamily="Segoe UI Light">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock>
                                                 <Run Text="{Binding DisplayName}" />
-                                                <Run Text="- $" />
+                                                <Run Text="$" />
                                                 <Run Text="{Binding Price}" />
                                             </TextBlock>
                                         </StackPanel>
