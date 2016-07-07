@@ -11,7 +11,6 @@
     <!-- Store reusable code in Windows.Resource-->
     <Window.Resources>
         <JobVM:JobVM x:Key="JobViewModel" />
-
         <Style TargetType="Grid">
             <Setter Property="Background" Value="#1C2021" />
         </Style>
@@ -114,6 +113,7 @@
                                 <Setter Property="BorderThickness" Value="0,0,0,1" />
                                 <Setter Property="VerticalContentAlignment" Value="Center" />
                                 <Setter Property="Foreground" Value="#333" />
+                                <Setter Property="FontWeight" Value="Normal" />
                             </Style>
                             <Style TargetType="ComboBox">
                                 <Setter Property="FontFamily" Value="Segoe UI" />
@@ -143,10 +143,10 @@
                             <RowDefinition Height="20" />
                             <RowDefinition Height="8" />
                             <RowDefinition Height="30" />
-                            <RowDefinition Height="20" />
+                            <RowDefinition Height="25" />
                             <RowDefinition Height="20" />
                             <RowDefinition Height="8" />
-                            <RowDefinition Height="20" />
+                            <RowDefinition Height="25" />
                             <RowDefinition Height="20" />
                             <RowDefinition Height="8" />
                         </Grid.RowDefinitions>
@@ -186,23 +186,23 @@
                         <TextBox Grid.Row="17" Grid.Column="1" Text="{Binding Job.MailingZip}" />
 
                         <!-- Premise Information -->
-                        <Label Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="5" Content="Premise Information" FontSize="14" FontWeight="Bold" Margin="4.6,0,4.6,20" Grid.RowSpan="2" VerticalAlignment="Center" />
+                        <Label Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="5" Content="Premise Information" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" />
                         <Label Grid.Row="1" Grid.Column="5" Content="Project Type" />
                         <ComboBox Grid.Row="2" Grid.Column="5" ItemsSource="{Binding Job.ProjectTypeValues}" SelectedItem="{Binding Job.ProjectType, Mode=TwoWay}" />
-                        <CheckBox Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="5" Content="Use mailing address for premise" IsChecked="{Binding PremiseEqualsMailing, Mode=TwoWay}" Grid.RowSpan="2" VerticalContentAlignment="Center" />
-                        <Label Grid.Row="7" Grid.Column="5" Grid.ColumnSpan="5" Content="Premise Address 1" Grid.RowSpan="2" />
+                        <CheckBox Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="5" Content="Use mailing address for premise" IsChecked="{Binding PremiseEqualsMailing, Mode=TwoWay}" VerticalContentAlignment="Center" />
+                        <Label Grid.Row="7" Grid.Column="5" Grid.ColumnSpan="5" Content="Premise Address 1" />
                         <TextBox Grid.Row="8" Grid.Column="5" Grid.ColumnSpan="5" Text="{Binding Job.PremiseAddress01}" />
-                        <Label Grid.Row="10" Grid.Column="5" Grid.ColumnSpan="5" Content="Premise Address 2" Grid.RowSpan="2" />
+                        <Label Grid.Row="10" Grid.Column="5" Grid.ColumnSpan="5" Content="Premise Address 2" />
                         <TextBox Grid.Row="11" Grid.Column="5" Grid.ColumnSpan="5" Text="{Binding Job.PremiseAddress02}" />
-                        <Label Grid.Row="13" Grid.Column="5" Grid.ColumnSpan="4" Content="Premise City" Grid.RowSpan="2" />
+                        <Label Grid.Row="13" Grid.Column="5" Grid.ColumnSpan="4" Content="Premise City" />
                         <TextBox Grid.Row="14" Grid.Column="5" Text="{Binding Job.PremiseCity}" />
-                        <Label Grid.Row="13" Grid.Column="7" Grid.ColumnSpan="4" Content="Premise State" Grid.RowSpan="2" />
+                        <Label Grid.Row="13" Grid.Column="7" Grid.ColumnSpan="4" Content="Premise State" />
                         <TextBox Grid.Row="14" Grid.Column="7" Text="{Binding Job.PremiseState}" />
-                        <Label Grid.Row="16" Grid.Column="5" Grid.ColumnSpan="4" Content="Premise Zip" Grid.RowSpan="2" />
+                        <Label Grid.Row="16" Grid.Column="5" Grid.ColumnSpan="4" Content="Premise Zip" />
                         <TextBox Grid.Row="17" Grid.Column="5" Text="{Binding Job.PremiseZip}" />
 
                          <!-- Information -->
-                        <Separator Grid.Row="18" Grid.ColumnSpan="10" Height="5"/>
+                        <!--<Separator Grid.Row="18" Grid.ColumnSpan="10" Height="5"/>-->
                         <Label Grid.Row="19" Grid.Column="1" Grid.ColumnSpan="3" Content="Job Information" FontWeight="Bold" FontSize="14" />
                         <Label Grid.Row="20" Grid.Column="1" Content="Number of Rooms" />
                         <TextBox x:Name="txtNumRooms" Grid.Row="21" Grid.Column="1" Text="{Binding Job.NumRooms, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" />
@@ -627,34 +627,16 @@
                 <Border Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="#333">
                     <StackPanel Orientation="Vertical">
                         <Label HorizontalContentAlignment="Center" Content="Labor Fees" />
-                        <Label HorizontalContentAlignment="Center">
-                            <TextBlock>
-                                <Run Text="$" />
-                                <Run Text="{Binding LaborFees}" />
-                            </TextBlock>
-                        </Label>
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="1"  BorderThickness="0,0,1,0" BorderBrush="#333">
                     <StackPanel Orientation="Vertical">
                         <Label HorizontalContentAlignment="Center" Content="Equipment Fees" />
-                        <Label HorizontalContentAlignment="Center">
-                            <TextBlock>
-                                <Run Text="$" />
-                                <Run Text="{Binding EquipmentFees}" />
-                            </TextBlock>
-                        </Label>
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="2" BorderThickness="0,0,0,0">
                     <StackPanel Orientation="Vertical">
                         <Label HorizontalContentAlignment="Center" Content="Markup Costs" />
-                        <Label HorizontalContentAlignment="Center">
-                            <TextBlock>
-                                <Run Text="$" />
-                                <Run Text="{Binding MarkupCosts}" />
-                            </TextBlock>
-                        </Label>
                     </StackPanel>
                 </Border>
             </Grid>
