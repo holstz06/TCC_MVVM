@@ -11,9 +11,6 @@
     <!-- Store reusable code in Windows.Resource-->
     <Window.Resources>
         <JobVM:JobVM x:Key="JobViewModel" />
-        <Style TargetType="Grid">
-            <Setter Property="Background" Value="#1C2021" />
-        </Style>
     </Window.Resources>
 
     <Grid HorizontalAlignment="Stretch">
@@ -63,40 +60,6 @@
                    ToolTip="The verion of this software is in ALPHA. This means, while most features are implemented, they are not tested or even finished. It is important not to take any of the software's output as real business data." />-->
 
         <TabControl Grid.Column="0" Grid.Row="1" TabStripPlacement="Left" BorderThickness="0" Padding="0">
-            <TabControl.Resources>
-                <Style TargetType="TabItem">
-                    <Setter Property="Foreground" Value="#aaaaaa" />
-                    <Setter Property="FontFamily" Value="Gadugi" />
-                    <Setter Property="FontSize" Value="12" />
-                    <Setter Property="FontWeight" Value="SemiBold" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="TabItem">
-                                <Border Name="Panel" Padding="20,10,23,10">
-                                    <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        ContentSource="Header"
-                                        Margin="10,2"/>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="Panel" Property="Background" Value="#34495e" />
-                                        <Setter TargetName="Panel" Property="BorderThickness" Value="5,0,0,0" />
-                                        <Setter TargetName="Panel" Property="BorderBrush" Value="#49c5d4" />
-                                        <Setter TargetName="ContentSite" Property="Margin" Value="-5,0,0,0" />
-                                        <Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="#eeeeee" />
-                                    </Trigger>
-                                    <Trigger Property="IsSelected" Value="False">
-                                        <Setter TargetName="Panel" Property="Background" Value="#1C2021" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </TabControl.Resources>
-
             <!--========================================================================================
                                                         Job Information
             ==========================================================================================-->
@@ -633,41 +596,41 @@
 
                 <Border Grid.Column="0" Grid.Row="0" BorderThickness="0,0,1,0" BorderBrush="#333">
                     <StackPanel Orientation="Vertical">
-                        <Label Content="Labor Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
-                        <Label Content="$55.36" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                        <Label Content="Shelving Costs" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="$10256.36" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
                         <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="1" Grid.Row="0" BorderThickness="0,0,1,0" BorderBrush="#333">
                     <StackPanel Orientation="Vertical">
-                        <Label Content="Equipment Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
-                        <Label Content="$16.25" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                        <Label Content="Strip Costs" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="$102.25" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
                         <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="2" Grid.Row="0">
                     <StackPanel Orientation="Vertical">
-                        <Label Content="Markup Cost" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
-                        <Label Content="$302.09" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                        <Label Content="Accessory Costs" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="$102.09" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
                         <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="0" Grid.Row="1" BorderThickness="0,0,1,0" BorderBrush="#333">
                     <StackPanel Orientation="Vertical">
-                        <Label Content="Travel Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
-                        <Label Content="$1.23" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                        <Label Content="Labor Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="$50.23" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="1" Grid.Row="1" BorderThickness="0,0,1,0" BorderBrush="#333">
                     <StackPanel Orientation="Vertical">
-                        <Label Content="Shelving Costs" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="Equipment Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
                         <Label Content="$16.25" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="2" Grid.Row="1">
                     <StackPanel Orientation="Vertical">
-                        <Label Content="Markup Cost" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
-                        <Label Content="$302.09" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                        <Label Content="Travel Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
+                        <Label Content="3.09" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
                     </StackPanel>
                 </Border>
             </Grid>
