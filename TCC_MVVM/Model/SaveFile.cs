@@ -190,7 +190,7 @@ namespace TCC_MVVM.Model
 
             try
             {
-                DataSet.WriteXml(viewmodel.Job.FirstName + " " + viewmodel.Job.LastName + ".xml");
+                DataSet.WriteXml(viewmodel.Job.FullName + ".xml");
                 MessageBox.Show("Proposal Created Successfully");
             }
             catch (Exception e)

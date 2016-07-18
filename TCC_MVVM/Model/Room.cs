@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Data;
 using PropertyChanged;
@@ -26,9 +25,14 @@ namespace TCC_MVVM.Model
         /// </summary>
         public Room()
         {
-
+            
         }
 
+        /// <summary>
+        /// Creates a new instance of a Room
+        /// </summary>
+        /// <param name="RoomName"></param>
+        /// <param name="RoomNumber"></param>
         public Room(string RoomName, int RoomNumber)
         {
             this.RoomName = RoomName;
@@ -39,11 +43,9 @@ namespace TCC_MVVM.Model
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

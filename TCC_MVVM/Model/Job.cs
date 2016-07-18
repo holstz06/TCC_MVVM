@@ -11,7 +11,7 @@ namespace TCC_MVVM.Model
         // Contact Information Variables
         //======================================
         public string FirstName { get; set; } = "Tyler";
-        public string LastName { get; set; } = "Holstead";
+        public string FullName { get; set; } = "Tyler Holstead";
         public string PhoneNumber { get; set; } = "(920) 857-4544";
         public string Email { get; set; }
         public string MailingAddress01 { get; set; } = "1471 Navigator Way";
@@ -44,8 +44,7 @@ namespace TCC_MVVM.Model
         /// </summary>
         public readonly string[] Properties =
         {
-            "FirstName",
-            "LastName",
+            "FullName",
             "PhoneNumber",
             "Email",
             "MailingAddress01",
@@ -75,8 +74,7 @@ namespace TCC_MVVM.Model
         {
             switch(PropertyName)
             {
-                case "FirstName": FirstName = PropertyValue; break;
-                case "LastName": LastName = PropertyValue; break;
+                case "FullName": FullName = PropertyValue; break;
                 case "PhoneNumber": PhoneNumber = PropertyValue; break;
                 case "NumRooms": NumRooms = int.Parse(PropertyValue); break;
                 case "MailingAddress01": MailingAddress01 = PropertyValue; break;
@@ -106,8 +104,7 @@ namespace TCC_MVVM.Model
         {
             switch(PropertyName)
             {
-                case "FirstName": return FirstName;
-                case "LastName": return LastName;
+                case "FullName": return FirstName;
                 case "PhoneNumber": return PhoneNumber;
                 case "Email": return Email;
                 case "MailingAddress01": return MailingAddress01;
@@ -149,8 +146,7 @@ namespace TCC_MVVM.Model
         {
             "NumRooms",
             "ExcelAppPath",
-            "FirstName",
-            "LastName",
+            "FullName",
             "MailingAddress01",
             "PhoneNumber"
         };
@@ -177,55 +173,42 @@ namespace TCC_MVVM.Model
             }
         }
 
-        private string ValidateNumRooms()
+        string ValidateNumRooms()
         {
             if (NumRooms < 1)
                 return "One or more rooms is needed";
-            else
-                return null;
+            return null;
         }
 
-        private string ValidateFirstName()
+        string ValidateFullName()
         {
             if (string.IsNullOrEmpty(FirstName))
-                return "First name cannot be left blank";
-            else
-                return null;
+                return "Name cannot be left blank";
+            return null;
         }
 
-        private string ValidateLastName()
-        {
-            if (string.IsNullOrEmpty(LastName))
-                return "Last name cannot be left blank";
-            else
-                return null;
-        }
-
-        private string ValidateMailingAddress()
+        string ValidateMailingAddress()
         {
             if (string.IsNullOrEmpty(MailingAddress01))
                 return "Mailing address cannot be left blank";
-            else
-                return null;
+            return null;
         }
 
-        private string ValidatePhoneNumber()
+        string ValidatePhoneNumber()
         {
             if (string.IsNullOrEmpty(PhoneNumber))
                 return "Phone number cannot be left blank";
-            else
-                return null;
+            return null;
         }
 
-        private string GetValidationError(string propertyName)
+        string GetValidationError(string propertyName)
         {
             string error = null;
 
             switch (propertyName)
             {
                 case "NumRooms": error = ValidateNumRooms(); break;
-                case "FirstName": error = ValidateFirstName(); break;
-                case "LastName": error = ValidateLastName(); break;
+                case "FullName": error = ValidateFullName(); break;
                 case "MailingAddress01": error = ValidateMailingAddress(); break;
                 case "PhoneNumber": error = ValidatePhoneNumber(); break;
             }

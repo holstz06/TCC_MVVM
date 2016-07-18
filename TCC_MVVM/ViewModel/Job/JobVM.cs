@@ -13,17 +13,24 @@ namespace TCC_MVVM.ViewModel.Job
         private int CurrentRoomNumber { get; set; } = 0;
 
         public decimal TotalPrice { get; set; }
+        public decimal ShelvingCost { get; set; }
+        public decimal StripCost { get; set; }
+        public decimal AccessoryCost { get; set; }
 
         public Model.Job Job { get; set; } = new Model.Job();
 
         public ObservableCollection<RoomVM> Rooms { get; set; } 
             = new ObservableCollection<RoomVM>();
 
+        //==========================================================
+        // Job Commands
+        //==========================================================
         public ICommand BrowseCommand { get; private set; }
         public ICommand CreateJobCommand { get; private set; }
         public ICommand CreateProposalCommand { get; private set; }
         public ICommand SamePremiseAddressCommand { get; private set; }
         public ICommand LoadCommand { get; private set; }
+        public ICommand AddRoomCommand { get; private set; }
 
         /// <summary>
         /// Set the premise address to the mailing address
@@ -57,13 +64,13 @@ namespace TCC_MVVM.ViewModel.Job
 
         public JobVM()
         {
+            // Initialize job commands
             BrowseCommand = new BrowseCommand(this);
             CreateJobCommand = new CreateJobCommand(this);
             SamePremiseAddressCommand = new SamePremiseAddressCommand(this);
             CreateProposalCommand = new CreateProposalCommand(this);
             LoadCommand = new LoadCommand(this);
-
-            //AddRoom("Master Bedroom");
+            AddRoomCommand = new AddRoomCommand(this);
         }
 
         /// <summary>
@@ -74,10 +81,9 @@ namespace TCC_MVVM.ViewModel.Job
         /// </param>
         public void AddRoom(string RoomName = null)
         {
-            bool HasRoomName = false;
-            if (RoomName != null) HasRoomName = true;
+            bool HasRoomName = false || RoomName != null;
 
-            RoomVM roomVM = new RoomVM(HasRoomName ? RoomName : "Room" + CurrentRoomNumber.ToString(), CurrentRoomNumber);
+            RoomVM roomVM = new RoomVM(HasRoomName ? RoomName : "Room" + CurrentRoomNumber, CurrentRoomNumber);
             roomVM.PropertyChanged += RoomPropertyChanged;
 
             Rooms.Add(roomVM);
@@ -111,6 +117,30 @@ namespace TCC_MVVM.ViewModel.Job
                 foreach(RoomVM room in Rooms)
                 {
                     TotalPrice += room.TotalPrice;
+                }
+            }
+            if(e.PropertyName == "ShelvingCost")
+            {
+                ShelvingCost = 0;
+                foreach(RoomVM room in Rooms)
+                {
+                    ShelvingCost += room.ShelvingCost;
+                }
+            }
+            if(e.PropertyName == "StripCost")
+            {
+                StripCost = 0;
+                foreach(RoomVM room in Rooms)
+                {
+                    StripCost += room.StripCost;
+                }
+            }
+            if(e.PropertyName == "AccessoryCost")
+            {
+                AccessoryCost = 0;
+                foreach(RoomVM room in Rooms)
+                {
+                    AccessoryCost += room.AccessoryCost;
                 }
             }
         }

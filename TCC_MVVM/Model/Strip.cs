@@ -3,16 +3,9 @@ using System.ComponentModel;
 using System;
 using PropertyChanged;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
 
 namespace TCC_MVVM.Model
 {
-    /// <summary>
-    /// Strip Item (Model)
-    /// 
-    /// Sub-items that each strip contains
-    /// </summary>
     [ImplementPropertyChanged]
     public class StripItem : INotifyPropertyChanged
     {
@@ -22,26 +15,21 @@ namespace TCC_MVVM.Model
         public decimal Price { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
-    /// <summary>
-    /// Strip (Model)
-    /// 
-    /// Contains all the business data memebrs that belong to a strip and functions
-    /// that set the property members
-    /// </summary>
     [ImplementPropertyChanged]
     public class Strip : INotifyPropertyChanged
     {
         public int RoomNumber { get; set; }
-        public double Length { get; set; }
         public string Color { get; set; }
+        public double Length { get; set; }
+        
 
-        private decimal _Price;
+        decimal _Price;
         public decimal Price
         {
             // Return the price to two decimal places
@@ -79,7 +67,7 @@ namespace TCC_MVVM.Model
         /// <summary>
         /// Iterates through each strip item and selects which item belongs to this collection
         /// </summary>
-        private void SelectStripItems()
+        void SelectStripItems()
         {
             StripItems.Clear();
             foreach (StripItem item in StripItemList)
@@ -88,12 +76,12 @@ namespace TCC_MVVM.Model
                     StripItems.Add(item);
             }
         }
-        
+
         /// <summary>
         /// Sets the price of the strip by adding all the subitem prices.
         /// These include the wall rail and cover strip
         /// </summary>
-        private void SetPrice()
+        void SetPrice()
         {
             decimal tempPrice = 0;
             foreach (StripItem item in StripItems)
@@ -123,7 +111,7 @@ namespace TCC_MVVM.Model
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
@@ -134,12 +122,12 @@ namespace TCC_MVVM.Model
         }
         #endregion
 
-        private string _DisplayName;
+        string _DisplayName;
         public string DisplayName
         {
             get
             {
-                return "1x (" + Color + ") Hang Rail/Cover, " + Length.ToString() + "in. ";
+                return "1x (" + Color + ") Hang Rail/Cover, " + Length + "in. ";
             }
             set { _DisplayName = value; OnPropertyChanged("DisplayName"); }
         }

@@ -45,8 +45,7 @@
                 <Label Grid.Column="1" FontWeight="Normal" FontFamily="Segoe UI" FontSize="16" Background="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                     <TextBlock>
                         <Run Text="Personal Quote for: " />
-                        <Run Text="{Binding Job.FirstName}" />
-                        <Run Text="{Binding Job.LastName}" />
+                        <Run Text="{Binding Job.FullName}" />
                         <Run Text=" - " />
                         <Run Text="$" />
                         <Run Text="{Binding TotalPrice}" />
@@ -64,130 +63,100 @@
                                                         Job Information
             ==========================================================================================-->
             <TabItem Header="Job" Margin="-2,-2,0,0" Padding="7,7,7,7">
-                <Border BorderBrush="#dddddd" BorderThickness="0,1,0,0">
-                    <Grid Background="White">
-                        <Grid.Resources>
-                            <Style TargetType="Label">
-                                <Setter Property="FontFamily" Value="Segoe UI" />
-                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                            </Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="FontFamily" Value="Segoe UI" />
-                                <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                <Setter Property="Foreground" Value="#333" />
-                                <Setter Property="FontWeight" Value="Normal" />
-                            </Style>
-                            <Style TargetType="ComboBox">
-                                <Setter Property="FontFamily" Value="Segoe UI" />
-                            </Style>
-                            <Style TargetType="CheckBox">
-                                <Setter Property="FontFamily" Value="Segoe UI" />
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="20" />
-                            <RowDefinition Height="8" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="20" />
-                            <RowDefinition Height="8" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="20" />
-                            <RowDefinition Height="8" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="20" />
-                            <RowDefinition Height="8" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="20" />
-                            <RowDefinition Height="8" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="20" />
-                            <RowDefinition Height="8" />
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="20" />
-                            <RowDefinition Height="8" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="20" />
-                            <RowDefinition Height="8" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5" />
-                            <ColumnDefinition Width="150" />
-                            <ColumnDefinition Width="5" />
-                            <ColumnDefinition Width="150" />
-                            <ColumnDefinition Width="10" />
-                            <ColumnDefinition Width="150" />
-                            <ColumnDefinition Width="5" />
-                            <ColumnDefinition Width="150" />
-                            <ColumnDefinition Width="5" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="5" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Content="Contact Information" FontSize="14" Foreground="#333" FontWeight="Bold" VerticalContentAlignment="Center"/>
-
-                        <Label Grid.Row="1" Grid.Column="1" Content="First Name" />
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Job.FirstName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                        <Label Grid.Row="1" Grid.Column="3" Content="Last Name" />
-                        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Job.LastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        <Label Grid.Row="4" Grid.Column="1" Content="Phone Number" />
-                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Job.PhoneNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        <Label Grid.Row="4" Grid.Column="3" Content="Email" />
-                        <TextBox Grid.Row="5" Grid.Column="3" Text="{Binding Job.Email}" />
-                        <Label Grid.Row="7" Grid.Column="1" Content="Mailing Address 1" />
-                        <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Job.MailingAddress01, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        <Label Grid.Row="10" Grid.Column="1" Content="Mailing Address 2" />
-                        <TextBox Grid.Row="11" Grid.Column="1" Text="{Binding Job.MailingAddress02, Mode=TwoWay}" Grid.ColumnSpan="3" />
-                        <Label Grid.Row="13" Grid.Column="1" Content="City" />
-                        <TextBox Grid.Row="14" Grid.Column="1" Text="{Binding Job.MailingCity}" />
-                        <Label Grid.Row="13" Grid.Column="3" Content="State" />
-                        <TextBox Grid.Row="14" Grid.Column="3" Text="{Binding Job.MailingState}" />
-                        <Label Grid.Row="16" Grid.Column="1" Content="Zip" />
-                        <TextBox Grid.Row="17" Grid.Column="1" Text="{Binding Job.MailingZip}" />
-
-                        <!-- Premise Information -->
-                        <Label Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="5" Content="Premise Information" FontSize="14" FontWeight="Bold" VerticalAlignment="Center" />
-                        <Label Grid.Row="1" Grid.Column="5" Content="Project Type" />
-                        <ComboBox Grid.Row="2" Grid.Column="5" ItemsSource="{Binding Job.ProjectTypeValues}" SelectedItem="{Binding Job.ProjectType, Mode=TwoWay}" />
-                        <CheckBox Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="5" Content="Use mailing address for premise" IsChecked="{Binding PremiseEqualsMailing, Mode=TwoWay}" VerticalContentAlignment="Center" />
-                        <Label Grid.Row="7" Grid.Column="5" Grid.ColumnSpan="5" Content="Premise Address 1" />
-                        <TextBox Grid.Row="8" Grid.Column="5" Grid.ColumnSpan="5" Text="{Binding Job.PremiseAddress01}" />
-                        <Label Grid.Row="10" Grid.Column="5" Grid.ColumnSpan="5" Content="Premise Address 2" />
-                        <TextBox Grid.Row="11" Grid.Column="5" Grid.ColumnSpan="5" Text="{Binding Job.PremiseAddress02}" />
-                        <Label Grid.Row="13" Grid.Column="5" Grid.ColumnSpan="4" Content="Premise City" />
-                        <TextBox Grid.Row="14" Grid.Column="5" Text="{Binding Job.PremiseCity}" />
-                        <Label Grid.Row="13" Grid.Column="7" Grid.ColumnSpan="4" Content="Premise State" />
-                        <TextBox Grid.Row="14" Grid.Column="7" Text="{Binding Job.PremiseState}" />
-                        <Label Grid.Row="16" Grid.Column="5" Grid.ColumnSpan="4" Content="Premise Zip" />
-                        <TextBox Grid.Row="17" Grid.Column="5" Text="{Binding Job.PremiseZip}" />
-
-                         <!-- Information -->
-                        <!--<Separator Grid.Row="18" Grid.ColumnSpan="10" Height="5"/>-->
-                        <Label Grid.Row="19" Grid.Column="1" Grid.ColumnSpan="3" Content="Job Information" FontWeight="Bold" FontSize="14" />
-                        <Label Grid.Row="20" Grid.Column="1" Content="Number of Rooms" />
-                        <TextBox x:Name="txtNumRooms" Grid.Row="21" Grid.Column="1" Text="{Binding Job.NumRooms, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay}" />
-                        <Label Grid.Row="20" Grid.Column="3" Grid.ColumnSpan="5" Content="Excel Application Path" />
-                        <TextBox x:Name="txtExcelAppPath" Grid.Row="21" Grid.Column="3" Grid.ColumnSpan="3" Text="{Binding Job.ExcelAppPath, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        <Button Grid.Row="21" Grid.Column="7" Content="Browse" Command="{Binding BrowseCommand}" />
-                        <Button Grid.Row="23" Grid.Column="1" Content="Create Job" Command="{Binding CreateJobCommand}" />
-
-                    </Grid>
-                </Border>
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <Border BorderBrush="#dddddd" BorderThickness="0,1,0,0">
+                        <Grid Background="White">
+                            <Grid.Resources>
+                                <Style TargetType="Label">
+                                    <Setter Property="FontFamily" Value="Segoe UI" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                </Style>
+                                <Style TargetType="xctk:WatermarkTextBox">
+                                    <Setter Property="FontFamily" Value="Segoe UI" />
+                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    <Setter Property="Foreground" Value="#333" />
+                                    <Setter Property="FontWeight" Value="Normal" />
+                                </Style>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="FontFamily" Value="Segoe UI" />
+                                </Style>
+                                <Style TargetType="CheckBox">
+                                    <Setter Property="FontFamily" Value="Segoe UI" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="28" />
+                                <RowDefinition Height="28" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="15" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="15" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="15" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Contact Information Controls-->
+                            <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Content="Contact Information" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold" />
+                            <xctk:WatermarkTextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Watermark="Full Name" Text="{Binding Job.FullName, Mode=TwoWay}" />
+                            <xctk:WatermarkTextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Watermark="Email Address" Text="{Binding Job.Email, Mode=TwoWay}" />
+                            <xctk:WatermarkTextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Watermark="Phone Number" Text="{Binding Job.PhoneNumber, Mode=TwoWay}" />
+                            <xctk:WatermarkTextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Watermark="Address Line 01" Text="{Binding Job.MailingAddress01, Mode=TwoWay}" />
+                            <xctk:WatermarkTextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Watermark="Address Line 02" Text="{Binding Job.MailingAddress02, Mode=TwoWay}"/>
+                            <xctk:WatermarkTextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="1" Watermark="City" Text="{Binding Job.MailingCity, Mode=TwoWay}"/>
+                            <xctk:WatermarkTextBox Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="1" Watermark="State" Text="{Binding Job.MailingState, Mode=TwoWay}"/>
+                            <xctk:WatermarkTextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="1" Watermark="Postal" Text="{Binding Job.MailingZip, Mode=TwoWay}"/>
+                            
+                            <!-- Premise Information Controls -->
+                            <Label Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Content="Premise Information" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold"  />
+                            <CheckBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Content="Contact Address is also Premise Address" />
+                            <xctk:WatermarkTextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="1" Watermark="Mileage" />
+                            <xctk:WatermarkTextBox Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="1" Watermark="Price" />
+                            <xctk:WatermarkTextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Watermark="Address Line 01" Text="{Binding Job.PremiseAddress02, Mode=TwoWay}"/>
+                            <xctk:WatermarkTextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Watermark="Address Line 02" Text="{Binding Job.PremiseAddress02, Mode=TwoWay}"/>
+                            <xctk:WatermarkTextBox Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="1" Watermark="City" Text="{Binding Job.PremiseCity, Mode=TwoWay}"/>
+                            <xctk:WatermarkTextBox Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="1" Watermark="State" Text="{Binding Job.PremiseState, Mode=TwoWay}"/>
+                            <xctk:WatermarkTextBox Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="1" Watermark="Postal" Text="{Binding Job.PremiseZip, Mode=TwoWay}"/>
+                            
+                            <!-- Additional Information Controls -->
+                            <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Content="Addition Information" FontSize="16" FontWeight="Bold"  />
+                            <xctk:WatermarkTextBox Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Watermark="Contractor/Builder" />
+                            <CheckBox Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Content="Include sales tax" />
+                            <xctk:WatermarkComboBox Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="1" Watermark="Project Type" />
+                        </Grid>
+                    </Border>
+                </ScrollViewer>
             </TabItem>
 
             <!--========================================================================================
                                                         Room Information
             ==========================================================================================-->
             <TabItem Header="Rooms" Margin="-2,-2,0,0" Padding="7,7,7,7">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
                     <Grid Background="White">
-                        <ItemsControl ItemsSource="{Binding Rooms}" HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="702">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Content="Add Room" Command="{Binding AddRoomCommand}" />
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Rooms}" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="5,10,0,0">
+                                    <Grid Margin="5,10,0,25">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="28" />
                                             <RowDefinition Height="28" />
@@ -195,21 +164,20 @@
                                             <RowDefinition Height="28" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="0" />
+                                            <ColumnDefinition Width="15" />
                                             <ColumnDefinition Width="100" />
                                             <ColumnDefinition Width="100" />
                                             <ColumnDefinition Width="250" />
                                             <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="0" />
+                                            <ColumnDefinition Width="15" />
                                         </Grid.ColumnDefinitions>
-                                        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" Text="{Binding Room.RoomName}" BorderThickness="0,0,0,1" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" FontSize="14" />
+                                        <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
                                         <TextBlock Grid.Row="1" Grid.Column="1" Text="Wood Color" />
                                         <ComboBox ToolTip="Select the default room color" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Room.RoomColor, Mode=TwoWay}" ItemsSource="{Binding Room.WoodColorValues}" />
                                         <TextBlock Grid.Row="2" Grid.Column="1" Text="Strip Color" />
                                         <ComboBox ToolTip="Select the default strip color" Grid.Row="2" Grid.Column="2" SelectedItem="{Binding Room.StripColor, Mode=TwoWay}" ItemsSource="{Binding Room.StripColorValues}" />
                                         <TextBlock Grid.Row="3" Grid.Column="1" Text="Shelving Depth" />
                                         <ComboBox ToolTip="Select the default room depth" Grid.Row="3" Grid.Column="2" SelectedItem="{Binding Room.ShelvingDepth, Mode=TwoWay}" ItemsSource="{Binding Room.ShelvingDepthValues}" />
-                                        <TextBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" BorderThickness="0,0,1,1" SpellCheck.IsEnabled="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -305,7 +273,7 @@
                                                         Panel Information
             ==========================================================================================-->
             <TabItem Header="Panel" Margin="-2,-2,0,0" Padding="7,7,7,7">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
                     <ItemsControl ItemsSource="{Binding Rooms}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -379,7 +347,7 @@
                                                     <ComboBox Grid.Column="1" ItemsSource="{Binding HeightValues}" SelectedItem="{Binding SizeHeight, Mode=TwoWay}"/>
                                                     <ComboBox Grid.Column="2" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}" />
                                                     <CheckBox Grid.Column="3" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding IsHutch}"/>
-                                                    <TextBox Grid.Column="4" Text="{Binding Quantity, Mode=TwoWay}" />
+                                                    <xctk:IntegerUpDown Grid.Column="4" Text="{Binding Quantity, Mode=TwoWay}" />
                                                     <TextBlock Grid.Column="5">
                                                         <Run Text="$" />
                                                         <Run Text="{Binding Price}" />
@@ -401,7 +369,7 @@
                                                         Shelf Information
             ==========================================================================================-->
             <TabItem Header="Shelf" Margin="-2,-2,0,0" Padding="7,7,7,7">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
                     <ItemsControl ItemsSource="{Binding Rooms}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -414,14 +382,14 @@
                                         <RowDefinition Height="28" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0" />
+                                        <ColumnDefinition Width="15" />
                                         <ColumnDefinition Width="104" />
                                         <ColumnDefinition Width="100" />
                                         <ColumnDefinition Width="100" />
                                         <ColumnDefinition Width="100" />
                                         <ColumnDefinition Width="100" />
                                         <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="0" />
+                                        <ColumnDefinition Width="15" />
                                     </Grid.ColumnDefinitions>
 
                                     <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
@@ -431,7 +399,7 @@
                                             <CheckBox FontFamily="Calibri Light" FontSize="14" Content="Same Depth" IsChecked="{Binding IsShelfSameDepth}" ToolTip="When checked, all the shelves will be the same depth." />
                                         </StackPanel>
                                     </Border>-->
-                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="1,1,0,1" Content="Size Depth" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Size Depth" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
                                     <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
                                     <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Size Width" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
                                     <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Shelving Type" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
@@ -475,7 +443,7 @@
                                                     <ComboBox Grid.Column="1" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}"/>
                                                     <ComboBox Grid.Column="2" ItemsSource="{Binding WidthValues}" SelectedItem="{Binding SizeWidth, Mode=TwoWay}"/>
                                                     <ComboBox Grid.Column="3" ItemsSource="{Binding ShelfTypeValues}" SelectedItem="{Binding ShelfType, Mode=TwoWay}" DisplayMemberPath="Name" />
-                                                    <TextBox Grid.Column="4" Text="{Binding Quantity, Mode=TwoWay}" />
+                                                    <xctk:IntegerUpDown Grid.Column="4" Text="{Binding Quantity, Mode=TwoWay}" />
                                                     <TextBlock Grid.Column="5">
                                                         <Run Text="$" />
                                                         <Run Text="{Binding Price, Mode=TwoWay}" />
@@ -497,7 +465,7 @@
                                                         Accessory Information
             ==========================================================================================-->
             <TabItem Header="Accessory" Margin="-2,-2,0,0" Padding="7,7,7,7">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
                     <ItemsControl ItemsSource="{Binding Rooms}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -579,13 +547,12 @@
 
         <Grid Grid.Column="1" Grid.Row="1" Background="White">
             <Grid.RowDefinitions>
-                <RowDefinition Height="200" />
+                <RowDefinition Height="100" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <!--<Button Content="Create Proposal" Command="{Binding CreateProposalCommand}" />-->
             <Grid Background="White">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height=".5*" />
                     <RowDefinition Height=".5*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -597,44 +564,42 @@
                 <Border Grid.Column="0" Grid.Row="0" BorderThickness="0,0,1,0" BorderBrush="#333">
                     <StackPanel Orientation="Vertical">
                         <Label Content="Shelving Costs" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
-                        <Label Content="$10256.36" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                        <Label HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333">
+                            <TextBlock>
+                                <Run Text="$" />
+                                <Run Text="{Binding ShelvingCost}" />
+                            </TextBlock>
+                        </Label>
                         <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="1" Grid.Row="0" BorderThickness="0,0,1,0" BorderBrush="#333">
                     <StackPanel Orientation="Vertical">
                         <Label Content="Strip Costs" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
-                        <Label Content="$102.25" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                        <Label HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333">
+                            <TextBlock>
+                                <Run Text="$" />
+                                <Run Text="{Binding StripCost}" />
+                            </TextBlock>
+                        </Label>
                         <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
                     </StackPanel>
                 </Border>
                 <Border Grid.Column="2" Grid.Row="0">
                     <StackPanel Orientation="Vertical">
                         <Label Content="Accessory Costs" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
-                        <Label Content="$102.09" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
+                        <Label HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333">
+                            <TextBlock>
+                                <Run Text="$"/>
+                                <Run Text="{Binding AccessoryCost}" />
+                            </TextBlock>
+                        </Label>
                         <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
                     </StackPanel>
                 </Border>
-                <Border Grid.Column="0" Grid.Row="1" BorderThickness="0,0,1,0" BorderBrush="#333">
-                    <StackPanel Orientation="Vertical">
-                        <Label Content="Labor Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
-                        <Label Content="$50.23" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
-                    </StackPanel>
-                </Border>
-                <Border Grid.Column="1" Grid.Row="1" BorderThickness="0,0,1,0" BorderBrush="#333">
-                    <StackPanel Orientation="Vertical">
-                        <Label Content="Equipment Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
-                        <Label Content="$16.25" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
-                    </StackPanel>
-                </Border>
-                <Border Grid.Column="2" Grid.Row="1">
-                    <StackPanel Orientation="Vertical">
-                        <Label Content="Travel Fees" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
-                        <Label Content="3.09" HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333" />
-                    </StackPanel>
-                </Border>
             </Grid>
-            <ItemsControl Grid.Row="1" ItemsSource="{Binding Rooms}">
+            
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Rooms}" Margin="10,0,0,0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <!-- List all the rooms in the job-->
@@ -665,7 +630,7 @@
                             </ItemsControl>
 
                             <!-- List all the panels in the room -->
-                            <ItemsControl ItemsSource="{Binding PanelViewModel.Panels}" Margin="15,0,0,0">
+                            <ItemsControl ItemsSource="{Binding PanelViewModel.Panels}" Margin="15,0,0,0" FontFamily="Segoe UI Light">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
@@ -680,35 +645,22 @@
                             </ItemsControl>
 
                             <!-- List all the shelves in the room -->
-                            <ItemsControl ItemsSource="{Binding ShelfViewModel.Shelves}" Margin="15,0,0,0">
+                            <ItemsControl ItemsSource="{Binding ShelfViewModel.Shelves}" Margin="15,0,0,0" FontFamily="Segoe UI Light">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock>
                                                 <Run Text="{Binding DisplayName, Mode=OneWay}" />
-                                                <Run Text=" | $"/>
+                                                <Run Text=" - $"/>
                                                 <Run Text="{Binding Price}" />
                                             </TextBlock>
-                                            <!--<TextBlock>
-                                                <Run Text="{Binding Quantity}" />
-                                                <Run Text="x " />
-                                                <Run Text="{Binding ShelfType}" />
-                                                <Run Text=" Shelf (" />
-                                                <Run Text="{Binding Color}" />
-                                                <Run Text="), " />
-                                                <Run Text="{Binding SizeWidth}" />
-                                                <Run Text="in. x " />
-                                                <Run Text="{Binding SizeDepth}" />
-                                                <Run Text="in., $ " />
-                                                <Run FontWeight="Bold" Text="{Binding Price}" />
-                                            </TextBlock>-->
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
                             <!-- List all the Accessories in the room -->
-                            <ItemsControl ItemsSource="{Binding AccessoryViewModel.Accessories}" Margin="15,0,0,0">
+                            <ItemsControl ItemsSource="{Binding AccessoryViewModel.Accessories}" Margin="15,0,0,0" FontFamily="Segoe UI Light">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">

@@ -170,7 +170,7 @@ namespace TCC_MVVM.Model
         {
             get
             {
-                return "";
+                return Quantity + "x " + ShelfType.Name + ", " + Color + ", " + SizeWidth + "in. x " + SizeDepth + "in. ";
             }
             private set
             {

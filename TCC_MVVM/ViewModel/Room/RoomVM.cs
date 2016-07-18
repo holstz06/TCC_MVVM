@@ -26,32 +26,42 @@ namespace TCC_MVVM.ViewModel.Room
     [ImplementPropertyChanged]
     public class RoomVM : INotifyPropertyChanged
     {
+        // Data Table Variables
+        //====================================
         public DataTable Data { get; set; }
-
-        /// <summary>
-        /// Data table that stores the shelving depth values
-        /// </summary>
         private DataTable ShelvingDepthData;
-
-        /// <summary>
-        /// Data table that stores the strip color values;
-        /// </summary>
         private DataTable StripColorData;
-
-        /// <summary>
-        /// Data table that stores the wood data values
-        /// </summary>
         private DataTable WoodData;
 
-        /// <summary>
-        /// The total price of all the shelving in this room
-        /// </summary>
+        // Cost Variables
+        //====================================
+        private decimal _TotalPrice;
         public decimal TotalPrice
         {
             get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
-        private decimal _TotalPrice;
+
+        private decimal _ShelvingCost;
+        public decimal ShelvingCost
+        {
+            get { return Math.Round(_ShelvingCost, 2, MidpointRounding.AwayFromZero); }
+            set { _ShelvingCost = value; OnPropertyChanged("ShelvingCost"); }
+        }
+
+        private decimal _StripCost;
+        public decimal StripCost
+        {
+            get { return Math.Round(_StripCost, 2, MidpointRounding.AwayFromZero); }
+            set { _StripCost = value; OnPropertyChanged("StripCost"); }
+        }
+
+        private decimal _AccessoryCost;
+        public decimal AccessoryCost
+        {
+            get { return Math.Round(_AccessoryCost, 2, MidpointRounding.AwayFromZero); }
+            set { _AccessoryCost = value; OnPropertyChanged("AccessoryCost"); }
+        }
 
         // Model
         public Model.Room Room { get; set; }
@@ -303,6 +313,18 @@ namespace TCC_MVVM.ViewModel.Room
                     PanelViewModel.TotalPrice +
                     ShelfViewModel.TotalPrice +
                     AccessoryViewModel.TotalPrice;
+
+                // Set the price of the shelving
+                ShelvingCost = 0;
+                ShelvingCost += PanelViewModel.TotalPrice + ShelfViewModel.TotalPrice;
+
+                // Set the price of the strip
+                StripCost = 0;
+                StripCost += StripViewModel.TotalPrice;
+
+                // Set the price of the accessory
+                AccessoryCost = 0;
+                AccessoryCost += AccessoryViewModel.TotalPrice;
             }
         }
         #endregion

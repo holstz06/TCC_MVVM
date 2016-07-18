@@ -17,18 +17,12 @@ namespace TCC_MVVM.ViewModel
     {
         // Data Table Variables
         //=====================================
-        private DataTable StripData;
-        private DataTable StripColorData;
+        DataTable StripData;
+        DataTable StripColorData;
 
-        /// <summary>
-        /// A collection of strip
-        /// </summary>
         public ObservableCollection<Strip> Strips { get; set; } = new ObservableCollection<Strip>();
 
-        /// <summary>
-        /// The total price of the all the strip in the collection
-        /// </summary>
-        private decimal _TotalPrice;
+        decimal _TotalPrice;
         public decimal TotalPrice
         {
             get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
@@ -36,9 +30,9 @@ namespace TCC_MVVM.ViewModel
         }
 
         /// <summary>
-        /// Command to remove a strip from the collection
+        /// (Command) Removes strip from the collection
         /// </summary>
-        private ICommand _RemoveCommand;
+        ICommand _RemoveCommand;
         public ICommand RemoveCommand
         {
             get
@@ -84,23 +78,15 @@ namespace TCC_MVVM.ViewModel
         /// <summary>
         /// Creates a list of color values from the data table
         /// </summary>
-        /// <returns>
-        /// Return a list of color values
-        /// </returns>
-        private List<string> GetStripColors() => StripColorData.AsEnumerable().Select(row => row.Field<string>("StripColor")).Distinct().ToList();
+        /// <returns></returns>
+        List<string> GetStripColors() 
+            => StripColorData.AsEnumerable().Select(row => row.Field<string>("StripColor")).Distinct().ToList();
 
         /// <summary>
         /// Sets the properties of a new strip then adds it to the collection
         /// </summary>
-        /// <param name="RoomNumber">
-        /// The room number this strip belongs to
-        /// </param>
-        /// <param name="StripNumber">
-        /// A unique ID for this strip
-        /// </param>
-        /// <param name="Color">
-        /// The color of this strip
-        /// </param>
+        /// <param name="RoomNumber"></param>
+        /// <param name="Color"></param>
         public void Add(int RoomNumber, string Color = null)
         {
             bool HasColor = false;
@@ -120,9 +106,7 @@ namespace TCC_MVVM.ViewModel
         /// <summary>
         /// Adds a strip to the collection
         /// </summary>
-        /// <param name="strip">
-        /// The strip to add to the collection
-        /// </param>
+        /// <param name="strip"></param>
         public void Add(Strip strip)
         {
             strip.StripItemList = GetStripItems();
@@ -166,14 +150,11 @@ namespace TCC_MVVM.ViewModel
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        /// <summary>
-        /// Creates a new listener so the observer of this object can see this property
-        /// </summary>
         void Strip_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Strip senderStrip = (Strip)sender;
@@ -185,6 +166,16 @@ namespace TCC_MVVM.ViewModel
                         TotalPrice += strip.Price;
                     break;
             }
+        }
+
+        void SetPrice()
+        {
+
+        }
+
+        void SetLength()
+        {
+
         }
         #endregion
     }
