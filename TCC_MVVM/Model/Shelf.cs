@@ -8,15 +8,25 @@ namespace TCC_MVVM.Model
     /// <summary>
     /// Camposts are items fastened to a shelf to lock them into panels.
     /// Only fixed shelfs have these items but depending on the shelf,
-    /// they vary how many they have (e.g. Shoe shelves have 2 where corner 
+    /// they vary how many they have (e.g. Shoe shelves have 2, corner 
     /// shelves have 6)
     /// 
-    /// Camposts also have a wood color associated with it. In other words,
-    /// every wood color has its own campost color
+    /// Camposts also have a wood color associated with it. Every wood color has its own campost color
     /// </summary>
     public class CamPost
     {
         public int Quantity { get; set; }
+        public string Color { get; set; }
+        public string WoodColor { get; set; }
+        public decimal Price { get; set; }
+    }
+
+    /// <summary>
+    /// Top Connector (H beams) are attached to the side of a shelf to secure it to another
+    /// shelf adjacent. This useful for corners.
+    /// </summary>
+    public class TopConnector
+    {
         public string Color { get; set; }
         public string WoodColor { get; set; }
         public decimal Price { get; set; }
@@ -40,23 +50,6 @@ namespace TCC_MVVM.Model
     public class ShelfType
     {
         public string Name { get; set; }
-        public int CamQuantity { get; set; }
-        public bool HasFencePost { get; set; }
-        public string FencePostColor { get; set; } = "";
-    }
-
-    [ImplementPropertyChanged]
-    public class Shelf : INotifyPropertyChanged
-    {
-        //========================================
-        // Shelving variables
-        //========================================
-        public int RoomNumber { get; set; }
-        public int ShelfNumber { get; set; }
-        public int Quantity { get; set; }
-        public string Color { get; set; }
-        public string SizeDepth { get; set; }
-        public string SizeWidth { get; set; }
 
         //========================================
         // Cam Post Variables
@@ -73,13 +66,73 @@ namespace TCC_MVVM.Model
         public decimal FencePrice { get; set; }
 
         //========================================
+        // Top Connector Variables
+        //========================================
+        public bool HasTopConnector { get; set; }
+        public string TopConnectorColor { get; set; }
+        public decimal TopConnectorPrice { get; set; }
+
+        //========================================
+        // Toe Kick Variables
+        //========================================
+        public bool IsToeKick { get; set; }
+    }
+
+    [ImplementPropertyChanged]
+    public class Shelf : INotifyPropertyChanged
+    {
+        //========================================
+        // Shelving variables
+        //========================================
+        public int RoomNumber { get; set; }
+        public int ShelfNumber { get; set; }
+        public int Quantity { get; set; }
+        public string Color { get; set; }
+        public string SizeDepth { get; set; }
+        public string SizeWidth { get; set; }
+        public decimal LaborFees { get; set; } 
+        public decimal EquipmentFees { get; set; } 
+        public string ShelfTypeName { get; set; }
+
+        //========================================
         // Shelf Price
         //========================================
-        private decimal _Price;
+        decimal _Price;
         public decimal Price
         {
             get { return Math.Round(_Price, 2, MidpointRounding.AwayFromZero); }
             set { _Price = value; OnPropertyChanged("Price"); }
+        }
+
+        public readonly string[] Properties =
+        {
+            "RoomNumber",
+            "ShelfNumber",
+            "Quantity",
+            "Color",
+            "SizeDepth",
+            "SizeWidth",
+            "LaborFees",
+            "EquipmentFees",
+            "Price",
+            "ShelfTypeName"
+        };
+
+        public void SetProperty(string PropertyName, string PropertyValue)
+        {
+            switch(PropertyName)
+            {
+                case "RoomNumber": RoomNumber = int.Parse(PropertyValue); break;
+                case "ShelfNumber": ShelfNumber = int.Parse(PropertyValue); break;
+                case "Quantity": Quantity = int.Parse(PropertyValue); break;
+                case "Color": Color = PropertyValue; break;
+                case "SizeDepth": SizeDepth = PropertyValue; break;
+                case "SizeWidth": SizeWidth = PropertyValue; break;
+                case "LaborFees": LaborFees = decimal.Parse(PropertyValue); break;
+                case "EquipmentFees": EquipmentFees = decimal.Parse(PropertyValue); break;
+                case "Price": Price = decimal.Parse(PropertyValue); break;
+                case "ShelfTypeName": ShelfTypeName = PropertyValue; break;
+            }
         }
 
         //========================================
@@ -95,10 +148,10 @@ namespace TCC_MVVM.Model
         public ObservableCollection<string> ColorValues { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> WidthValues { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> DepthValues { get; set; } = new ObservableCollection<string>();
-        public ObservableCollection<ShelfType> ShelfTypeValues { get; set; } = new ObservableCollection<ShelfType>();
+        public ObservableCollection<string> ShelfTypeValues { get; set; } = new ObservableCollection<string>();
 
         /// <summary>
-        /// Default Constructor
+        /// Default Constructor - Creates new instance of a shelf
         /// </summary>
         public Shelf()
         {
@@ -108,15 +161,6 @@ namespace TCC_MVVM.Model
         /// <summary>
         /// Creates a new instance of a shelf
         /// </summary>
-        /// <param name="RoomNumber">
-        /// The unique room number this shelf belongs to
-        /// </param>
-        /// <param name="Color">
-        /// The color of this shelf
-        /// </param>
-        /// <param name="SizeDepth">
-        /// The depth of this shelf
-        /// </param>
         public Shelf(int RoomNumber, string Color = null, string SizeDepth = null)
         {
             Quantity = 1;
@@ -128,29 +172,35 @@ namespace TCC_MVVM.Model
         /// <summary>
         /// Sets the price of the shelf
         /// </summary>
-        private void SetPrice()
+        void SetPrice()
         {
-            Price = 0; // Reset price
+            decimal tempPrice = 0; // Reset price
 
-            decimal SizeWidth = decimal.Parse(this.SizeWidth);
-            decimal SizeDepth = decimal.Parse(this.SizeDepth);
+            var SizeWidth = decimal.Parse(this.SizeWidth);
+            var SizeDepth = decimal.Parse(this.SizeDepth);
 
             // Get the price of the wood and banding
-            Price += (SizeWidth * SizeDepth) * Wood.Price * (decimal)Wood.MARKUP;
-            Price += (SizeWidth) * Banding.Price;
+            tempPrice += (SizeWidth * SizeDepth) * Wood.Price * (decimal)Wood.MARKUP;
+            tempPrice += (SizeWidth) * Banding.Price;
 
-            Price += (CamPostQuantity * CamPostPrice);
+            tempPrice += (ShelfType.CamPostQuantity * ShelfType.CamPostPrice);
 
-            if (HasFence)
-                Price += FencePrice;
-            
+            if (ShelfType.HasFence)
+                tempPrice += ShelfType.FencePrice;
+            if (ShelfType.HasTopConnector)
+                tempPrice += ShelfType.TopConnectorPrice;
+            if(ShelfType.IsToeKick)
+                tempPrice += SizeWidth * 3 /*HEIGHT*/ * Wood.Price;
+
+
             // Get the price for all the boards
-            Price += Price * Quantity;
+            tempPrice *= Quantity;
+
+            Price = tempPrice;
         }
 
-        #region INotifyPropertyChanged Members
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
@@ -158,25 +208,33 @@ namespace TCC_MVVM.Model
                 && !string.IsNullOrEmpty(Color)
                 && !string.IsNullOrEmpty(SizeWidth)
                 && !string.IsNullOrEmpty(SizeDepth)
-                && !string.IsNullOrEmpty(ShelfType.Name))
+                && !string.IsNullOrEmpty(ShelfTypeName))
                     SetPrice();
         }
-        #endregion
 
-        #region Display Name
-
-        private string _DisplayName;
+        string _DisplayName;
         public string DisplayName
         {
             get
             {
-                return Quantity + "x " + ShelfType.Name + ", " + Color + ", " + SizeWidth + "in. x " + SizeDepth + "in. ";
+                return Quantity + "x " + ShelfType.Name + " Shelf, " + Color + ", " + SizeWidth + "in. x " + SizeDepth + "in. ";
             }
             private set
             {
                 _DisplayName = value; OnPropertyChanged("DisplayName");
             }
         }
-        #endregion
+
+        public ShelfType ShelfType1
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
     }
 }

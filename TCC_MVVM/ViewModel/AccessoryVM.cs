@@ -86,6 +86,13 @@ namespace TCC_MVVM.ViewModel
             Accessories.Add(accessory);
         }
 
+        public void Add(Accessory Accessory)
+        {
+            Accessory.Accessories = new ObservableCollection<string>(GetAccessories());
+            Accessory.PropertyChanged += Accessory_PropertyChanged;
+            Accessories.Add(Accessory);
+        }
+
         /// <summary>
         /// Remove accessory from the collection
         /// </summary>

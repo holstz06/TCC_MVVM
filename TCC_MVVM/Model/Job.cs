@@ -72,10 +72,11 @@ namespace TCC_MVVM.Model
         /// </param>
         public void SetProperty(string PropertyName, string PropertyValue)
         {
-            switch(PropertyName)
+            switch (PropertyName)
             {
                 case "FullName": FullName = PropertyValue; break;
                 case "PhoneNumber": PhoneNumber = PropertyValue; break;
+                case "Email": Email = PropertyValue; break;
                 case "NumRooms": NumRooms = int.Parse(PropertyValue); break;
                 case "MailingAddress01": MailingAddress01 = PropertyValue; break;
                 case "MailingAddress02": MailingAddress02 = PropertyValue; break;
@@ -102,7 +103,7 @@ namespace TCC_MVVM.Model
         /// </returns>
         public object GetPropertyValue(string PropertyName)
         {
-            switch(PropertyName)
+            switch (PropertyName)
             {
                 case "FullName": return FirstName;
                 case "PhoneNumber": return PhoneNumber;
@@ -158,7 +159,7 @@ namespace TCC_MVVM.Model
         {
             get
             {
-                foreach(string property in ValidateProperties)
+                foreach (string property in ValidateProperties)
                     if (GetValidationError(property) != null)
                         return false;
                 return true;

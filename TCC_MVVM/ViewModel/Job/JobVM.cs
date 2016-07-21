@@ -4,13 +4,14 @@ using System.Windows.Input;
 using TCC_MVVM.ViewModel.Room;
 using PropertyChanged;
 using TCC_MVVM.Model;
+using System.Windows;
 
 namespace TCC_MVVM.ViewModel.Job
 {
     [ImplementPropertyChanged]
     public class JobVM : INotifyPropertyChanged
     {
-        private int CurrentRoomNumber { get; set; } = 0;
+        int CurrentRoomNumber { get; set; } = 0;
 
         public decimal TotalPrice { get; set; }
         public decimal ShelvingCost { get; set; }
@@ -35,7 +36,7 @@ namespace TCC_MVVM.ViewModel.Job
         /// <summary>
         /// Set the premise address to the mailing address
         /// </summary>
-        private bool _PremiseEqualsMailing = false;
+        bool _PremiseEqualsMailing;
         public bool PremiseEqualsMailing
         {
             get { return _PremiseEqualsMailing; }
@@ -76,9 +77,7 @@ namespace TCC_MVVM.ViewModel.Job
         /// <summary>
         /// Adds a new room to the collection
         /// </summary>
-        /// <param name="RoomName">
-        /// (Optional) The name of the room. A default name will be given if one is not provided
-        /// </param>
+        /// <param name="RoomName"></param>
         public void AddRoom(string RoomName = null)
         {
             bool HasRoomName = false || RoomName != null;
@@ -98,18 +97,17 @@ namespace TCC_MVVM.ViewModel.Job
         {
             SaveFile savefile = new SaveFile();
             savefile.Save(this);
-            //Proposal proposal = new Proposal(this) { ItemListPath = "C:\\Users\\tyhol\\Desktop\\Proposal1.xlsx" };
-            //proposal.CreateItemList();
+            MessageBox.Show("Saved!");
         }
 
         #region INotifyPropertyChanged Members
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void RoomPropertyChanged(object sender, PropertyChangedEventArgs e)
+        void RoomPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == "TotalPrice")
             {
@@ -145,5 +143,17 @@ namespace TCC_MVVM.ViewModel.Job
             }
         }
         #endregion
+
+        public RoomVM RoomVM
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
     }
 }

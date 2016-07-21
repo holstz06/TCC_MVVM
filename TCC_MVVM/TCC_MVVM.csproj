@@ -68,6 +68,7 @@
     <Compile Include="Model\Accessory.cs" />
     <Compile Include="Model\Banding.cs" />
     <Compile Include="Model\Proposal.cs" />
+    <Compile Include="Model\ShelvingItem.cs" />
     <Compile Include="ViewModel\CollectionChangeCommand.cs" />
     <Compile Include="Model\Job.cs" />
     <Compile Include="Model\Price.cs" />
@@ -95,6 +96,8 @@
     <Compile Include="ViewModel\PanelVM.cs" />
     <Compile Include="ViewModel\Room\RoomVM.cs" />
     <Compile Include="ViewModel\ShelfVM.cs" />
+    <Compile Include="ViewModel\ShelfVM_Data.cs" />
+    <Compile Include="ViewModel\ShelfVM_PropertyChange.cs" />
     <Compile Include="ViewModel\StripVM.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -128,6 +131,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -7,8 +7,6 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="The Closet Company - Quoting Tool" Height="800" Width="1300">
-
-    <!-- Store reusable code in Windows.Resource-->
     <Window.Resources>
         <JobVM:JobVM x:Key="JobViewModel" />
     </Window.Resources>
@@ -32,16 +30,7 @@
                     <ColumnDefinition Width="121" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Content="TCCQ" 
-                        Background="#49c5d4"
-                        Grid.Column="0" 
-                        FontFamily="Gill Sans Ultra Bold" 
-                        FontWeight="ExtraBold" 
-                        FontSize="16" 
-                        Height="auto"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                       Foreground="#eeeeee"/>
+                <Label Content="TCCQ" Grid.Column="0" FontFamily="Gill Sans Ultra Bold" FontWeight="ExtraBold" FontSize="16" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <Label Grid.Column="1" FontWeight="Normal" FontFamily="Segoe UI" FontSize="16" Background="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                     <TextBlock>
                         <Run Text="Personal Quote for: " />
@@ -51,13 +40,8 @@
                         <Run Text="{Binding TotalPrice}" />
                     </TextBlock>
                 </Label>
-                <!--<Button Grid.Column="1" Content="Load Proposal" Command="{Binding LoadCommand, Mode=TwoWay}" />-->
             </Grid>
         </Border>
-
-        <!--<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold" Text="****** This version of the software is in ALPHA - Therefore this software is INCOMPLETE ******"
-                   ToolTip="The verion of this software is in ALPHA. This means, while most features are implemented, they are not tested or even finished. It is important not to take any of the software's output as real business data." />-->
-
         <TabControl Grid.Column="0" Grid.Row="1" TabStripPlacement="Left" BorderThickness="0" Padding="0">
             <!--========================================================================================
                                                         Job Information
@@ -123,10 +107,10 @@
                             
                             <!-- Premise Information Controls -->
                             <Label Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Content="Premise Information" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold"  />
-                            <CheckBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Content="Contact Address is also Premise Address" />
+                            <CheckBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Content="Contact Address is also Premise Address" IsChecked="{Binding PremiseEqualsMailing, Mode=TwoWay}" />
                             <xctk:WatermarkTextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="1" Watermark="Mileage" />
                             <xctk:WatermarkTextBox Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="1" Watermark="Price" />
-                            <xctk:WatermarkTextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Watermark="Address Line 01" Text="{Binding Job.PremiseAddress02, Mode=TwoWay}"/>
+                            <xctk:WatermarkTextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Watermark="Address Line 01" Text="{Binding Job.PremiseAddress01, Mode=TwoWay}"/>
                             <xctk:WatermarkTextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Watermark="Address Line 02" Text="{Binding Job.PremiseAddress02, Mode=TwoWay}"/>
                             <xctk:WatermarkTextBox Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="1" Watermark="City" Text="{Binding Job.PremiseCity, Mode=TwoWay}"/>
                             <xctk:WatermarkTextBox Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="1" Watermark="State" Text="{Binding Job.PremiseState, Mode=TwoWay}"/>
@@ -173,7 +157,7 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
                                         <TextBlock Grid.Row="1" Grid.Column="1" Text="Wood Color" />
-                                        <ComboBox ToolTip="Select the default room color" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Room.RoomColor, Mode=TwoWay}" ItemsSource="{Binding Room.WoodColorValues}" />
+                                        <ComboBox ToolTip="Select the default room color" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Room.ShelvingColor, Mode=TwoWay}" ItemsSource="{Binding Room.WoodColorValues}" />
                                         <TextBlock Grid.Row="2" Grid.Column="1" Text="Strip Color" />
                                         <ComboBox ToolTip="Select the default strip color" Grid.Row="2" Grid.Column="2" SelectedItem="{Binding Room.StripColor, Mode=TwoWay}" ItemsSource="{Binding Room.StripColorValues}" />
                                         <TextBlock Grid.Row="3" Grid.Column="1" Text="Shelving Depth" />
@@ -442,7 +426,7 @@
                                                     <ComboBox Grid.Column="0" ItemsSource="{Binding DepthValues}" SelectedItem="{Binding SizeDepth, Mode=TwoWay}"/>
                                                     <ComboBox Grid.Column="1" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}"/>
                                                     <ComboBox Grid.Column="2" ItemsSource="{Binding WidthValues}" SelectedItem="{Binding SizeWidth, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="3" ItemsSource="{Binding ShelfTypeValues}" SelectedItem="{Binding ShelfType, Mode=TwoWay}" DisplayMemberPath="Name" />
+                                                    <ComboBox Grid.Column="3" ItemsSource="{Binding ShelfTypeValues}" SelectedItem="{Binding ShelfTypeName, Mode=TwoWay}" />
                                                     <xctk:IntegerUpDown Grid.Column="4" Text="{Binding Quantity, Mode=TwoWay}" />
                                                     <TextBlock Grid.Column="5">
                                                         <Run Text="$" />
@@ -453,7 +437,7 @@
                                         </ListView.ItemTemplate>
                                     </ListView>
                                     <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new panel to this room" FontSize="16" Content=" + " Command="{Binding Command_AddShelf, Mode=OneWay}" />
-                                    <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected panel" FontSize="18" Content=" - " Command="{Binding ShelfViewModel}" CommandParameter="{Binding ElementName=ShelfViewList,Path=SelectedItem}" />
+                                    <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected panel" FontSize="18" Content=" - " Command="{Binding ShelfViewModel.RemoveCommand}" CommandParameter="{Binding ElementName=ShelfViewList,Path=SelectedItem}" />
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -478,65 +462,73 @@
                                         <RowDefinition Height="28" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="15" />
+                                        <ColumnDefinition Width="90" />
+                                        <ColumnDefinition Width="90" />
+                                        <ColumnDefinition Width="90" />
+                                        <ColumnDefinition Width="90" />
+                                        <ColumnDefinition Width="90" />
+                                        <ColumnDefinition Width="90" />
                                         <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="0" />
+                                        <ColumnDefinition Width="15" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="7" Text="{Binding Room.RoomName}" ToolTip="Type in the name of the room" BorderBrush="#ccc" BorderThickness="0,0,0,1" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" FontSize="14" />
-                                    <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" BorderBrush="#ccc" BorderThickness="0,0,0,0">
-                                        <StackPanel Orientation="Vertical" Margin="0,10,0,10">
-                                            <!-- PLACEHOLDER FOR STACKPANEL ITEMS -->
-                                        </StackPanel>
-                                    </Border>
-                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="1,1,1,1" Content="Item" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Width" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Depth" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="5" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Height" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="6" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1" Content="Length" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="7"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,1,1"/>
+                                    <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="7" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
+                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Item" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Width" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Depth" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="5" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Height" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="6" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Length" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                                    <Label Grid.Row="2" Grid.Column="7"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1"/>
                                     <ListView Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="7" ItemsSource="{Binding AccessoryViewModel.Accessories}" x:Name="AccessoryViewList">
-                                        <ListView.ItemContainerStyle>
+                                        <ListView.Resources>
                                             <Style TargetType="ListViewItem">
                                                 <Setter Property="Padding" Value="0,0,0,0" />
                                                 <Setter Property="FontFamily" Value="Calibri Light" />
                                                 <Setter Property="FontSize" Value="14" />
                                                 <Setter Property="IsSelected" Value="False" />
                                                 <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
+                                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                <Setter Property="BorderThickness" Value="0,0,0,0" />
                                             </Style>
-                                        </ListView.ItemContainerStyle>
+                                            <Style TargetType="ListView">
+                                                <Setter Property="BorderThickness" Value="0,0,0,0" />
+                                            </Style>
+                                            <Style TargetType="ComboBox">
+                                                <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            </Style>
+                                            <Style TargetType="TextBox">
+                                                <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            </Style>
+                                        </ListView.Resources>
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Height="25">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
+                                                        <ColumnDefinition Width="90" />
+                                                        <ColumnDefinition Width="90" />
+                                                        <ColumnDefinition Width="90" />
+                                                        <ColumnDefinition Width="90" />
+                                                        <ColumnDefinition Width="90" />
+                                                        <ColumnDefinition Width="90" />
+                                                        <ColumnDefinition Width="90" />
                                                     </Grid.ColumnDefinitions>
-                                                    <ComboBox Grid.Column="0" BorderBrush="#ccc" BorderThickness="1,0,1,1" ItemsSource="{Binding Accessories}" SelectedItem="{Binding Name, Mode=TwoWay}" ToolTip="{Binding Name}"/>
-                                                    <ComboBox Grid.Column="1" BorderBrush="#ccc" BorderThickness="0,0,1,1" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="2" BorderBrush="#ccc" BorderThickness="0,0,1,1" ItemsSource="{Binding WidthValues}" SelectedItem="{Binding Width, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="3" BorderBrush="#ccc" BorderThickness="0,0,1,1" ItemsSource="{Binding DepthValues}" SelectedItem="{Binding Depth, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="4" BorderBrush="#ccc" BorderThickness="0,0,1,1" ItemsSource="{Binding HeightValues}" SelectedItem="{Binding Height, Mode=TwoWay}"/>
-                                                    <TextBox Grid.Column="5" BorderBrush="#ccc" BorderThickness="0,0,1,1" IsEnabled="{Binding HasLength}" Text="{Binding Length, Mode=TwoWay}"/>
+                                                    <ComboBox Grid.Column="0" ItemsSource="{Binding Accessories}" SelectedItem="{Binding Name, Mode=TwoWay}" ToolTip="{Binding Name}"/>
+                                                    <ComboBox Grid.Column="1" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}"/>
+                                                    <ComboBox Grid.Column="2" ItemsSource="{Binding WidthValues}" SelectedItem="{Binding Width, Mode=TwoWay}"/>
+                                                    <ComboBox Grid.Column="3" ItemsSource="{Binding DepthValues}" SelectedItem="{Binding Depth, Mode=TwoWay}"/>
+                                                    <ComboBox Grid.Column="4" ItemsSource="{Binding HeightValues}" SelectedItem="{Binding Height, Mode=TwoWay}"/>
+                                                    <TextBox Grid.Column="5" IsEnabled="{Binding HasLength}" Text="{Binding Length, Mode=TwoWay}"/>
                                                     <TextBlock Grid.Column="6"><Run Text="$" /><Run Text="{Binding Price}" /></TextBlock>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
-                                    <Button Grid.Row="4" Grid.Column="1" ToolTip="Adds new accessory to this room" Content="Add" Command="{Binding Command_AddAccessory}" />
-                                    <Button Grid.Row="4" Grid.Column="2" ToolTip="Remove new accessoy from this room" Content="Remove" Command="{Binding AccessoryViewModel.RemoveCommand}" CommandParameter="{Binding ElementName=AccessoryViewList,Path=SelectedItem}" />
+                                    <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new panel to this room" FontSize="16" Content=" + " Command="{Binding Command_AddAccessory, Mode=OneWay}" />
+                                    <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected panel" FontSize="18" Content=" - " Command="{Binding AccessoryViewModel.RemoveCommand}" CommandParameter="{Binding ElementName=AccessoryViewList,Path=SelectedItem}" />
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -547,11 +539,14 @@
 
         <Grid Grid.Column="1" Grid.Row="1" Background="White">
             <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
                 <RowDefinition Height="100" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <!--<Button Content="Create Proposal" Command="{Binding CreateProposalCommand}" />-->
-            <Grid Background="White">
+            <xctk:SplitButton Grid.Row="0" Content="Load Proposal" Command="{Binding LoadCommand}" />
+            <Button Grid.Row="1" Content="Create Proposal" Command="{Binding CreateProposalCommand}" />
+            <Grid Background="White" Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height=".5*" />
                 </Grid.RowDefinitions>
@@ -598,8 +593,7 @@
                     </StackPanel>
                 </Border>
             </Grid>
-            
-            <ItemsControl Grid.Row="1" ItemsSource="{Binding Rooms}" Margin="10,0,0,0">
+            <ItemsControl Grid.Row="3" ItemsSource="{Binding Rooms}" Margin="10,0,0,0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <!-- List all the rooms in the job-->

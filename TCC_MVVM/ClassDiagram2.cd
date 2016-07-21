@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TCC_MVVM.ViewModel.Job.JobVM">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAQBACAAAAAAACBIAAAAIAChAAqRAAACAAAAAMQAAA=</HashCode>
+      <FileName>ViewModel\Job\JobVM.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="RoomVM" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TCC_MVVM.ViewModel.Room.RoomVM">
+    <Position X="3.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAgABEGiABAMIgBAIBCEUAJSgIJgRRJICACAQAIAhAA=</HashCode>
+      <FileName>ViewModel\Room\RoomVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TCC_MVVM.ViewModel.AccessoryVM">
+    <Position X="6.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAEAAAAgDAABIIIQBAAAgwACQAIAAAAAQAAAAAg=</HashCode>
+      <FileName>ViewModel\AccessoryVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TCC_MVVM.ViewModel.PanelVM">
+    <Position X="11.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABoAEAEkAAAgDAAAIAAQBQAAiQBBQAABAgBAIQABAIA=</HashCode>
+      <FileName>ViewModel\PanelVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TCC_MVVM.ViewModel.ShelfVM">
+    <Position X="8" Y="3" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>ABIggIFsAAIADAAAYAAQDQACiQxCQgiDAIhAAAAAQYg=</HashCode>
+      <FileName>ViewModel\ShelfVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TCC_MVVM.ViewModel.StripVM">
+    <Position X="13.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAIAAAEAABAgTABBIBAABAAAgAAQQAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ViewModel\StripVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TCC_MVVM.Model.Strip">
+    <Position X="22" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABEAAAAQEAABABIgAAIABAgAEAAAAAAAAAgAQCEAA=</HashCode>
+      <FileName>Model\Strip.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TCC_MVVM.Model.Panel">
+    <Position X="20.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEBEAAAAQAQAAABIgAIICAAgAEAAAAAIAAKiQQCAAA=</HashCode>
+      <FileName>Model\Panel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TCC_MVVM.Model.Shelf">
+    <Position X="18.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAWBGABAAQAUAAABogBAIAAAgAEAAABAAAACiAQCABA=</HashCode>
+      <FileName>Model\Shelf.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TCC_MVVM.Model.Accessory">
+    <Position X="16.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACBAAAABQAQAAAAIoAAIERAggAAAAAgIAAAgAAAAAA=</HashCode>
+      <FileName>Model\Accessory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

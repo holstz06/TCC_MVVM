@@ -89,26 +89,6 @@ namespace TCC_MVVM.Model
             Price = tempPrice;
         }
 
-        /// <summary>
-        /// Sets the value of a property by its property name
-        /// </summary>
-        /// <param name="PropertyName">
-        /// The name of the property
-        /// </param>
-        /// <param name="PropertyValue">
-        /// The value of the property
-        /// </param>
-        public void SetProperty(string PropertyName, string PropertyValue)
-        {
-            switch (PropertyName)
-            {
-                case "RoomNumber": RoomNumber = int.Parse(PropertyValue); break;
-                case "Length": Length = double.Parse(PropertyValue); break;
-                case "Color": Color = PropertyValue; break;
-                case "Price": Price = decimal.Parse(PropertyValue); break;
-            }
-        }
-
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged(string propertyName)
@@ -121,6 +101,25 @@ namespace TCC_MVVM.Model
                 SetPrice();
         }
         #endregion
+
+        public readonly string[] Properties =
+{
+            "RoomNumber",
+            "Color",
+            "Length",
+            "Price"
+        };
+
+        public void SetProperty(string PropertyName, string PropertyValue)
+        {
+            switch (PropertyName)
+            {
+                case "RoomNumber": RoomNumber = int.Parse(PropertyValue); break;
+                case "Color": Color = PropertyValue; break;
+                case "Length": Length = double.Parse(PropertyValue); break;
+                case "Price": Price = decimal.Parse(PropertyValue); break;
+            }
+        }
 
         string _DisplayName;
         public string DisplayName

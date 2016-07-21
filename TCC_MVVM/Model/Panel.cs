@@ -19,7 +19,7 @@ namespace TCC_MVVM.Model
         public decimal Price { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -36,7 +36,7 @@ namespace TCC_MVVM.Model
         public string Color { get; set; } = null;
         public bool IsHutch { get; set; } = false;
 
-        private decimal _Price;
+        decimal _Price;
         public decimal Price
         {
             get { return Math.Round(_Price, 2, MidpointRounding.AwayFromZero); }
@@ -46,29 +46,37 @@ namespace TCC_MVVM.Model
         public Wood Wood { get; set; } = new Wood();
         public Banding Banding { get; set; } = new Banding();
 
-        /// <summary>
-        /// A collection of color values
-        /// </summary>
+        public readonly string[] Properties =
+        {
+            "Quantity",
+            "RoomNumber",
+            "PanelNumber",
+            "SizeHeight",
+            "SizeDepth",
+            "Color",
+            "IsHutch",
+            "Price"
+        };
+
+        public void SetProperty(string PropertyName, string PropertyValue)
+        {
+            switch(PropertyName)
+            {
+                case "Quantity": Quantity = int.Parse(PropertyValue); break;
+                case "RoomNumber": RoomNumber = int.Parse(PropertyValue); break;
+                case "PanelNumber": PanelNumber = int.Parse(PropertyValue); break;
+                case "SizeHeight": SizeHeight = PropertyValue; break;
+                case "SizeDepth": SizeDepth = PropertyValue; break;
+                case "Color": Color = PropertyValue; break;
+                case "IsHutch": IsHutch = bool.Parse(PropertyValue); break;
+                case "Price": Price = decimal.Parse(PropertyValue); break;
+            }
+        }
+
         public ObservableCollection<string> ColorValues { get; set; } = new ObservableCollection<string>();
-
-        /// <summary>
-        /// A collection of height values
-        /// </summary>
         public ObservableCollection<string> HeightValues { get; set; } = new ObservableCollection<string>();
-
-        /// <summary>
-        /// A collection of depth values
-        /// </summary>
         public ObservableCollection<string> DepthValues { get; set; } = new ObservableCollection<string>();
-
-        /// <summary>
-        /// A collection of panel items, these panel items 
-        /// </summary>
         public ObservableCollection<PanelItem> PanelItems { get; set; } = new ObservableCollection<PanelItem>();
-
-        /// <summary>
-        /// A total collection of panel items that can belong to any panel
-        /// </summary>
         public List<PanelItem> PanelItemsList { get; set; } = new List<PanelItem>();
 
         public Panel(int RoomNumber, string Color = null, string SizeDepth = null)
@@ -108,12 +116,12 @@ namespace TCC_MVVM.Model
         /// Sets the price of this panel by adding the price of the subitems
         /// and adding the cost of wood and banding
         /// </summary>
-        private decimal SetPrice()
+        decimal SetPrice()
         {
             decimal price = 0;
 
-            decimal SizeHeight = decimal.Parse(this.SizeHeight);
-            decimal SizeDepth = decimal.Parse(this.SizeDepth);
+            var SizeHeight = decimal.Parse(this.SizeHeight);
+            var SizeDepth = decimal.Parse(this.SizeDepth);
 
             decimal woodPrice = (SizeHeight * SizeDepth) * Wood.Price;
             decimal bandingPrice = (SizeHeight + (2 * SizeDepth)) * Banding.Price;
@@ -149,18 +157,19 @@ namespace TCC_MVVM.Model
         }
         #endregion
 
+       
+
         /// <summary>
         /// The display text for this panel
         /// </summary>
-        private string _DisplayName;
+        string _DisplayName;
         public string DisplayName
         {
             get
             {
                 if (IsHutch)
                     return Quantity + "x (" + Color + ") Hutch Panel: " + SizeDepth + "in. x " + SizeHeight + "in";
-                else
-                    return Quantity + "x (" + Color + ") Panel: " + SizeDepth + "in. x " + SizeHeight + "in.";
+                return Quantity + "x (" + Color + ") Panel: " + SizeDepth + "in. x " + SizeHeight + "in.";
             }
             set { _DisplayName = value; OnPropertyChanged("DisplayName"); }
         }

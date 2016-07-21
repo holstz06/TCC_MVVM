@@ -23,17 +23,6 @@ namespace TCC_MVVM.ViewModel.Job
 
         public void Execute(object parameter)
         {
-            ViewModel.Rooms.Clear();
-            bool validModel = ViewModel.Job.IsValid;
-            if (validModel)
-            {
-                for (int i = 1; i <= Job.NumRooms; i++)
-                {
-                    ViewModel.AddRoom();
-                }
-            }
-            else
-                MessageBox.Show("Please make sure all required fields are entered.");
         }
     }
 }

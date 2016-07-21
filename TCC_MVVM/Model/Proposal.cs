@@ -26,7 +26,6 @@ namespace TCC_MVVM.Model
         Microsoft.Office.Interop.Excel.Application ExcelApp;
         Microsoft.Office.Interop.Excel._Workbook WorkBook;
         Microsoft.Office.Interop.Excel._Worksheet WorkSheet;
-        Microsoft.Office.Interop.Excel.Range Range;
         object MissingValue = System.Reflection.Missing.Value;
 
         private JobVM ViewModel;
@@ -83,8 +82,8 @@ namespace TCC_MVVM.Model
         public void LoadItemList()
         {
             OpenExcel();
-            int rowCount = Range.Rows.Count;
-            int colCount = Range.Columns.Count;
+            int rowCount = 25;
+            int colCount = 25;
             int roomnumber = -1;
             RoomVM currentRoom = new RoomVM(null, 0);
 

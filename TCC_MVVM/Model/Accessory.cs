@@ -16,7 +16,7 @@ namespace TCC_MVVM.Model
         public string Depth { get; set; } = "N/A";
         public double Length { get; set; } = 0;
 
-        private decimal _Price = 0M;
+        decimal _Price;
         public decimal Price
         {
             get { return Math.Round(_Price, 2, MidpointRounding.AwayFromZero); }
@@ -32,9 +32,36 @@ namespace TCC_MVVM.Model
         public bool HasLength { get; set; } = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public readonly string[] Properties =
+        {
+            "RoomNumber",
+            "Name",
+            "Color",
+            "Width",
+            "Height",
+            "Depth",
+            "Length",
+            "Price"
+        };
+
+        public void SetProperty(string PropertyName, string PropertyValue)
+        {
+            switch(PropertyName)
+            {
+                case "RoomNumber": RoomNumber = int.Parse(PropertyValue); break;
+                case "Name": Name = PropertyValue; break;
+                case "Color": Color = PropertyValue; break;
+                case "Width": Width = PropertyValue; break;
+                case "Height": Height = PropertyValue; break;
+                case "Depth": Depth = PropertyValue; break;
+                case "Length": Length = double.Parse(PropertyValue); break;
+                case "Price": Price = decimal.Parse(PropertyValue); break;
+            }
         }
     }
 }

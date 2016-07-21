@@ -17,20 +17,20 @@ namespace TCC_MVVM.Model
     public class SaveFile
     {
         public DataSet DataSet { get; set; }
-        private DataTable JobData { get; set; }
-        private DataTable RoomData { get; set; }
-        private DataTable StripData { get; set; }
-        private DataTable PanelData { get; set; }
-        private DataTable ShelfData { get; set; }
-        private DataTable AccessoryData { get; set; }
+        DataTable JobData { get; set; }
+        DataTable RoomData { get; set; }
+        DataTable StripData { get; set; }
+        DataTable PanelData { get; set; }
+        DataTable ShelfData { get; set; }
+        DataTable AccessoryData { get; set; }
 
-        private readonly string DataSetName = "Proposal";
-        private readonly string JobDataName = "JobData";
-        private readonly string RoomDataName = "RoomData";
-        private readonly string StripDataName = "StripData";
-        private readonly string PanelDataName = "PanelData";
-        private readonly string ShelfDataName = "ShelfData";
-        private readonly string AccessoryDataName = "AccessoryData";
+        readonly string DataSetName = "Proposal";
+        readonly string JobDataName = "JobData";
+        readonly string RoomDataName = "RoomData";
+        readonly string StripDataName = "StripData";
+        readonly string PanelDataName = "PanelData";
+        readonly string ShelfDataName = "ShelfData";
+        readonly string AccessoryDataName = "AccessoryData";
 
         public void Save(JobVM viewmodel)
         {
@@ -42,8 +42,8 @@ namespace TCC_MVVM.Model
             JobData = new DataTable(JobDataName);
 
             // Create Columns
-            PropertyInfo[] properties = viewmodel.Job.GetType().GetProperties();
-            foreach(PropertyInfo property in properties)
+            PropertyInfo[] jobProperties = viewmodel.Job.GetType().GetProperties();
+            foreach(PropertyInfo property in jobProperties)
             {
                 JobData.Columns.Add(property.Name, typeof(string));
             }
@@ -51,7 +51,7 @@ namespace TCC_MVVM.Model
             // Populate rows
             JobData.Rows.Add();
             DataRow datarow = JobData.Rows[0];
-            foreach(PropertyInfo property in properties)
+            foreach(PropertyInfo property in jobProperties)
             {
                 if(property.CanRead && property.GetIndexParameters().Length == 0)
                     datarow[property.Name] = property.GetValue(viewmodel.Job);
@@ -65,75 +65,77 @@ namespace TCC_MVVM.Model
 
             // Create columns
             Room room = new Room();
-            properties = room.GetType().GetProperties();
-            foreach(PropertyInfo property in properties)
+            PropertyInfo[] roomProperties = room.GetType().GetProperties();
+            foreach (PropertyInfo property in roomProperties)
             {
                 RoomData.Columns.Add(property.Name, typeof(string));
             }
-
-            //RoomData.Columns.Add("RoomNumber", typeof(int));
-            //RoomData.Columns.Add("RoomName", typeof(string));
-            //RoomData.Columns.Add("RoomColor", typeof(string));
-            //RoomData.Columns.Add("StripColor", typeof(string));
-            //RoomData.Columns.Add("ShelvingDepth", typeof(string));
 
             // Populate rows
             int currentRow = 0;
             foreach (RoomVM roomvm in viewmodel.Rooms)
             {
                 RoomData.Rows.Add();
-                datarow = RoomData.Rows[currentRow++];
-                foreach(PropertyInfo property in properties)
+                DataRow roomDatarow = RoomData.Rows[currentRow];
+                foreach (PropertyInfo property in roomProperties)
                 {
                     if (property.CanRead && property.GetIndexParameters().Length == 0)
-                        datarow[property.Name] = property.GetValue(room);
-
+                        roomDatarow[property.Name] = property.GetValue(roomvm.Room);
                 }
+                currentRow++;
             }
 
             //===================================
             // Extract Strip Information
             //===================================
-
             StripData = new DataTable(StripDataName);
+            Strip stripmodel = new Strip();
+            PropertyInfo[] stripPropertes = stripmodel.GetType().GetProperties();
+            foreach(PropertyInfo property in stripPropertes)
+            {
+                StripData.Columns.Add(property.Name, typeof(string));
+            }
 
-            // Create columns
-            StripData.Columns.Add("RoomNumber", typeof(int));
-            StripData.Columns.Add("Color", typeof(string));
-            StripData.Columns.Add("Length", typeof(double));
-            StripData.Columns.Add("Price", typeof(decimal));
-
-            // Populate rows
-            foreach (RoomVM roomvm in viewmodel.Rooms)
+            currentRow = 0;
+            foreach(RoomVM roomvm in viewmodel.Rooms)
             {
                 foreach(Strip strip in roomvm.StripViewModel.Strips)
                 {
-                    StripData.Rows.Add(strip);
-                    //StripData.Rows.Add(strip.RoomNumber, strip.Color, strip.Length, strip.Price);
+                    StripData.Rows.Add();
+                    DataRow stripDatarow = StripData.Rows[currentRow];
+                    foreach(PropertyInfo property in stripPropertes)
+                    {
+                        if (property.CanRead && property.GetIndexParameters().Length == 0)
+                            stripDatarow[property.Name] = property.GetValue(strip);
+                    }
+                    currentRow++;
                 }
             }
 
             //===================================
             // Extract Panel Information
             //===================================
-
             PanelData = new DataTable(PanelDataName);
+            Panel panelmodel = new Panel();
+            PropertyInfo[] panelProperties = panelmodel.GetType().GetProperties();
+            foreach(PropertyInfo property in panelProperties)
+            {
+                PanelData.Columns.Add(property.Name, typeof(string));
+            }
 
-            // Create columns
-            PanelData.Columns.Add("RoomNumber", typeof(int));
-            PanelData.Columns.Add("SizeHeight", typeof(string));
-            PanelData.Columns.Add("SizeDepth", typeof(string));
-            PanelData.Columns.Add("Color", typeof(string));
-            PanelData.Columns.Add("IsHutch", typeof(bool));
-            PanelData.Columns.Add("Quantity", typeof(int));
-            PanelData.Columns.Add("Price", typeof(decimal));
-
-            // Populate rows
+            currentRow = 0;
             foreach(RoomVM roomvm in viewmodel.Rooms)
             {
                 foreach(Panel panel in roomvm.PanelViewModel.Panels)
                 {
-                    PanelData.Rows.Add(panel.RoomNumber, panel.SizeHeight, panel.SizeDepth, panel.Color, panel.IsHutch, panel.Quantity, panel.Price);
+                    PanelData.Rows.Add();
+                    DataRow panelDatarow = PanelData.Rows[currentRow];
+                    foreach(PropertyInfo property in panelProperties)
+                    {
+                        if (property.CanRead && property.GetIndexParameters().Length == 0)
+                            panelDatarow[property.Name] = property.GetValue(panel);
+                    }
+                    currentRow++;
                 }
             }
 
@@ -141,41 +143,55 @@ namespace TCC_MVVM.Model
             // Extract Shelf Information
             //===================================
             ShelfData = new DataTable(ShelfDataName);
-
-            // Create Columns
-            ShelfData.Columns.Add("RoomNumber", typeof(int));
-            ShelfData.Columns.Add("SizeWidth", typeof(string));
-            ShelfData.Columns.Add("SizeDepth", typeof(string));
-            ShelfData.Columns.Add("Color", typeof(string));
-            ShelfData.Columns.Add("ShelfType", typeof(ShelfType));
-            ShelfData.Columns.Add("Quantity", typeof(int));
-            ShelfData.Columns.Add("Price", typeof(decimal));
-
-            ShelfData.Columns.Add("CamPostColor", typeof(string));
-            ShelfData.Columns.Add("CamPostQuantity", typeof(int));
-            ShelfData.Columns.Add("CamPostPrice", typeof(decimal));
-
-            ShelfData.Columns.Add("HasFence", typeof(bool));
-            ShelfData.Columns.Add("FenceColor", typeof(string));
-            ShelfData.Columns.Add("FencePrice", typeof(decimal));
-
-            foreach(RoomVM roomvm in viewmodel.Rooms)
+            Shelf shelfmodel = new Shelf();
+            PropertyInfo[] shelfProperties = shelfmodel.GetType().GetProperties();
+            foreach (PropertyInfo property in shelfProperties)
             {
-                foreach(Shelf shelf in roomvm.ShelfViewModel.Shelves)
-                {
-                    ShelfData.Rows.Add(shelf.RoomNumber, shelf.SizeWidth, shelf.SizeDepth, shelf.Color, shelf.ShelfType,
-                        shelf.Quantity, shelf.Price, shelf.CamPostColor, shelf.CamPostQuantity, shelf.CamPostPrice, shelf.HasFence,
-                        shelf.FenceColor, shelf.FencePrice);
-                }
+                ShelfData.Columns.Add(property.Name, typeof(string));
             }
 
+            currentRow = 0;
+            foreach (RoomVM roomvm in viewmodel.Rooms)
+            {
+                foreach (Shelf shelf in roomvm.ShelfViewModel.Shelves)
+                {
+                    ShelfData.Rows.Add();
+                    DataRow shelfDatarow = ShelfData.Rows[currentRow];
+                    foreach (PropertyInfo property in shelfProperties)
+                    {
+                        if (property.CanRead && property.GetIndexParameters().Length == 0)
+                            shelfDatarow[property.Name] = property.GetValue(shelf);
+                    }
+                    currentRow++;
+                }
+            }
 
             //===================================
             // Extract Accessory Information
             //===================================
             AccessoryData = new DataTable(AccessoryDataName);
+            Accessory accessorymodel = new Accessory();
+            PropertyInfo[] accessoryProperties = accessorymodel.GetType().GetProperties();
+            foreach (PropertyInfo property in accessoryProperties)
+            {
+                AccessoryData.Columns.Add(property.Name, typeof(string));
+            }
 
-            // Create Columns
+            currentRow = 0;
+            foreach (RoomVM roomvm in viewmodel.Rooms)
+            {
+                foreach (Accessory accessory in roomvm.AccessoryViewModel.Accessories)
+                {
+                    AccessoryData.Rows.Add();
+                    DataRow accessoryDatarow = AccessoryData.Rows[currentRow];
+                    foreach (PropertyInfo property in accessoryProperties)
+                    {
+                        if (property.CanRead && property.GetIndexParameters().Length == 0)
+                            accessoryDatarow[property.Name] = property.GetValue(accessory);
+                    }
+                    currentRow++;
+                }
+            }
 
             //===================================
             // Write the XML information
@@ -197,12 +213,11 @@ namespace TCC_MVVM.Model
             {
                 MessageBox.Show(e.ToString());
             }
-            
+
         }
 
         public JobVM Load()
         {
-            // Read in the xml
             DataSet = new DataSet(DataSetName);
             DataSet.ReadXml("Tyler Holstead.xml");
             JobData = DataSet.Tables[JobDataName];
@@ -216,8 +231,6 @@ namespace TCC_MVVM.Model
             //===================================
             // Import Job Information
             //===================================
-
-            // Read the job information from
             Job job = new Job();
             foreach(DataColumn propertyName in JobData.Columns)
             {
@@ -229,67 +242,58 @@ namespace TCC_MVVM.Model
             //===================================
             // Import Room Information
             //===================================
-
-            ObservableCollection<RoomVM> rooms = new ObservableCollection<RoomVM>();
-            foreach(DataRow row in RoomData.Rows)
+            if(RoomData != null)
             {
-                RoomVM roomvm = new RoomVM(
-                    row["RoomName"].ToString(),
-                    int.Parse(row["RoomNumber"].ToString())
-                );
-                roomvm.Room.RoomColor = row["RoomColor"].ToString();
-                roomvm.Room.StripColor = row["StripColor"].ToString();
-                roomvm.Room.ShelvingDepth = row["ShelvingDepth"].ToString();
-
-                rooms.Add(roomvm);
+                for (int row = 0; row < RoomData.Rows.Count; row++)
+                {
+                    newJob.AddRoom();
+                    RoomVM roomvm = newJob.Rooms[row];
+                    foreach (string propertyName in roomvm.Room.Properties)
+                    {
+                        roomvm.Room.SetProperty(propertyName, RoomData.Rows[row][propertyName].ToString());
+                    }
+                }
             }
-            newJob.Rooms = rooms;
 
             //===================================
             // Import Strip Information
             //===================================
-            if(StripData != null)
+            if(PanelData != null)
             {
-                foreach (DataRow row in StripData.Rows)
+                for (int row = 0; row < StripData.Rows.Count; row++)
                 {
-                    Strip strip = new Strip()
+                    Strip strip = new Strip();
+                    foreach (string propertyName in strip.Properties)
                     {
-                        RoomNumber = int.Parse(row["RoomNumber"].ToString()),
-                        Color = row["Color"].ToString(),
-                        Length = double.Parse(row["Length"].ToString())
-                    };
+                        strip.SetProperty(propertyName, StripData.Rows[row][propertyName].ToString());
+                    }
 
-                    // Place the strip in the correct room
-                    foreach (RoomVM room in newJob.Rooms)
+                    foreach (RoomVM roomvm in newJob.Rooms)
                     {
-                        if (room.Room.RoomNumber == strip.RoomNumber)
-                            room.StripViewModel.Add(strip);
+                        if (roomvm.Room.RoomNumber == strip.RoomNumber)
+                            roomvm.StripViewModel.Add(strip);
                     }
                 }
             }
+            
 
             //===================================
             // Import Panel Information
             //===================================
             if(PanelData != null)
             {
-                foreach (DataRow row in PanelData.Rows)
+                for (int row = 0; row < PanelData.Rows.Count; row++)
                 {
-                    Panel panel = new Panel()
+                    Panel panel = new Panel();
+                    foreach (string propertyName in panel.Properties)
                     {
-                        RoomNumber = int.Parse(row["RoomNumber"].ToString()),
-                        SizeDepth = row["SizeDepth"].ToString(),
-                        SizeHeight = row["SizeHeight"].ToString(),
-                        Color = row["Color"].ToString(),
-                        IsHutch = bool.Parse(row["IsHutch"].ToString()),
-                        Quantity = int.Parse(row["Quantity"].ToString())
-                    };
+                        panel.SetProperty(propertyName, PanelData.Rows[row][propertyName].ToString());
+                    }
 
-                    // Place the panel in the correct room
-                    foreach (RoomVM room in newJob.Rooms)
+                    foreach (RoomVM roomvm in newJob.Rooms)
                     {
-                        if (room.Room.RoomNumber == panel.RoomNumber)
-                            room.PanelViewModel.Add(panel);
+                        if (roomvm.Room.RoomNumber == panel.RoomNumber)
+                            roomvm.PanelViewModel.Add(panel);
                     }
                 }
             }
@@ -299,25 +303,43 @@ namespace TCC_MVVM.Model
             //===================================
             if(ShelfData != null)
             {
-                //foreach(DataRow row in ShelfData.Rows)
-                //{
-                //    Shelf shelf = new Shelf()
-                //    {
-                //        RoomNumber = int.Parse(row["RoomNumber"].ToString()),
-                //        SizeDepth = row["SizeDepth"].ToString(),
-                //        SizeWidth = row["SizeWidth"].ToString(),
-                //        Color = row["Color"].ToString(),
-                //        ShelfType = (ShelfType)row["ShelfType"],
-                //        Quantity = int.Parse(row["Quantity"].ToString())
-                //    };
+                for (int row = 0; row < ShelfData.Rows.Count; row++)
+                {
+                    Shelf shelf = new Shelf();
+                    foreach (string propertyName in shelf.Properties)
+                    {
+                        if(ShelfData.Columns[propertyName] != null)
+                            shelf.SetProperty(propertyName, ShelfData.Rows[row][propertyName].ToString());
+                    }
 
-                //    // Place the shelf in the correct room
-                //    foreach (RoomVM room in newJob.Rooms)
-                //    {
-                //        if (room.Room.RoomNumber == shelf.RoomNumber)
-                //            room.ShelfViewModel.Add(shelf);
-                //    }
-                //}
+                    foreach (RoomVM roomvm in newJob.Rooms)
+                    {
+                        if (roomvm.Room.RoomNumber == shelf.RoomNumber)
+                            roomvm.ShelfViewModel.Add(shelf);
+                    }
+                }
+            }
+
+            //===================================
+            // Import Accessory Information
+            //===================================
+            if(AccessoryData != null)
+            {
+                for (int row = 0; row < ShelfData.Rows.Count; row++)
+                {
+                    Accessory accessory = new Accessory();
+                    foreach (string propertyName in accessory.Properties)
+                    {
+                        if (ShelfData.Columns[propertyName] != null)
+                            accessory.SetProperty(propertyName, ShelfData.Rows[row][propertyName].ToString());
+                    }
+
+                    foreach (RoomVM roomvm in newJob.Rooms)
+                    {
+                        if (roomvm.Room.RoomNumber == accessory.RoomNumber)
+                            roomvm.AccessoryViewModel.Add(accessory);
+                    }
+                }
             }
 
             return newJob;

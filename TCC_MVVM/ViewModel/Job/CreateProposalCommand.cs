@@ -5,7 +5,7 @@ namespace TCC_MVVM.ViewModel.Job
 {
     class CreateProposalCommand : ICommand
     {
-        private JobVM ViewModel;
+        JobVM ViewModel;
         public CreateProposalCommand(JobVM ViewModel)
         {
             this.ViewModel = ViewModel;
