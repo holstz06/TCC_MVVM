@@ -1,19 +1,7 @@
 <?xml version="1.0" standalone="yes"?>
 <BandingDataSet>
-  <BandingData>
-    <BandingColor>Super White</BandingColor>
-    <BandingPrice>0.1</BandingPrice>
-  </BandingData>
-  <BandingData>
+<BandingData>
     <BandingColor>White</BandingColor>
-    <BandingPrice>0.1</BandingPrice>
-  </BandingData>
-  <BandingData>
-    <BandingColor>Nova White</BandingColor>
-    <BandingPrice>0.1</BandingPrice>
-  </BandingData>
-  <BandingData>
-    <BandingColor>White White</BandingColor>
     <BandingPrice>0.1</BandingPrice>
   </BandingData>
   <BandingData>

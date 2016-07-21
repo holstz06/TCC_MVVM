@@ -1,0 +1,173 @@
+<?xml version="1.0" standalone="yes"?>
+<Proposal>
+  <JobData>
+    <FirstName>Tyler</FirstName>
+    <FullName>Tyler Holstead</FullName>
+    <PhoneNumber>(920) 857-4544</PhoneNumber>
+    <MailingAddress01>1471 Navigator Way</MailingAddress01>
+    <ProjectTypeValues>System.String[]</ProjectTypeValues>
+    <Distance>0</Distance>
+    <NumRooms>1</NumRooms>
+    <IsValid>True</IsValid>
+  </JobData>
+  <RoomData>
+    <RoomNumber>0</RoomNumber>
+    <RoomName>Master Bedroom</RoomName>
+    <ShelvingColor>White</ShelvingColor>
+    <StripColor>White</StripColor>
+    <ShelvingDepth>14</ShelvingDepth>
+    <WoodColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</WoodColorValues>
+    <StripColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</StripColorValues>
+    <ShelvingDepthValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</ShelvingDepthValues>
+  </RoomData>
+  <RoomData>
+    <RoomNumber>1</RoomNumber>
+    <RoomName>Linen</RoomName>
+    <ShelvingColor>White</ShelvingColor>
+    <StripColor>White</StripColor>
+    <ShelvingDepth>12</ShelvingDepth>
+    <WoodColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</WoodColorValues>
+    <StripColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</StripColorValues>
+    <ShelvingDepthValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</ShelvingDepthValues>
+  </RoomData>
+  <StripData>
+    <RoomNumber>0</RoomNumber>
+    <Color>White</Color>
+    <Length>97</Length>
+    <Price>19.38</Price>
+    <ColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</ColorValues>
+    <StripItems>System.Collections.ObjectModel.ObservableCollection`1[TCC_MVVM.Model.StripItem]</StripItems>
+    <StripItemList>System.Collections.Generic.List`1[TCC_MVVM.Model.StripItem]</StripItemList>
+    <DisplayName>1x (White) Hang Rail/Cover, 97in. </DisplayName>
+  </StripData>
+  <StripData>
+    <RoomNumber>0</RoomNumber>
+    <Color>White</Color>
+    <Length>126</Length>
+    <Price>25.17</Price>
+    <ColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</ColorValues>
+    <StripItems>System.Collections.ObjectModel.ObservableCollection`1[TCC_MVVM.Model.StripItem]</StripItems>
+    <StripItemList>System.Collections.Generic.List`1[TCC_MVVM.Model.StripItem]</StripItemList>
+    <DisplayName>1x (White) Hang Rail/Cover, 126in. </DisplayName>
+  </StripData>
+  <StripData>
+    <RoomNumber>1</RoomNumber>
+    <Color>White</Color>
+    <Length>56</Length>
+    <Price>11.19</Price>
+    <ColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</ColorValues>
+    <StripItems>System.Collections.ObjectModel.ObservableCollection`1[TCC_MVVM.Model.StripItem]</StripItems>
+    <StripItemList>System.Collections.Generic.List`1[TCC_MVVM.Model.StripItem]</StripItemList>
+    <DisplayName>1x (White) Hang Rail/Cover, 56in. </DisplayName>
+  </StripData>
+  <PanelData>
+    <Quantity>3</Quantity>
+    <RoomNumber>0</RoomNumber>
+    <PanelNumber>0</PanelNumber>
+    <SizeHeight>24</SizeHeight>
+    <SizeDepth>14</SizeDepth>
+    <Color>White</Color>
+    <IsHutch>False</IsHutch>
+    <Price>48.36</Price>
+    <Wood>TCC_MVVM.Model.Wood</Wood>
+    <Banding>TCC_MVVM.Model.Banding</Banding>
+    <ColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</ColorValues>
+    <HeightValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</HeightValues>
+    <DepthValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</DepthValues>
+    <PanelItems>System.Collections.ObjectModel.ObservableCollection`1[TCC_MVVM.Model.PanelItem]</PanelItems>
+    <PanelItemsList>System.Collections.Generic.List`1[TCC_MVVM.Model.PanelItem]</PanelItemsList>
+    <DisplayName>3x (White) Panel: 14in. x 24in.</DisplayName>
+  </PanelData>
+  <PanelData>
+    <Quantity>5</Quantity>
+    <RoomNumber>0</RoomNumber>
+    <PanelNumber>0</PanelNumber>
+    <SizeHeight>30</SizeHeight>
+    <SizeDepth>14</SizeDepth>
+    <Color>White</Color>
+    <IsHutch>False</IsHutch>
+    <Price>80.60</Price>
+    <Wood>TCC_MVVM.Model.Wood</Wood>
+    <Banding>TCC_MVVM.Model.Banding</Banding>
+    <ColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</ColorValues>
+    <HeightValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</HeightValues>
+    <DepthValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</DepthValues>
+    <PanelItems>System.Collections.ObjectModel.ObservableCollection`1[TCC_MVVM.Model.PanelItem]</PanelItems>
+    <PanelItemsList>System.Collections.Generic.List`1[TCC_MVVM.Model.PanelItem]</PanelItemsList>
+    <DisplayName>5x (White) Panel: 14in. x 30in.</DisplayName>
+  </PanelData>
+  <PanelData>
+    <Quantity>2</Quantity>
+    <RoomNumber>0</RoomNumber>
+    <PanelNumber>0</PanelNumber>
+    <SizeHeight>36</SizeHeight>
+    <SizeDepth>14</SizeDepth>
+    <Color>White</Color>
+    <IsHutch>True</IsHutch>
+    <Price>32.24</Price>
+    <Wood>TCC_MVVM.Model.Wood</Wood>
+    <Banding>TCC_MVVM.Model.Banding</Banding>
+    <ColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</ColorValues>
+    <HeightValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</HeightValues>
+    <DepthValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</DepthValues>
+    <PanelItems>System.Collections.ObjectModel.ObservableCollection`1[TCC_MVVM.Model.PanelItem]</PanelItems>
+    <PanelItemsList>System.Collections.Generic.List`1[TCC_MVVM.Model.PanelItem]</PanelItemsList>
+    <DisplayName>2x (White) Hutch Panel: 14in. x 36in</DisplayName>
+  </PanelData>
+  <PanelData>
+    <Quantity>2</Quantity>
+    <RoomNumber>1</RoomNumber>
+    <PanelNumber>0</PanelNumber>
+    <SizeHeight>24</SizeHeight>
+    <SizeDepth>12</SizeDepth>
+    <Color>White</Color>
+    <IsHutch>False</IsHutch>
+    <Price>32.24</Price>
+    <Wood>TCC_MVVM.Model.Wood</Wood>
+    <Banding>TCC_MVVM.Model.Banding</Banding>
+    <ColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</ColorValues>
+    <HeightValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</HeightValues>
+    <DepthValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</DepthValues>
+    <PanelItems>System.Collections.ObjectModel.ObservableCollection`1[TCC_MVVM.Model.PanelItem]</PanelItems>
+    <PanelItemsList>System.Collections.Generic.List`1[TCC_MVVM.Model.PanelItem]</PanelItemsList>
+    <DisplayName>2x (White) Panel: 12in. x 24in.</DisplayName>
+  </PanelData>
+  <PanelData>
+    <Quantity>2</Quantity>
+    <RoomNumber>1</RoomNumber>
+    <PanelNumber>0</PanelNumber>
+    <SizeHeight>72</SizeHeight>
+    <SizeDepth>12</SizeDepth>
+    <Color>White</Color>
+    <IsHutch>True</IsHutch>
+    <Price>32.24</Price>
+    <Wood>TCC_MVVM.Model.Wood</Wood>
+    <Banding>TCC_MVVM.Model.Banding</Banding>
+    <ColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</ColorValues>
+    <HeightValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</HeightValues>
+    <DepthValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</DepthValues>
+    <PanelItems>System.Collections.ObjectModel.ObservableCollection`1[TCC_MVVM.Model.PanelItem]</PanelItems>
+    <PanelItemsList>System.Collections.Generic.List`1[TCC_MVVM.Model.PanelItem]</PanelItemsList>
+    <DisplayName>2x (White) Hutch Panel: 12in. x 72in</DisplayName>
+  </PanelData>
+  <ShelfData>
+    <RoomNumber>0</RoomNumber>
+    <ShelfNumber>0</ShelfNumber>
+    <Quantity>2</Quantity>
+    <Color>White</Color>
+    <SizeDepth>14</SizeDepth>
+    <SizeWidth>18</SizeWidth>
+    <LaborFees>0</LaborFees>
+    <EquipmentFees>0</EquipmentFees>
+    <ShelfTypeName>TCC_MVVM.Model.ShelfType</ShelfTypeName>
+    <Price>24.09</Price>
+    <Wood>TCC_MVVM.Model.Wood</Wood>
+    <Banding>TCC_MVVM.Model.Banding</Banding>
+    <ShelfType>TCC_MVVM.Model.ShelfType</ShelfType>
+    <ColorValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</ColorValues>
+    <WidthValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</WidthValues>
+    <DepthValues>System.Collections.ObjectModel.ObservableCollection`1[System.String]</DepthValues>
+    <ShelfTypeValues>System.Collections.ObjectModel.ObservableCollection`1[TCC_MVVM.Model.ShelfType]</ShelfTypeValues>
+    <DisplayName>2x  Shelf, White, 18in. x 14in. </DisplayName>
+  </ShelfData>
+</Proposal>

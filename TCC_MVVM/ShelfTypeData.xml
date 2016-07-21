@@ -5,41 +5,71 @@
     <CamQuantity>4</CamQuantity>
     <HasFencePost>false</HasFencePost>
     <FencePostColor>N/A</FencePostColor>
+	<HasTopConnector>false</HasTopConnector>
+	<IsToeKick>false</IsToeKick>
   </ShelfTypeData>
   <ShelfTypeData>
     <ShelfType>Adjustable</ShelfType>
     <CamQuantity>0</CamQuantity>
     <HasFencePost>false</HasFencePost>
     <FencePostColor>N/A</FencePostColor>
+	<HasTopConnector>false</HasTopConnector>
+	<IsToeKick>false</IsToeKick>
   </ShelfTypeData>
   <ShelfTypeData>
-    <ShelfType>(Fixed) Corner</ShelfType>
+    <ShelfType>Corner (Fixed)</ShelfType>
     <CamQuantity>6</CamQuantity>
     <HasFencePost>false</HasFencePost>
     <FencePostColor>N/A</FencePostColor>
+	<HasTopConnector>false</HasTopConnector>
+	<IsToeKick>false</IsToeKick>
   </ShelfTypeData>
   <ShelfTypeData>
-    <ShelfType>(Adj) Corner</ShelfType>
+    <ShelfType>Corner (Adj)</ShelfType>
     <CamQuantity>0</CamQuantity>
     <HasFencePost>false</HasFencePost>
     <FencePostColor>N/A</FencePostColor>
+	<HasTopConnector>false</HasTopConnector>
+	<IsToeKick>false</IsToeKick>
   </ShelfTypeData>
   <ShelfTypeData>
-    <ShelfType>(Chrome) Shoe Shelf</ShelfType>
+    <ShelfType>Shoe (Chrome)</ShelfType>
     <CamQuantity>2</CamQuantity>
     <HasFencePost>true</HasFencePost>
     <FencePostColor>Chrome</FencePostColor>
+	<HasTopConnector>false</HasTopConnector>
+	<IsToeKick>false</IsToeKick>
   </ShelfTypeData>
   <ShelfTypeData>
-    <ShelfType>(MN) Shoe Shelf</ShelfType>
+    <ShelfType>Shoe (MN)</ShelfType>
     <CamQuantity>2</CamQuantity>
     <HasFencePost>true</HasFencePost>
     <FencePostColor>MN</FencePostColor>
+	<HasTopConnector>false</HasTopConnector>
+	<IsToeKick>false</IsToeKick>
   </ShelfTypeData>
   <ShelfTypeData>
-    <ShelfType>(ORB) Shoe Shelf</ShelfType>
+    <ShelfType>Shoe (ORB)</ShelfType>
     <CamQuantity>2</CamQuantity>
     <HasFencePost>true</HasFencePost>
     <FencePostColor>ORB</FencePostColor>
+	<HasTopConnector>false</HasTopConnector>
+	<IsToeKick>false</IsToeKick>
+  </ShelfTypeData>
+  <ShelfTypeData>
+    <ShelfType>Top Connector</ShelfType>
+    <CamQuantity>2</CamQuantity>
+    <HasFencePost>false</HasFencePost>
+    <FencePostColor>N/A</FencePostColor>
+	<HasTopConnector>true</HasTopConnector>
+	<IsToeKick>false</IsToeKick>
+  </ShelfTypeData>
+  <ShelfTypeData>
+    <ShelfType>Toe Kick</ShelfType>
+    <CamQuantity>3</CamQuantity>
+    <HasFencePost>false</HasFencePost>
+    <FencePostColor>N/A</FencePostColor>
+	<HasTopConnector>false</HasTopConnector>
+	<IsToeKick>true</IsToeKick>
   </ShelfTypeData>
 </ShelfTypeDataSet>

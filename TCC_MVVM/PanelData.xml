@@ -12,34 +12,7 @@
   <PanelData>
     <Category>Panel</Category>
     <ItemName>Cover Cap</ItemName>
-    <WoodColor>Super White</WoodColor>
-    <Color>White</Color>
-    <Quantity>1</Quantity>
-    <Wholesale>0.36</Wholesale>
-    <Price>0.36</Price>
-  </PanelData>
-  <PanelData>
-    <Category>Panel</Category>
-    <ItemName>Cover Cap</ItemName>
     <WoodColor>White</WoodColor>
-    <Color>White</Color>
-    <Quantity>1</Quantity>
-    <Wholesale>0.36</Wholesale>
-    <Price>0.36</Price>
-  </PanelData>
-  <PanelData>
-    <Category>Panel</Category>
-    <ItemName>Cover Cap</ItemName>
-    <WoodColor>Nova White</WoodColor>
-    <Color>White</Color>
-    <Quantity>1</Quantity>
-    <Wholesale>0.36</Wholesale>
-    <Price>0.36</Price>
-  </PanelData>
-  <PanelData>
-    <Category>Panel</Category>
-    <ItemName>Cover Cap</ItemName>
-    <WoodColor>White White</WoodColor>
     <Color>White</Color>
     <Quantity>1</Quantity>
     <Wholesale>0.36</Wholesale>

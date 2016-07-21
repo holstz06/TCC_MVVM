@@ -1,20 +1,8 @@
 <?xml version="1.0" standalone="yes"?>
 <WoodDataSet>
-  <WoodData>
-    <WoodColor>Super White</WoodColor>
-    <WoodPrice>0.0205269607843137</WoodPrice>
-  </WoodData>
-  <WoodData>
+<WoodData>
     <WoodColor>White</WoodColor>
     <WoodPrice>0.0176547181372549</WoodPrice>
-  </WoodData>
-  <WoodData>
-    <WoodColor>Nova White</WoodColor>
-    <WoodPrice>0.0205269607843137</WoodPrice>
-  </WoodData>
-  <WoodData>
-    <WoodColor>White White</WoodColor>
-    <WoodPrice>0.0223243464052288</WoodPrice>
   </WoodData>
   <WoodData>
     <WoodColor>Sunset Grey</WoodColor>
