@@ -2,88 +2,14 @@
 using System.Collections.ObjectModel;
 using PropertyChanged;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TCC_MVVM.Model
-{
-    /// <summary>
-    /// Camposts are items fastened to a shelf to lock them into panels.
-    /// Only fixed shelfs have these items but depending on the shelf,
-    /// they vary how many they have (e.g. Shoe shelves have 2, corner 
-    /// shelves have 6)
-    /// 
-    /// Camposts also have a wood color associated with it. Every wood color has its own campost color
-    /// </summary>
-    public class CamPost
-    {
-        public int Quantity { get; set; }
-        public string Color { get; set; }
-        public string WoodColor { get; set; }
-        public decimal Price { get; set; }
-    }
-
-    /// <summary>
-    /// Top Connector (H beams) are attached to the side of a shelf to secure it to another
-    /// shelf adjacent. This useful for corners.
-    /// </summary>
-    public class TopConnector
-    {
-        public string Color { get; set; }
-        public string WoodColor { get; set; }
-        public decimal Price { get; set; }
-    }
-
-    /// <summary>
-    /// Fences are only used when the shelf is slanted, which prevents
-    /// the contents of the shelf from sliding off. Typically, only used
-    /// for shoe shelves
-    /// </summary>
-    public class Fence
-    {
-        public bool HasFence { get; set; }
-        public string Color { get; set; }
-        public decimal Price { get; set; }
-    }
-
-    /// <summary>
-    /// An object that describes the type of shelf
-    /// </summary>
-    public class ShelfType
-    {
-        public string Name { get; set; }
-
-        //========================================
-        // Cam Post Variables
-        //========================================
-        public string CamPostColor { get; set; }
-        public int CamPostQuantity { get; set; }
-        public decimal CamPostPrice { get; set; }
-
-        //========================================
-        // Fence Post Variables
-        //========================================
-        public bool HasFence { get; set; }
-        public string FenceColor { get; set; }
-        public decimal FencePrice { get; set; }
-
-        //========================================
-        // Top Connector Variables
-        //========================================
-        public bool HasTopConnector { get; set; }
-        public string TopConnectorColor { get; set; }
-        public decimal TopConnectorPrice { get; set; }
-
-        //========================================
-        // Toe Kick Variables
-        //========================================
-        public bool IsToeKick { get; set; }
-    }
-
+{ 
     [ImplementPropertyChanged]
     public class Shelf : INotifyPropertyChanged
     {
-        //========================================
-        // Shelving variables
-        //========================================
         public int RoomNumber { get; set; }
         public int ShelfNumber { get; set; }
         public int Quantity { get; set; }
@@ -94,9 +20,6 @@ namespace TCC_MVVM.Model
         public decimal EquipmentFees { get; set; } 
         public string ShelfTypeName { get; set; }
 
-        //========================================
-        // Shelf Price
-        //========================================
         decimal _Price;
         public decimal Price
         {
@@ -135,32 +58,42 @@ namespace TCC_MVVM.Model
             }
         }
 
-        //========================================
-        // Dependancy Variables
-        //========================================
         public Wood Wood { get; set; } = new Wood();
         public Banding Banding { get; set; } = new Banding();
         public ShelfType ShelfType { get; set; } = new ShelfType();
 
-        //========================================
-        // Collection Variables
-        //========================================
         public ObservableCollection<string> ColorValues { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> WidthValues { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> DepthValues { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> ShelfTypeValues { get; set; } = new ObservableCollection<string>();
 
+        ///=================================================================================================
         /// <summary>
-        /// Default Constructor - Creates new instance of a shelf
+        ///     Creates new instance of a shelf - Default
         /// </summary>
+        ///=================================================================================================
         public Shelf()
         {
 
         }
 
+        ///=================================================================================================
         /// <summary>
-        /// Creates a new instance of a shelf
+        ///     Creates a new instance of a shelf
         /// </summary>
+        /// 
+        /// <param name="Color">
+        ///     The color of this shelf
+        /// </param>
+        /// 
+        /// <param name="RoomNumber">
+        ///     (Optional) The room number this shelf belongs to
+        /// </param>
+        /// 
+        /// <param name="SizeDepth">
+        ///     (Optional) The depth of this shelf
+        /// </param>
+        ///=================================================================================================
         public Shelf(int RoomNumber, string Color = null, string SizeDepth = null)
         {
             Quantity = 1;
@@ -169,19 +102,28 @@ namespace TCC_MVVM.Model
             this.SizeDepth = SizeDepth;
         }
 
+        ///=================================================================================================
         /// <summary>
-        /// Sets the price of the shelf
+        ///     Sets the price of the shelf
         /// </summary>
+        /// 
+        /// <remarks>
+        ///     <para>Wood Cost = Width * Depth * Wood Price * Markup Price</para>
+        ///     <para>Banding Cost = Width * Banding Price</para>
+        ///     <para>Campost Cost = Price per cam * quantity (by type e.g. shoe shelf = 2 cams)</para>
+        ///     <para>TOTAL COST = (Wood + Banding + Campost + Fence + Top Connector + Toe Kick) * Quantity</para>
+        /// </remarks>
+        ///=================================================================================================
         void SetPrice()
         {
-            decimal tempPrice = 0; // Reset price
+            decimal tempPrice = 0;
 
-            decimal SizeWidth = decimal.Parse(this.SizeWidth);
-            decimal SizeDepth = decimal.Parse(this.SizeDepth);
+            var width = decimal.Parse(this.SizeWidth);
+            var depth = decimal.Parse(this.SizeDepth);
 
             // Get the price of the wood and banding
-            tempPrice += (SizeWidth * SizeDepth) * Wood.Price * (decimal)Wood.MARKUP;
-            tempPrice += (SizeWidth) * Banding.Price;
+            tempPrice += (width * depth) * Wood.Price * (decimal)Wood.MARKUP;
+            tempPrice += (width) * Banding.Price;
 
             tempPrice += (ShelfType.CamPostQuantity * ShelfType.CamPostPrice);
 
@@ -190,10 +132,8 @@ namespace TCC_MVVM.Model
             if (ShelfType.HasTopConnector)
                 tempPrice += ShelfType.TopConnectorPrice;
             if(ShelfType.IsToeKick)
-                tempPrice += SizeWidth * 3 /*HEIGHT*/ * Wood.Price;
+                tempPrice += width * 3 /*HEIGHT*/ * Wood.Price;
 
-
-            // Get the price for all the boards
             tempPrice *= Quantity;
 
             Price = tempPrice;

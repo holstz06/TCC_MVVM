@@ -42,7 +42,7 @@ namespace TCC_MVVM.Model
             JobData = new DataTable(JobDataName);
 
             // Create Columns
-            PropertyInfo[] jobProperties = viewmodel.Job.GetType().GetProperties();
+            var jobProperties = viewmodel.Job.GetType().GetProperties();
             foreach(PropertyInfo property in jobProperties)
             {
                 JobData.Columns.Add(property.Name, typeof(string));
@@ -64,8 +64,8 @@ namespace TCC_MVVM.Model
             RoomData = new DataTable(RoomDataName);
 
             // Create columns
-            Room room = new Room();
-            PropertyInfo[] roomProperties = room.GetType().GetProperties();
+            var room = new Room();
+            var roomProperties = room.GetType().GetProperties();
             foreach (PropertyInfo property in roomProperties)
             {
                 RoomData.Columns.Add(property.Name, typeof(string));
@@ -89,8 +89,8 @@ namespace TCC_MVVM.Model
             // Extract Strip Information
             //===================================
             StripData = new DataTable(StripDataName);
-            Strip stripmodel = new Strip();
-            PropertyInfo[] stripPropertes = stripmodel.GetType().GetProperties();
+            var stripmodel = new Strip();
+            var stripPropertes = stripmodel.GetType().GetProperties();
             foreach(PropertyInfo property in stripPropertes)
             {
                 StripData.Columns.Add(property.Name, typeof(string));
@@ -116,8 +116,8 @@ namespace TCC_MVVM.Model
             // Extract Panel Information
             //===================================
             PanelData = new DataTable(PanelDataName);
-            Panel panelmodel = new Panel();
-            PropertyInfo[] panelProperties = panelmodel.GetType().GetProperties();
+            var panelmodel = new Panel();
+            var panelProperties = panelmodel.GetType().GetProperties();
             foreach(PropertyInfo property in panelProperties)
             {
                 PanelData.Columns.Add(property.Name, typeof(string));
@@ -143,8 +143,8 @@ namespace TCC_MVVM.Model
             // Extract Shelf Information
             //===================================
             ShelfData = new DataTable(ShelfDataName);
-            Shelf shelfmodel = new Shelf();
-            PropertyInfo[] shelfProperties = shelfmodel.GetType().GetProperties();
+            var shelfmodel = new Shelf();
+            var shelfProperties = shelfmodel.GetType().GetProperties();
             foreach (PropertyInfo property in shelfProperties)
             {
                 ShelfData.Columns.Add(property.Name, typeof(string));
@@ -170,8 +170,8 @@ namespace TCC_MVVM.Model
             // Extract Accessory Information
             //===================================
             AccessoryData = new DataTable(AccessoryDataName);
-            Accessory accessorymodel = new Accessory();
-            PropertyInfo[] accessoryProperties = accessorymodel.GetType().GetProperties();
+            var accessorymodel = new Accessory();
+            var accessoryProperties = accessorymodel.GetType().GetProperties();
             foreach (PropertyInfo property in accessoryProperties)
             {
                 AccessoryData.Columns.Add(property.Name, typeof(string));
@@ -227,15 +227,15 @@ namespace TCC_MVVM.Model
             ShelfData = DataSet.Tables[ShelfDataName];
             AccessoryData = DataSet.Tables[AccessoryDataName];
 
-            JobVM newJob = new JobVM();
+            var newJob = new JobVM();
 
             //===================================
             // Import Job Information
             //===================================
-            Job job = new Job();
+            var job = new Job();
             foreach(DataColumn propertyName in JobData.Columns)
             {
-                string propertyValue = JobData.Rows[0][propertyName].ToString();
+                var propertyValue = JobData.Rows[0][propertyName].ToString();
                 job.SetProperty(propertyName.ColumnName, propertyValue);
             }
             newJob.Job = job;
@@ -264,7 +264,7 @@ namespace TCC_MVVM.Model
             {
                 for (int row = 0; row < StripData.Rows.Count; row++)
                 {
-                    Strip strip = new Strip();
+                    var strip = new Strip();
                     foreach (string propertyName in strip.Properties)
                     {
                         strip.SetProperty(propertyName, StripData.Rows[row][propertyName].ToString());
@@ -286,7 +286,7 @@ namespace TCC_MVVM.Model
             {
                 for (int row = 0; row < PanelData.Rows.Count; row++)
                 {
-                    Panel panel = new Panel();
+                    var panel = new Panel();
                     foreach (string propertyName in panel.Properties)
                     {
                         panel.SetProperty(propertyName, PanelData.Rows[row][propertyName].ToString());
@@ -307,7 +307,7 @@ namespace TCC_MVVM.Model
             {
                 for (int row = 0; row < ShelfData.Rows.Count; row++)
                 {
-                    Shelf shelf = new Shelf();
+                    var shelf = new Shelf();
                     foreach (string propertyName in shelf.Properties)
                     {
                         if(ShelfData.Columns[propertyName] != null)
@@ -329,7 +329,7 @@ namespace TCC_MVVM.Model
             {
                 for (int row = 0; row < AccessoryData.Rows.Count; row++)
                 {
-                    Accessory accessory = new Accessory();
+                    var accessory = new Accessory();
                     foreach (string propertyName in accessory.Properties)
                     {
                         if (AccessoryData.Columns[propertyName] != null)

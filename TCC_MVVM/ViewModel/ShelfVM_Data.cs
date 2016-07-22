@@ -18,7 +18,7 @@ namespace TCC_MVVM.ViewModel
         DataTable BandingData;
         DataTable ShelfTypeData;
 
-        List<CamPost> CamPosts = new List<CamPost>();
+        List<Campost> CamPosts = new List<Campost>();
         List<Fence> Fences = new List<Fence>();
         List<TopConnector> TopConnectors = new List<TopConnector>();
         List<ShelfType> ShelfTypes = new List<ShelfType>();
@@ -119,10 +119,10 @@ namespace TCC_MVVM.ViewModel
         /// <summary>
         /// Retrieves a list of camposts
         /// </summary>
-        List<CamPost> GetCamPosts()
+        List<Campost> GetCamPosts()
             => (from row in ShelfData.AsEnumerable()
                 where row.Field<string>("ItemName") == "Cam Post"
-                select new CamPost
+                select new Campost
                 {
                     WoodColor = row.Field<string>("WoodColor"),
                     Color = row.Field<string>("Color"),

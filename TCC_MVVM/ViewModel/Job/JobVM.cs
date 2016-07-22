@@ -53,13 +53,7 @@ namespace TCC_MVVM.ViewModel.Job
                     Job.PremiseZip = Job.MailingZip;
                 }
                 else
-                {
-                    Job.PremiseAddress01 = null;
-                    Job.PremiseAddress02 = null;
-                    Job.PremiseCity = null;
-                    Job.PremiseState = null;
-                    Job.PremiseZip = null;
-                }
+                    Job.PremiseAddress01 = Job.PremiseAddress02 = Job.PremiseCity = Job.PremiseState = Job.PremiseZip = null;
             }
         }
 

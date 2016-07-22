@@ -5,7 +5,7 @@ namespace TCC_MVVM.ViewModel.Job
 {
     class AddRoomCommand : ICommand
     {
-        JobVM ViewModel;
+        readonly JobVM ViewModel;
         public AddRoomCommand(JobVM ViewModel)
         {
             this.ViewModel = ViewModel;

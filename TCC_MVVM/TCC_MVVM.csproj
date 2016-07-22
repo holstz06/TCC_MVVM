@@ -67,8 +67,12 @@
     </ApplicationDefinition>
     <Compile Include="Model\Accessory.cs" />
     <Compile Include="Model\Banding.cs" />
+    <Compile Include="Model\Campost.cs" />
+    <Compile Include="Model\Fence.cs" />
     <Compile Include="Model\Proposal.cs" />
+    <Compile Include="Model\ShelfType.cs" />
     <Compile Include="Model\ShelvingItem.cs" />
+    <Compile Include="Model\TopConnector.cs" />
     <Compile Include="ViewModel\CollectionChangeCommand.cs" />
     <Compile Include="Model\Job.cs" />
     <Compile Include="Model\Price.cs" />

@@ -17,7 +17,7 @@ namespace TCC_MVVM.ViewModel
         public CollectionChangeCommand(Action<object> execute, Predicate<object> canExecute)
         {
             if (execute == null)
-                throw new ArgumentNullException("Execute");
+                throw new ArgumentNullException(nameof(execute), "Execute");
 
             this.execute = execute;
             this.canExecute = canExecute;

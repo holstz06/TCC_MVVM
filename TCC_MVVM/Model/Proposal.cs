@@ -28,7 +28,7 @@ namespace TCC_MVVM.Model
         Microsoft.Office.Interop.Excel._Worksheet WorkSheet;
         object MissingValue = System.Reflection.Missing.Value;
 
-        private JobVM ViewModel;
+        readonly JobVM ViewModel;
 
         public Proposal(JobVM ViewModel)
         {
@@ -85,7 +85,7 @@ namespace TCC_MVVM.Model
             int rowCount = 25;
             int colCount = 25;
             int roomnumber = -1;
-            RoomVM currentRoom = new RoomVM(null, 0);
+            var currentRoom = new RoomVM(null, 0);
 
             for(int row = 0; row < rowCount; row++)
             {
@@ -102,7 +102,7 @@ namespace TCC_MVVM.Model
 
                 if(WorkSheet.Cells[row, 1] == "Strip")
                 {
-                    Strip strip = new Strip()
+                    var strip = new Strip
                     {
                         RoomNumber = roomnumber,
                         Color = WorkSheet.Cells[row, COLOR_COL],
@@ -129,7 +129,7 @@ namespace TCC_MVVM.Model
             {
                 WorkSheet.Cells[curRow, 1] = "Job";
                 WorkSheet.Cells[curRow, 2] = property;
-                WorkSheet.Cells[curRow, 3] = ViewModel.Job.GetPropertyValue(property);
+                //WorkSheet.Cells[curRow, 3] = ViewModel.Job.GetPropertyValue(property);
                 curRow++;
             }
 

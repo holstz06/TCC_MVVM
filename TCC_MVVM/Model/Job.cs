@@ -1,15 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using PropertyChanged;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TCC_MVVM.Model
 {
     [ImplementPropertyChanged]
     public class Job : INotifyPropertyChanged, IDataErrorInfo
     {
-        //======================================
-        // Contact Information Variables
-        //======================================
         public string FirstName { get; set; } = "Tyler";
         public string FullName { get; set; } = "Tyler Holstead";
         public string PhoneNumber { get; set; } = "(920) 857-4544";
@@ -19,10 +18,6 @@ namespace TCC_MVVM.Model
         public string MailingCity { get; set; }
         public string MailingState { get; set; }
         public string MailingZip { get; set; }
-
-        //======================================
-        // Premise Information Variables
-        //======================================
         public string PremiseAddress01 { get; set; }
         public string PremiseAddress02 { get; set; }
         public string PremiseCity { get; set; }
@@ -31,17 +26,31 @@ namespace TCC_MVVM.Model
         public string[] ProjectTypeValues { get; set; } = { "New Construction", "Remodel", "Other" };
         public string ProjectType { get; set; }
         public double Distance { get; set; }
-
-        //======================================
-        // Job Information Variables
-        //======================================
         public int NumRooms { get; set; } = 1;
         public string ProposalOutputPath { get; set; }
         public string ItemListOutputPath { get; set; }
 
+
+        ///=================================================================================================
         /// <summary>
-        /// A list of property names, which correspond to the actual name of the property
+        ///     Queries the reflection of shelf class to gather a list of properties by their name
         /// </summary>
+        /// 
+        /// <returns>
+        ///     A list of properties by their names
+        /// </returns>
+        ///=================================================================================================
+        public List<string> GetPropertyNames()
+            => GetType().GetProperties().Select(row => row.Name).ToList();
+
+        //public void SetProperty(string PropertyName, string PropertyValue)
+        //{
+        //    foreach(var propertyName in GetPropertyNames())
+        //    {
+        //        if(PropertyName == propertyName)
+        //    }
+        //}
+
         public readonly string[] Properties =
         {
             "FullName",
@@ -61,15 +70,6 @@ namespace TCC_MVVM.Model
             "Distance"
         };
 
-        /// <summary>
-        /// Set each property by their property name
-        /// </summary>
-        /// <param name="PropertyName">
-        /// The name of the property
-        /// </param>
-        /// <param name="PropertyValue">
-        /// The value of the property
-        /// </param>
         public void SetProperty(string PropertyName, string PropertyValue)
         {
             switch (PropertyName)
@@ -90,38 +90,6 @@ namespace TCC_MVVM.Model
                 case "PremiseZip": PremiseZip = PropertyValue; break;
                 case "Distance": Distance = double.Parse(PropertyValue); break;
             }
-        }
-
-        /// <summary>
-        /// Get the value of a property by their property name
-        /// </summary>
-        /// <param name="PropertyName">
-        /// The name of the property
-        /// </param>
-        /// <returns>
-        /// The value of that property
-        /// </returns>
-        public object GetPropertyValue(string PropertyName)
-        {
-            switch (PropertyName)
-            {
-                case "FullName": return FirstName;
-                case "PhoneNumber": return PhoneNumber;
-                case "Email": return Email;
-                case "MailingAddress01": return MailingAddress01;
-                case "MailingAddress02": return MailingAddress02;
-                case "MailingCity": return MailingCity;
-                case "MailingState": return MailingState;
-                case "MailingZip": return MailingZip;
-                case "PremiseAddress01": return PremiseAddress01;
-                case "PremiseAddress02": return PremiseAddress02;
-                case "PremiseCity": return PremiseCity;
-                case "PremiseState": return PremiseState;
-                case "PremiseZip": return PremiseZip;
-                case "NumRooms": return NumRooms;
-                case "Distance": return Distance;
-            }
-            return null;
         }
 
         #region IDataErrorInfo Members

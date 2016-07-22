@@ -56,7 +56,7 @@ namespace TCC_MVVM.ViewModel
                 {
                     shelf.ShelfType = item;
                     Fence fence = GetFence(shelf);
-                    CamPost campost = GetCamPost(shelf);
+                    Campost campost = GetCamPost(shelf);
                     TopConnector topconnector = GetTopConnector(shelf);
 
                     if(fence != null)
@@ -84,7 +84,7 @@ namespace TCC_MVVM.ViewModel
         void Color_PropertyChanged(Shelf shelf)
         {
             // Select the appropriate cam post
-            foreach (CamPost campost in CamPosts)
+            foreach (Campost campost in CamPosts)
             {
                 if (campost.WoodColor == shelf.Color)
                 {
@@ -134,9 +134,9 @@ namespace TCC_MVVM.ViewModel
         /// Selects the correct campost that belongs to the shelf
         /// based on the shelf's color
         /// </summary>
-        CamPost GetCamPost(Shelf shelf)
+        Campost GetCamPost(Shelf shelf)
         {
-            foreach (CamPost campost in CamPosts)
+            foreach (Campost campost in CamPosts)
             {
                 if (campost.WoodColor == shelf.Color)
                     return campost;

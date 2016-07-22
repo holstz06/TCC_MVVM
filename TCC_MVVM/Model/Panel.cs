@@ -120,15 +120,15 @@ namespace TCC_MVVM.Model
         {
             decimal price = 0;
 
-            var SizeHeight = decimal.Parse(this.SizeHeight);
-            var SizeDepth = decimal.Parse(this.SizeDepth);
+            var height = decimal.Parse(this.SizeHeight);
+            var depth = decimal.Parse(this.SizeDepth);
 
-            decimal woodPrice = (SizeHeight * SizeDepth) * Wood.Price;
-            decimal bandingPrice = (SizeHeight + (2 * SizeDepth)) * Banding.Price;
+            decimal woodPrice = (height * depth) * Wood.Price;
+            decimal bandingPrice = (height + (2 * depth)) * Banding.Price;
             decimal fees = (decimal)(Wood.PANEL_INSTALL + Wood.ROUTER_FEE + Wood.DRILLBIT_FEE);
 
             if (IsHutch)
-                bandingPrice = SizeHeight * Banding.Price;
+                bandingPrice = height * Banding.Price;
 
             price += ((woodPrice + bandingPrice) * (decimal)Wood.MARKUP) + fees;
 
