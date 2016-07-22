@@ -176,8 +176,8 @@ namespace TCC_MVVM.Model
         {
             decimal tempPrice = 0; // Reset price
 
-            var SizeWidth = decimal.Parse(this.SizeWidth);
-            var SizeDepth = decimal.Parse(this.SizeDepth);
+            decimal SizeWidth = decimal.Parse(this.SizeWidth);
+            decimal SizeDepth = decimal.Parse(this.SizeDepth);
 
             // Get the price of the wood and banding
             tempPrice += (SizeWidth * SizeDepth) * Wood.Price * (decimal)Wood.MARKUP;
@@ -222,18 +222,6 @@ namespace TCC_MVVM.Model
             private set
             {
                 _DisplayName = value; OnPropertyChanged("DisplayName");
-            }
-        }
-
-        public ShelfType ShelfType1
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
             }
         }
     }

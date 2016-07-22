@@ -83,7 +83,7 @@ namespace TCC_MVVM.ViewModel
                 ColorValues = new ObservableCollection<string>(GetColorValues()),
                 WidthValues = new ObservableCollection<string>(GetWidthValues()),
                 DepthValues = new ObservableCollection<string>(GetDepthValues()),
-                ShelfTypeValues = new ObservableCollection<string>(GetShelfTypNames())
+                ShelfTypeValues = new ObservableCollection<string>(GetShelfTypeNames())
             };
 
             shelf.Wood.WoodValues = GetWoodValues();
@@ -105,7 +105,9 @@ namespace TCC_MVVM.ViewModel
             shelf.ColorValues = new ObservableCollection<string>(GetColorValues());
             shelf.WidthValues = new ObservableCollection<string>(GetWidthValues());
             shelf.DepthValues = new ObservableCollection<string>(GetDepthValues());
-            shelf.ShelfTypeValues = new ObservableCollection<string>(GetShelfTypNames());
+            shelf.ShelfTypeValues = new ObservableCollection<string>(GetShelfTypeNames());
+            shelf.Wood.WoodValues = GetWoodValues();
+            shelf.Banding.BandingValues = GetBandingValues();
             shelf.PropertyChanged += Shelf_PropertyChanged;
             Shelves.Add(shelf);
         }
@@ -126,42 +128,6 @@ namespace TCC_MVVM.ViewModel
         {
             foreach (Shelf shelf in Shelves)
                 shelf.SizeDepth = SizeDepth;
-        }
-
-        public Shelf Shelf
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
-
-        public CamPost CamPost
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
-
-        public Fence Fence
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
         }
     }
 }

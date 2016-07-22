@@ -74,25 +74,32 @@ namespace TCC_MVVM.ViewModel.Job
             AddRoomCommand = new AddRoomCommand(this);
         }
 
+        ///===============================================================================
         /// <summary>
-        /// Adds a new room to the collection
+        ///     Adds a new room to the collection
         /// </summary>
-        /// <param name="RoomName"></param>
+        /// 
+        /// <param name="RoomName">
+        ///     (Optional) The name of the room
+        /// </param>
+        ///===============================================================================
         public void AddRoom(string RoomName = null)
         {
             bool HasRoomName = false || RoomName != null;
 
             RoomVM roomVM = new RoomVM(HasRoomName ? RoomName : "Room" + CurrentRoomNumber, CurrentRoomNumber);
-            roomVM.PropertyChanged += RoomPropertyChanged;
+            roomVM.PropertyChanged += Room_PropertyChanged;
 
             Rooms.Add(roomVM);
 
             CurrentRoomNumber++;
         }
 
+        ///===============================================================================
         /// <summary>
-        /// Creates a proposal based on this job
+        ///     Creates a proposal based on this job
         /// </summary>
+        ///===============================================================================
         public void CreateProposal()
         {
             SaveFile savefile = new SaveFile();
@@ -100,59 +107,53 @@ namespace TCC_MVVM.ViewModel.Job
             MessageBox.Show("Saved!");
         }
 
-        #region INotifyPropertyChanged Members
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        ///===============================================================================
+        /// <summary>
+        ///     Method is called by the 'set' accessory of each property
+        /// </summary>
+        ///===============================================================================
         void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        
 
-        void RoomPropertyChanged(object sender, PropertyChangedEventArgs e)
+        ///===============================================================================
+        /// <summary>
+        ///     Property changed event handeler for 'room model'. Once subscribed, the
+        ///     view model is aware of all the room's property changes
+        /// </summary>
+        ///===============================================================================
+        void Room_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "TotalPrice")
+            switch (e.PropertyName)
             {
-                TotalPrice = 0;
-                foreach(RoomVM room in Rooms)
-                {
-                    TotalPrice += room.TotalPrice;
-                }
-            }
-            if(e.PropertyName == "ShelvingCost")
-            {
-                ShelvingCost = 0;
-                foreach(RoomVM room in Rooms)
-                {
-                    ShelvingCost += room.ShelvingCost;
-                }
-            }
-            if(e.PropertyName == "StripCost")
-            {
-                StripCost = 0;
-                foreach(RoomVM room in Rooms)
-                {
-                    StripCost += room.StripCost;
-                }
-            }
-            if(e.PropertyName == "AccessoryCost")
-            {
-                AccessoryCost = 0;
-                foreach(RoomVM room in Rooms)
-                {
-                    AccessoryCost += room.AccessoryCost;
-                }
-            }
-        }
-        #endregion
+                case "TotalPrice":
+                    TotalPrice = 0;
+                    foreach (RoomVM room in Rooms)
+                        TotalPrice += room.TotalPrice;
+                    break;
 
-        public RoomVM RoomVM
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
+                case "ShelvingCost":
+                    ShelvingCost = 0;
+                    foreach (RoomVM room in Rooms)
+                        ShelvingCost += room.ShelvingCost;
+                    break;
 
-            set
-            {
+                case "StripCost":
+                    StripCost = 0;
+                    foreach (RoomVM room in Rooms)
+                        StripCost += room.StripCost;
+                    break;
+
+                case "AccessoryCost":
+                    AccessoryCost = 0;
+                    foreach (RoomVM room in Rooms)
+                        AccessoryCost += room.AccessoryCost;
+                    break;
             }
         }
     }

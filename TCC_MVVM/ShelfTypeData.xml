@@ -58,7 +58,7 @@
   </ShelfTypeData>
   <ShelfTypeData>
     <ShelfType>Top Connector</ShelfType>
-    <CamQuantity>2</CamQuantity>
+    <CamQuantity>4</CamQuantity>
     <HasFencePost>false</HasFencePost>
     <FencePostColor>N/A</FencePostColor>
 	<HasTopConnector>true</HasTopConnector>

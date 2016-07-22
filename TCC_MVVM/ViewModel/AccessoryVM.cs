@@ -12,30 +12,22 @@ namespace TCC_MVVM.ViewModel
 {
     public class AccessoryVM : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Data table with the accessories and their attributes
-        /// </summary>
-        private DataTable AccessoryData;
+        DataTable AccessoryData;
 
-        /// <summary>
-        /// The total price of all the panels
-        /// </summary>
+        decimal _TotalPrice;
         public decimal TotalPrice
         {
             get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
-        private decimal _TotalPrice;
-
-        /// <summary>
-        /// Collection of accessories
-        /// </summary>
         public ObservableCollection<Accessory> Accessories { get; set; } = new ObservableCollection<Accessory>();
         private List<Accessory> AllAccessories { get; set; } = new List<Accessory>();
 
+        ///====================================================================================
         /// <summary>
-        /// Removes an accessory from the collection
+        ///     Command to call the remove function (removes accessory from the collection
         /// </summary>
+        ///====================================================================================
         public ICommand RemoveCommand
         {
             get
@@ -45,11 +37,14 @@ namespace TCC_MVVM.ViewModel
                 return _RemoveCommand;
             }
         }
-        private ICommand _RemoveCommand;
+        ICommand _RemoveCommand;
 
+
+        ///====================================================================================
         /// <summary>
-        /// Creates new instance of an accessory view model
+        ///     Creates a new instance of the Accessory View Model - Default
         /// </summary>
+        ///====================================================================================
         public AccessoryVM()
         {
             DataSet dataset = new DataSet();
@@ -67,36 +62,58 @@ namespace TCC_MVVM.ViewModel
                 Price = decimal.Parse(row.Field<string>("Price"))
             }).ToList();
         }
-        
+
+        ///====================================================================================
         /// <summary>
-        /// Adds and accessory to the collection
+        ///     Adds an accessory to the collection
         /// </summary>
-        /// <param name="RoomNumber">
-        /// The room number this accessory belongs to
+        /// 
+        /// <param name="roomNumber">
+        ///     The room number to assign the accessory to
         /// </param>
-        public void Add(int RoomNumber)
+        ///====================================================================================
+        public void Add(int roomNumber)
         {
             Accessory accessory = new Accessory()
             {
                 Accessories = new ObservableCollection<string>(GetAccessories()),
-                RoomNumber = RoomNumber
+                RoomNumber = roomNumber
             };
 
             accessory.PropertyChanged += Accessory_PropertyChanged;
             Accessories.Add(accessory);
         }
 
-        public void Add(Accessory Accessory)
+
+        ///====================================================================================
+        /// <summary>
+        ///     Adds an accessory to the collection
+        /// </summary>
+        /// 
+        /// <param name="accessory">
+        ///     The accessory to add
+        /// </param>
+        ///====================================================================================
+        public void Add(Accessory accessory)
         {
-            Accessory.Accessories = new ObservableCollection<string>(GetAccessories());
-            Accessory.PropertyChanged += Accessory_PropertyChanged;
-            Accessories.Add(Accessory);
+            accessory.Accessories = new ObservableCollection<string>(GetAccessories());
+            accessory.ColorValues = new ObservableCollection<string>(GetColorValues(accessory.Name));
+            accessory.WidthValues = new ObservableCollection<string>(GetWidthValues(accessory.Name, accessory.Color));
+            accessory.HeightValues = new ObservableCollection<string>(GetHeightValues(accessory.Name, accessory.Color));
+            accessory.DepthValues = new ObservableCollection<string>(GetDepthValues(accessory.Name, accessory.Color));
+            accessory.PropertyChanged += Accessory_PropertyChanged;
+            Accessories.Add(accessory);
         }
 
-        /// <summary>
-        /// Remove accessory from the collection
+        ///====================================================================================
+        /// <summary> 
+        ///     Removes an accessory from the collection
         /// </summary>
-        /// <param name="AccessoryModel"></param>
+        /// 
+        /// <param name="Accessory">
+        ///     The accessory to be removed
+        /// </param>
+        ///==================================================================================== 
         public void Remove(Accessory Accessory)
         {
             // Remove the price before you remove the accessory, otherwise the price will stay the same
@@ -105,7 +122,6 @@ namespace TCC_MVVM.ViewModel
                 Accessories.Remove(Accessory);
         }
 
-        #region INotifyPropertyChanged Members
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -169,33 +185,50 @@ namespace TCC_MVVM.ViewModel
             return 0M;
         }
 
+        ///====================================================================================
         /// <summary>
-        /// Retrieves a list of accessory names
+        ///     Retrieves a list of accessory names
         /// </summary>
+        /// 
         /// <returns>
-        /// A list of accessory names
+        ///     A list of accessory names
         /// </returns>
+        ///==================================================================================== 
         private List<string> GetAccessories() 
             => AccessoryData.AsEnumerable().Select(row => row.Field<string>("ItemName")).Distinct().ToList();
 
-
+        ///====================================================================================
         /// <summary>
-        /// Retrieves a list of color based on accessory name
+        ///     Retrieves a list of color based on the accessory's name
         /// </summary>
+        /// 
         /// <param name="AccessoryName">
-        /// The name of the accessory
+        ///     The name of the accessory
         /// </param>
+        /// 
+        /// <returns>
+        ///     A list of color values
+        /// </returns>
+        ///====================================================================================
         private List<string> GetColorValues(string AccessoryName) 
             => (from row in AccessoryData.AsEnumerable()
                 where row.Field<string>("ItemName") == AccessoryName
                 select row.Field<string>("Color")).Distinct().ToList();
 
+        ///====================================================================================
         /// <summary>
-        /// Gets the boolean value if the length should be set
+        ///     Gets the boolean value if the length should be set
         /// </summary>
+        /// 
         /// <param name="AccessoryName">
-        /// The name of the accessory
+        ///     The name of the accessory
         /// </param>
+        /// 
+        /// <returns>
+        ///     True, if the accessory has a length field
+        ///     False, if the accessory does not have a length field
+        /// </returns>
+        ///====================================================================================
         private bool HasLength(string AccessoryName)
         {
             bool haslength = false; 
@@ -253,6 +286,5 @@ namespace TCC_MVVM.ViewModel
                 && row.Field<string>("Color") == Color
              select row.Field<string>("Depth")).Distinct().ToList();
 
-        #endregion
     }
 }

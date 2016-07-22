@@ -225,6 +225,7 @@ namespace TCC_MVVM.Model
             StripData = DataSet.Tables[StripDataName];
             PanelData = DataSet.Tables[PanelDataName];
             ShelfData = DataSet.Tables[ShelfDataName];
+            AccessoryData = DataSet.Tables[AccessoryDataName];
 
             JobVM newJob = new JobVM();
 
@@ -250,7 +251,8 @@ namespace TCC_MVVM.Model
                     RoomVM roomvm = newJob.Rooms[row];
                     foreach (string propertyName in roomvm.Room.Properties)
                     {
-                        roomvm.Room.SetProperty(propertyName, RoomData.Rows[row][propertyName].ToString());
+                        if(RoomData.Columns[propertyName] != null)
+                            roomvm.Room.SetProperty(propertyName, RoomData.Rows[row][propertyName].ToString());
                     }
                 }
             }
@@ -325,13 +327,13 @@ namespace TCC_MVVM.Model
             //===================================
             if(AccessoryData != null)
             {
-                for (int row = 0; row < ShelfData.Rows.Count; row++)
+                for (int row = 0; row < AccessoryData.Rows.Count; row++)
                 {
                     Accessory accessory = new Accessory();
                     foreach (string propertyName in accessory.Properties)
                     {
-                        if (ShelfData.Columns[propertyName] != null)
-                            accessory.SetProperty(propertyName, ShelfData.Rows[row][propertyName].ToString());
+                        if (AccessoryData.Columns[propertyName] != null)
+                            accessory.SetProperty(propertyName, AccessoryData.Rows[row][propertyName].ToString());
                     }
 
                     foreach (RoomVM roomvm in newJob.Rooms)

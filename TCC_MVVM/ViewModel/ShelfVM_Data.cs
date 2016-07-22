@@ -86,7 +86,7 @@ namespace TCC_MVVM.ViewModel
         /// Gets a list of shelf type names
         /// </summary>
         /// <returns></returns>
-        List<string> GetShelfTypNames()
+        List<string> GetShelfTypeNames()
             => ShelfTypeData.AsEnumerable().Select(row => row.Field<string>("ShelfType")).Distinct().ToList();
 
         /// <summary>
