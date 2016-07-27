@@ -21,7 +21,7 @@ namespace TCC_MVVM.ViewModel
         List<Campost> CamPosts = new List<Campost>();
         List<Fence> Fences = new List<Fence>();
         List<TopConnector> TopConnectors = new List<TopConnector>();
-        List<ShelfType> ShelfTypes = new List<ShelfType>();
+        public List<ShelfType> ShelfTypes { get; set; } = new List<ShelfType>();
 
         Dictionary<string, decimal> Woodvalues;
         Dictionary<string, decimal> BandingValues;

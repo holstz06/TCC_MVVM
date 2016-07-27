@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PropertyChanged;
 using System;
+using System.Windows;
 
 namespace TCC_MVVM.ViewModel
 {
@@ -42,12 +43,16 @@ namespace TCC_MVVM.ViewModel
             }
         }
 
+        public ICommand AddAdjustableShelvingCommand { get; private set; }
+
         /// <summary>
         /// Creates a new instance of the shelf view model
         /// </summary>
         public ShelfVM()
         {
             InitializeData();
+
+            AddAdjustableShelvingCommand = new AddASCommand(this);
         }
 
         /// <summary>
@@ -76,14 +81,15 @@ namespace TCC_MVVM.ViewModel
             HasDepth |= SizeDepth != null;
 
             Shelf shelf = new Shelf(
-                RoomNumber, 
-                HasColor ? Color : null, 
+                RoomNumber,
+                HasColor ? Color : null,
                 HasDepth ? SizeDepth : null)
             {
                 ColorValues = new ObservableCollection<string>(GetColorValues()),
                 WidthValues = new ObservableCollection<string>(GetWidthValues()),
                 DepthValues = new ObservableCollection<string>(GetDepthValues()),
-                ShelfTypeValues = new ObservableCollection<string>(GetShelfTypeNames())
+                ShelfTypeValues = new ObservableCollection<string>(GetShelfTypeNames()),
+                viewmodel = this
             };
 
             shelf.Wood.WoodValues = GetWoodValues();
@@ -128,6 +134,40 @@ namespace TCC_MVVM.ViewModel
         {
             foreach (Shelf shelf in Shelves)
                 shelf.SizeDepth = SizeDepth;
+        }
+    }
+
+    public class AddASCommand : ICommand
+    {
+        ShelfVM viewmodel;
+        public AddASCommand(ShelfVM viewmodel)
+        {
+            this.viewmodel = viewmodel;
+        }
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            Shelf shelf = (parameter as Shelf);
+            Shelf newShelf = (shelf.Clone() as Shelf);
+
+            if(shelf.ShelfType.Name == "Fixed")
+            {
+                foreach (var shelfType in viewmodel.ShelfTypes)
+                {
+                    if(shelfType.Name == "Adjustable")
+                    {
+                        newShelf.ShelfTypeName = shelfType.Name;
+                        viewmodel.Add(newShelf);
+                    }
+                }
+            }
+
         }
     }
 }

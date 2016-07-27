@@ -420,6 +420,11 @@
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid>
+                                                    <Grid.ContextMenu>
+                                                        <ContextMenu>
+                                                            <MenuItem Header="Add Adjustable" Command="{Binding viewmodel.AddAdjustableShelvingCommand, Mode=OneWay}" CommandParameter="{Binding}" />
+                                                        </ContextMenu>
+                                                    </Grid.ContextMenu>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="100" />
                                                         <ColumnDefinition Width="100" />

@@ -8,8 +8,10 @@ using System.Linq;
 namespace TCC_MVVM.Model
 { 
     [ImplementPropertyChanged]
-    public class Shelf : INotifyPropertyChanged
+    public class Shelf : INotifyPropertyChanged, ICloneable
     {
+        public ViewModel.ShelfVM viewmodel { get; set; }
+
         public int RoomNumber { get; set; }
         public int ShelfNumber { get; set; }
         public int Quantity { get; set; }
@@ -160,6 +162,11 @@ namespace TCC_MVVM.Model
                 && !string.IsNullOrEmpty(SizeDepth)
                 && !string.IsNullOrEmpty(ShelfTypeName))
                     SetPrice();
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
 
         string _DisplayName;
