@@ -8,6 +8,7 @@ using System.Linq;
 using PropertyChanged;
 using System;
 using System.Windows;
+using TCC_MVVM.ViewModel.Commands;
 
 namespace TCC_MVVM.ViewModel
 {
@@ -52,7 +53,7 @@ namespace TCC_MVVM.ViewModel
         {
             InitializeData();
 
-            AddAdjustableShelvingCommand = new AddASCommand(this);
+            AddAdjustableShelvingCommand = new AddAdjustableShelfCommand(this);
         }
 
         /// <summary>
@@ -134,40 +135,6 @@ namespace TCC_MVVM.ViewModel
         {
             foreach (Shelf shelf in Shelves)
                 shelf.SizeDepth = SizeDepth;
-        }
-    }
-
-    public class AddASCommand : ICommand
-    {
-        ShelfVM viewmodel;
-        public AddASCommand(ShelfVM viewmodel)
-        {
-            this.viewmodel = viewmodel;
-        }
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            Shelf shelf = (parameter as Shelf);
-            Shelf newShelf = (shelf.Clone() as Shelf);
-
-            if(shelf.ShelfType.Name == "Fixed")
-            {
-                foreach (var shelfType in viewmodel.ShelfTypes)
-                {
-                    if(shelfType.Name == "Adjustable")
-                    {
-                        newShelf.ShelfTypeName = shelfType.Name;
-                        viewmodel.Add(newShelf);
-                    }
-                }
-            }
-
         }
     }
 }

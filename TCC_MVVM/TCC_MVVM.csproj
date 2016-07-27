@@ -36,6 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PropertyChanged, Version=1.51.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.1.51.0\lib\dotnet\PropertyChanged.dll</HintPath>
       <Private>False</Private>
@@ -44,7 +48,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -84,6 +91,7 @@
     <Compile Include="Model\Wire.cs" />
     <Compile Include="Model\Wood.cs" />
     <Compile Include="ViewModel\AccessoryVM.cs" />
+    <Compile Include="ViewModel\Commands\AddAdjustableShelfCommand.cs" />
     <Compile Include="ViewModel\Job\RemoveRoomCommand.cs" />
     <Compile Include="ViewModel\Job\BrowseCommand.cs" />
     <Compile Include="ViewModel\Job\CreateJobCommand.cs" />
@@ -91,6 +99,7 @@
     <Compile Include="ViewModel\Job\AddRoomCommand.cs" />
     <Compile Include="ViewModel\Job\LoadCommand.cs" />
     <Compile Include="ViewModel\Job\SamePremiseAddressCommand.cs" />
+    <Compile Include="ViewModel\Job\ToggleDisplayCommand.cs" />
     <Compile Include="ViewModel\Room\Commands\Command_AddAccessory.cs" />
     <Compile Include="ViewModel\Room\Commands\Command_AddPanel.cs" />
     <Compile Include="ViewModel\Room\Commands\Command_AddShelf.cs" />

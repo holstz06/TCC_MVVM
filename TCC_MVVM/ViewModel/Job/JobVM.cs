@@ -18,6 +18,13 @@ namespace TCC_MVVM.ViewModel.Job
         public decimal StripCost { get; set; }
         public decimal AccessoryCost { get; set; }
 
+        public int DisplayState { get; set; } = 0;
+        public Visibility IsProposalDisplayVisible { get; set; } = Visibility.Visible;
+        public Visibility IsTabControlDisplayVisible { get; set; } = Visibility.Visible;
+        public int ProposalDisplayColumn { get; set; } = 1;
+        public int TabControlColumnSpan { get; set; } = 1;
+        public int ProposalDisplayColumnSpan { get; set; } = 1;
+
         public Model.Job Job { get; set; } = new Model.Job();
 
         public ObservableCollection<RoomVM> Rooms { get; set; } 
@@ -32,6 +39,8 @@ namespace TCC_MVVM.ViewModel.Job
         public ICommand SamePremiseAddressCommand { get; private set; }
         public ICommand LoadCommand { get; private set; }
         public ICommand AddRoomCommand { get; private set; }
+        
+        public ICommand ToggleDisplayCommand { get; private set; }
 
         ICommand _RemoveCommand;
         public ICommand RemoveCommand
@@ -86,6 +95,7 @@ namespace TCC_MVVM.ViewModel.Job
             CreateProposalCommand = new CreateProposalCommand(this);
             LoadCommand = new LoadCommand(this);
             AddRoomCommand = new AddRoomCommand(this);
+            ToggleDisplayCommand = new ToggleDisplayCommand(this);
         }
 
         ///===============================================================================
