@@ -33,6 +33,26 @@ namespace TCC_MVVM.ViewModel.Job
         public ICommand LoadCommand { get; private set; }
         public ICommand AddRoomCommand { get; private set; }
 
+        ICommand _RemoveCommand;
+        public ICommand RemoveCommand
+        {
+            get
+            {
+                if (_RemoveCommand == null)
+                    _RemoveCommand = new CollectionChangeCommand(param => Remove((RoomVM)param));
+                return _RemoveCommand;
+            }
+        }
+
+        public void Remove(RoomVM roomToDelete)
+        {
+            if (MessageBox.Show("Deleting this room will delete all items contained in it. \nAre you sure you want to continue?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                if (Rooms.Contains(roomToDelete))
+                    Rooms.Remove(roomToDelete);
+            }
+        }
+
         /// <summary>
         /// Set the premise address to the mailing address
         /// </summary>

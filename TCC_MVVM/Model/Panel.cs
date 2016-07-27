@@ -123,7 +123,14 @@ namespace TCC_MVVM.Model
             var height = decimal.Parse(this.SizeHeight);
             var depth = decimal.Parse(this.SizeDepth);
 
+
+
+
             decimal woodPrice = (height * depth) * Wood.Price;
+
+
+
+
             decimal bandingPrice = (height + (2 * depth)) * Banding.Price;
             decimal fees = (decimal)(Wood.PANEL_INSTALL + Wood.ROUTER_FEE + Wood.DRILLBIT_FEE);
 

@@ -21,7 +21,7 @@ namespace TCC_MVVM.ViewModel
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
         public ObservableCollection<Accessory> Accessories { get; set; } = new ObservableCollection<Accessory>();
-        private List<Accessory> AllAccessories { get; set; } = new List<Accessory>();
+        List<Accessory> AllAccessories { get; set; } = new List<Accessory>();
 
         ///====================================================================================
         /// <summary>
@@ -123,7 +123,7 @@ namespace TCC_MVVM.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -166,7 +166,7 @@ namespace TCC_MVVM.ViewModel
             }
         }
 
-        private decimal SetPrice(Accessory selectedAccessory)
+        decimal SetPrice(Accessory selectedAccessory)
         {
             foreach(Accessory accessory in AllAccessories)
             {
@@ -178,8 +178,7 @@ namespace TCC_MVVM.ViewModel
                 {
                     if (selectedAccessory.HasLength)
                         return accessory.Price * (decimal)selectedAccessory.Length;
-                    else
-                        return accessory.Price;
+                    return accessory.Price;
                 }     
             }
             return 0M;
@@ -194,7 +193,7 @@ namespace TCC_MVVM.ViewModel
         ///     A list of accessory names
         /// </returns>
         ///==================================================================================== 
-        private List<string> GetAccessories() 
+        List<string> GetAccessories() 
             => AccessoryData.AsEnumerable().Select(row => row.Field<string>("ItemName")).Distinct().ToList();
 
         ///====================================================================================
@@ -210,7 +209,7 @@ namespace TCC_MVVM.ViewModel
         ///     A list of color values
         /// </returns>
         ///====================================================================================
-        private List<string> GetColorValues(string AccessoryName) 
+        List<string> GetColorValues(string AccessoryName) 
             => (from row in AccessoryData.AsEnumerable()
                 where row.Field<string>("ItemName") == AccessoryName
                 select row.Field<string>("Color")).Distinct().ToList();
@@ -229,7 +228,7 @@ namespace TCC_MVVM.ViewModel
         ///     False, if the accessory does not have a length field
         /// </returns>
         ///====================================================================================
-        private bool HasLength(string AccessoryName)
+        bool HasLength(string AccessoryName)
         {
             bool haslength = false; 
             var query = (from row in AccessoryData.AsEnumerable()
@@ -250,7 +249,7 @@ namespace TCC_MVVM.ViewModel
         /// <param name="Color">
         /// The color of the accessory
         /// </param>
-        private List<string> GetHeightValues(string AccessoryName, string Color) =>
+        List<string> GetHeightValues(string AccessoryName, string Color) =>
             (from row in AccessoryData.AsEnumerable()
              where row.Field<string>("ItemName") == AccessoryName
                 && row.Field<string>("Color") == Color
@@ -265,7 +264,7 @@ namespace TCC_MVVM.ViewModel
         /// <param name="Color">
         /// The color of the accessory
         /// </param>
-        private List<string> GetWidthValues(string AccessoryName, string Color) =>
+        List<string> GetWidthValues(string AccessoryName, string Color) =>
             (from row in AccessoryData.AsEnumerable()
              where row.Field<string>("ItemName") == AccessoryName
                 && row.Field<string>("Color") == Color
@@ -280,7 +279,7 @@ namespace TCC_MVVM.ViewModel
         /// <param name="Color">
         /// The color of the accessory
         /// </param>
-        private List<string> GetDepthValues(string AccessoryName, string Color) =>
+        List<string> GetDepthValues(string AccessoryName, string Color) =>
             (from row in AccessoryData.AsEnumerable()
              where row.Field<string>("ItemName") == AccessoryName
                 && row.Field<string>("Color") == Color

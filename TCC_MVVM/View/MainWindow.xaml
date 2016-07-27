@@ -136,9 +136,14 @@
                             <RowDefinition Height="25" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Button Grid.Row="0" Content="Add Room" Command="{Binding AddRoomCommand}" />
-                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Rooms}" >
-                            <ItemsControl.ItemTemplate>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".5*" />
+                            <ColumnDefinition Width=".5*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Grid.Column="0" Content="Add Room" Command="{Binding AddRoomCommand}" BorderThickness="0,0,0,1" BorderBrush="Green" Background="White" Foreground="Green" />
+                        <Button Grid.Row="0" Grid.Column="1" Content="Remove" Command="{Binding RemoveCommand}" CommandParameter="{Binding ElementName=RoomListView,Path=SelectedItem}" BorderThickness="0,0,0,1" BorderBrush="Red" Background="White" Foreground="Red" />
+                        <ListView Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Rooms}" x:Name="RoomListView" >
+                            <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="5,10,0,25">
                                         <Grid.RowDefinitions>
@@ -164,8 +169,8 @@
                                         <ComboBox ToolTip="Select the default room depth" Grid.Row="3" Grid.Column="2" SelectedItem="{Binding Room.ShelvingDepth, Mode=TwoWay}" ItemsSource="{Binding Room.ShelvingDepthValues}" />
                                     </Grid>
                                 </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                 </ScrollViewer>
             </TabItem>

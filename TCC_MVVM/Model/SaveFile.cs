@@ -233,7 +233,7 @@ namespace TCC_MVVM.Model
             // Import Job Information
             //===================================
             var job = new Job();
-            foreach(DataColumn propertyName in JobData.Columns)
+            foreach (DataColumn propertyName in JobData.Columns)
             {
                 var propertyValue = JobData.Rows[0][propertyName].ToString();
                 job.SetProperty(propertyName.ColumnName, propertyValue);
@@ -243,7 +243,7 @@ namespace TCC_MVVM.Model
             //===================================
             // Import Room Information
             //===================================
-            if(RoomData != null)
+            if (RoomData != null)
             {
                 for (int row = 0; row < RoomData.Rows.Count; row++)
                 {

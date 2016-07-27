@@ -16,8 +16,13 @@ namespace TCC_MVVM.Model
         public string Color { get; set; }
         public string SizeDepth { get; set; }
         public string SizeWidth { get; set; }
-        public decimal LaborFees { get; set; } 
-        public decimal EquipmentFees { get; set; } 
+
+
+        public decimal LaborFees { get; set; } = 2M;
+        public decimal EquipmentFees { get; set; } = 0.5M;
+
+
+
         public string ShelfTypeName { get; set; }
 
         decimal _Price;
@@ -79,7 +84,7 @@ namespace TCC_MVVM.Model
 
         ///=================================================================================================
         /// <summary>
-        ///     Creates a new instance of a shelf
+        ///     Constructor - Creates a new instance of a shelf
         /// </summary>
         /// 
         /// <param name="Color">
@@ -122,8 +127,11 @@ namespace TCC_MVVM.Model
             var depth = decimal.Parse(this.SizeDepth);
 
             // Get the price of the wood and banding
-            tempPrice += (width * depth) * Wood.Price * (decimal)Wood.MARKUP;
+            tempPrice += (width * depth) * Wood.Price;
             tempPrice += (width) * Banding.Price;
+
+            tempPrice += EquipmentFees;
+            tempPrice += LaborFees;
 
             tempPrice += (ShelfType.CamPostQuantity * ShelfType.CamPostPrice);
 
@@ -133,6 +141,8 @@ namespace TCC_MVVM.Model
                 tempPrice += ShelfType.TopConnectorPrice;
             if(ShelfType.IsToeKick)
                 tempPrice += width * 3 /*HEIGHT*/ * Wood.Price;
+
+            tempPrice *= (decimal)Wood.MARKUP;
 
             tempPrice *= Quantity;
 
