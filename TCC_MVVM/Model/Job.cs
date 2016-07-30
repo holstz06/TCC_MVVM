@@ -9,11 +9,11 @@ namespace TCC_MVVM.Model
     [ImplementPropertyChanged]
     public class Job : INotifyPropertyChanged, IDataErrorInfo
     {
-        public string FirstName { get; set; } = "Tyler";
-        public string FullName { get; set; } = "Tyler Holstead";
-        public string PhoneNumber { get; set; } = "(920) 857-4544";
+        public string FirstName { get; set; }
+        public string FullName { get; set; }
+        public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string MailingAddress01 { get; set; } = "1471 Navigator Way";
+        public string MailingAddress01 { get; set; }
         public string MailingAddress02 { get; set; }
         public string MailingCity { get; set; }
         public string MailingState { get; set; }

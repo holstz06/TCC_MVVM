@@ -16,27 +16,29 @@ namespace TCC_MVVM.ViewModel
     {
         // Data Tables Vairables
         //================================
-        private DataTable PanelData;
-        private DataTable PanelHeightData;
-        private DataTable ShelvingDepthData;
-        private DataTable WoodData;
-        private DataTable BandingData;
+        DataTable PanelData;
+        DataTable PanelHeightData;
+        DataTable ShelvingDepthData;
+        DataTable WoodData;
+        DataTable BandingData;
 
         // Collections Variables
         //=================================
         public ObservableCollection<Panel> Panels { get; set; } = new ObservableCollection<Panel>();
-        private List<PanelItem> PanelItems { get; set; } = new List<PanelItem>();
-        private Dictionary<string, decimal> Woodvalues;
-        private Dictionary<string, decimal> BandingValues;
+        List<PanelItem> PanelItems { get; set; } = new List<PanelItem>();
+        Dictionary<string, decimal> Woodvalues;
+        Dictionary<string, decimal> BandingValues;
 
         // Total Price of all panels
         //=================================
-        private decimal _TotalPrice;
+        decimal _TotalPrice;
         public decimal TotalPrice
         {
             get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
+
+        public int TotalQuantity { get; set; }
 
         // Commands
         //=================================
@@ -264,6 +266,11 @@ namespace TCC_MVVM.ViewModel
                     break;
                 case "Color":
                     Color_PropertyChange(sender);
+                    break;
+                case "Quantity":
+                    TotalQuantity = 0;
+                    foreach (Panel panel in Panels)
+                        TotalQuantity += panel.Quantity;
                     break;
             }
         }

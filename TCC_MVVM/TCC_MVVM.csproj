@@ -76,6 +76,7 @@
     <Compile Include="Model\Banding.cs" />
     <Compile Include="Model\Campost.cs" />
     <Compile Include="Model\Fence.cs" />
+    <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Proposal.cs" />
     <Compile Include="Model\ShelfType.cs" />
     <Compile Include="Model\ShelvingItem.cs" />

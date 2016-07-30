@@ -33,8 +33,8 @@
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
-                <Label Content="TCCQ" Grid.Column="0" FontFamily="Gill Sans Ultra Bold" FontWeight="ExtraBold" FontSize="16" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Label Grid.Column="1" FontWeight="Normal" FontFamily="Segoe UI" FontSize="16" Background="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                <!--<Label Content="TCCQ" Grid.Column="0" FontFamily="Gill Sans Ultra Bold" FontWeight="ExtraBold" FontSize="16" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+                <!--<Label Grid.Column="1" FontWeight="Normal" FontFamily="Segoe UI" FontSize="16" Background="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                     <TextBlock>
                         <Run Text="Personal Quote for: " />
                         <Run Text="{Binding Job.FullName}" />
@@ -42,14 +42,23 @@
                         <Run Text="$" />
                         <Run Text="{Binding TotalPrice}" />
                     </TextBlock>
-                </Label>
+                </Label>-->
+                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="2" Background="#444">
+                    <Label Foreground="#fff" FontFamily="Segoe UI Light" FontSize="22" VerticalContentAlignment="Center">
+                        <TextBlock>
+                            <Run Text="{Binding Job.FullName}" />
+                            <Run Text=": $" />
+                            <Run Text="{Binding TotalPrice}" />
+                        </TextBlock>
+                    </Label>
+                </StackPanel>
                 <Button Grid.Column="2" Content="Load" Command="{Binding Binding LoadCommand}" />
                 <Button Grid.Column="3" Content="Save" Command="{Binding CreateProposalCommand}"/>
                 <Button Grid.Column="4" Content="Toggle" Command="{Binding ToggleDisplayCommand}"/>
             </Grid>
         </Border>
         
-        <TabControl Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="{Binding TabControlColumnSpan, Mode=TwoWay}" Visibility="{Binding IsTabControlDisplayVisible}" TabStripPlacement="Left" BorderThickness="0" Padding="0">
+        <TabControl Grid.Column="0" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="{Binding TabControlColumnSpan, Mode=TwoWay}" Visibility="{Binding IsTabControlDisplayVisible}" TabStripPlacement="Top" BorderThickness="0" Padding="0">
             <TabControl.Resources>
 
                 <Style TargetType="{x:Type TabItem}">
@@ -59,37 +68,46 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type TabItem}">
                                 <Grid>
-                                    <Border Name="Border" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderThickness="0,0,0,0" >
-                                        <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" />
+                                    <Border Name="Border" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrush}}" BorderThickness="0,0,0,5" BorderBrush="#fff">
+                                        <ContentPresenter x:Name="ContentSite" ContentSource="Header" />
                                     </Border>
                                 </Grid>
                                 <ControlTemplate.Triggers>
-                                    <Trigger Property="IsFocused" Value="True" >
-                                        <Setter Property="Background" TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
+                                    <Trigger Property="IsSelected" Value="False">
                                         <Setter Property="HeaderTemplate">
                                             <Setter.Value>
                                                 <DataTemplate>
-                                                    <TextBlock FontWeight="Bold" Text="{Binding}"/>
+                                                    <Label FontWeight="Bold" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsFocused" Value="True" >
+                                        <Setter Property="BorderBrush" TargetName="Border" Value="#888" />
+                                        <Setter Property="HeaderTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <Label FontWeight="Bold" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                                                 </DataTemplate>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
                                     <Trigger Property="IsMouseOver" Value="True" >
-                                        <Setter Property="Background" TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
+                                        <Setter Property="BorderBrush" TargetName="Border" Value="#888" />
                                         <Setter Property="HeaderTemplate">
                                             <Setter.Value>
                                                 <DataTemplate>
-                                                    <TextBlock FontWeight="Bold" Text="{Binding}"/>
+                                                    <Label FontWeight="Bold" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                                                 </DataTemplate>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="True" >
-                                        <Setter Property="Background" TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
+                                        <Setter Property="BorderBrush" TargetName="Border" Value="#888" />
                                         <Setter Property="HeaderTemplate">
                                             <Setter.Value>
                                                 <DataTemplate>
-                                                    <TextBlock FontWeight="Bold" Text="{Binding}"/>
+                                                    <Label FontWeight="Bold" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                                                 </DataTemplate>
                                             </Setter.Value>
                                         </Setter>
@@ -100,6 +118,7 @@
                     </Setter>
                 </Style>
             </TabControl.Resources>
+            
             <!--========================================================================================
                                                         Job Information
             ==========================================================================================-->
@@ -114,9 +133,8 @@
                                 </Style>
                                 <Style TargetType="xctk:WatermarkTextBox">
                                     <Setter Property="FontFamily" Value="Segoe UI" />
-                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                    <Setter Property="BorderThickness" Value="0,0,0,0" />
                                     <Setter Property="VerticalContentAlignment" Value="Center" />
-                                    <Setter Property="Foreground" Value="#333" />
                                     <Setter Property="FontWeight" Value="Normal" />
                                 </Style>
                                 <Style TargetType="ComboBox">
@@ -127,7 +145,97 @@
                                     <Setter Property="VerticalContentAlignment" Value="Center" />
                                 </Style>
                             </Grid.Resources>
+                            
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="0.30*" />
+                                <RowDefinition Height="0.70*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50*" />
+                                    <ColumnDefinition Width="50*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.Resources>
+                                    <Style TargetType="TabItem">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type TabItem}">
+                                                    <Grid>
+                                                        <Border Name="Border" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrush}}" BorderThickness="0,0,0,5" BorderBrush="#fff">
+                                                            <ContentPresenter x:Name="ContentSite" ContentSource="Header" />
+                                                        </Border>
+                                                    </Grid>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsSelected" Value="False">
+                                                            <Setter Property="HeaderTemplate">
+                                                                <Setter.Value>
+                                                                    <DataTemplate>
+                                                                        <Label FontFamily="Segoe UI" FontSize="15" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                                                                    </DataTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Trigger>
+                                                        <Trigger Property="IsFocused" Value="True" >
+                                                            <Setter Property="BorderBrush" TargetName="Border" Value="#3D8EB9" />
+                                                            <Setter Property="HeaderTemplate">
+                                                                <Setter.Value>
+                                                                    <DataTemplate>
+                                                                        <Label FontFamily="Segoe UI" FontSize="15" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                                                                    </DataTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="True" >
+                                                            <Setter Property="BorderBrush" TargetName="Border" Value="#3D8EB9" />
+                                                            <Setter Property="HeaderTemplate">
+                                                                <Setter.Value>
+                                                                    <DataTemplate>
+                                                                        <Label FontFamily="Segoe UI" FontSize="15" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                                                                    </DataTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Trigger>
+                                                        <Trigger Property="IsSelected" Value="True" >
+                                                            <Setter Property="BorderBrush" TargetName="Border" Value="#3D8EB9" />
+                                                            <Setter Property="HeaderTemplate">
+                                                                <Setter.Value>
+                                                                    <DataTemplate>
+                                                                        <Label FontFamily="Segoe UI" FontSize="15" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                                                                    </DataTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                    
+                                </Grid.Resources>
+                                <TabItem Grid.Column="0" Header="Customer Profile" BorderThickness="0,0,0,0" Background="#fff" FontFamily="Segoe UI" FontSize="15" />
+                                <TabItem Grid.Column="1" Header="Premise Profile" BorderThickness="0,0,0,0" Background="#fff" FontFamily="Segoe UI" FontSize="15"/>
+                                
+                            </Grid>
+                            <Grid Grid.Row="1" Background="#444">
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <xctk:WatermarkTextBox Watermark="Full Name" Text="{Binding Job.FullName}" FontSize="22" VerticalContentAlignment="Center" Background="#444" Foreground="#fff" />
+                                    <xctk:WatermarkTextBox Watermark="Email Address" Text="{Binding Job.Email}" FontSize="12" VerticalContentAlignment="Center" Background="#444" Foreground="#fff" />
+                                    <xctk:WatermarkTextBox Watermark="Phone Number" Text="{Binding Job.PhoneNumber}" FontSize="12" VerticalContentAlignment="Center" Background="#444" Foreground="#fff" />
+                                    <Label Content="Load Preset Profile" Foreground="#3D8EB9" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <StackPanel Grid.Row="2" HorizontalAlignment="Center">
+                                <CheckBox Content="Is the premise address the same as the mailing address" IsChecked="{Binding PremiseEqualsMailing, Mode=TwoWay}" />
+                                <xctk:WatermarkTextBox Watermark="Address Line 01" Text="{Binding Job.PremiseAddress01, Mode=TwoWay}"/>
+                                <xctk:WatermarkTextBox Watermark="Address Line 02" Text="{Binding Job.PremiseAddress02, Mode=TwoWay}"/>
+                                <xctk:WatermarkTextBox Watermark="City" Text="{Binding Job.PremiseCity, Mode=TwoWay}"/>
+                                <xctk:WatermarkTextBox Watermark="State" Text="{Binding Job.PremiseState, Mode=TwoWay}"/>
+                                <xctk:WatermarkTextBox Watermark="Postal" Text="{Binding Job.PremiseZip, Mode=TwoWay}"/>
+                            </StackPanel>
+                            <!--<Grid.RowDefinitions>
                                 <RowDefinition Height="35" />
                                 <RowDefinition Height="28" />
                                 <RowDefinition Height="28" />
@@ -149,10 +257,10 @@
                                 <ColumnDefinition Width="150" />
                                 <ColumnDefinition Width="150" />
                                 <ColumnDefinition Width="15" />
-                            </Grid.ColumnDefinitions>
+                            </Grid.ColumnDefinitions>-->
                             
                             <!-- Contact Information Controls-->
-                            <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Content="Contact Information" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold" />
+                            <!--<Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Content="Contact Information" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold" />
                             <xctk:WatermarkTextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Watermark="Full Name" Text="{Binding Job.FullName, Mode=TwoWay}" />
                             <xctk:WatermarkTextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Watermark="Email Address" Text="{Binding Job.Email, Mode=TwoWay}" />
                             <xctk:WatermarkTextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Watermark="Phone Number" Text="{Binding Job.PhoneNumber, Mode=TwoWay}" />
@@ -160,10 +268,10 @@
                             <xctk:WatermarkTextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Watermark="Address Line 02" Text="{Binding Job.MailingAddress02, Mode=TwoWay}"/>
                             <xctk:WatermarkTextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="1" Watermark="City" Text="{Binding Job.MailingCity, Mode=TwoWay}"/>
                             <xctk:WatermarkTextBox Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="1" Watermark="State" Text="{Binding Job.MailingState, Mode=TwoWay}"/>
-                            <xctk:WatermarkTextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="1" Watermark="Postal" Text="{Binding Job.MailingZip, Mode=TwoWay}"/>
+                            <xctk:WatermarkTextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="1" Watermark="Postal" Text="{Binding Job.MailingZip, Mode=TwoWay}"/>-->
                             
                             <!-- Premise Information Controls -->
-                            <Label Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Content="Premise Information" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold"  />
+                            <!--<Label Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Content="Premise Information" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold"  />
                             <CheckBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Content="Contact Address is also Premise Address" IsChecked="{Binding PremiseEqualsMailing, Mode=TwoWay}" />
                             <xctk:WatermarkTextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="1" Watermark="Mileage" />
                             <xctk:WatermarkTextBox Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="1" Watermark="Price" />
@@ -171,13 +279,13 @@
                             <xctk:WatermarkTextBox Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Watermark="Address Line 02" Text="{Binding Job.PremiseAddress02, Mode=TwoWay}"/>
                             <xctk:WatermarkTextBox Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="1" Watermark="City" Text="{Binding Job.PremiseCity, Mode=TwoWay}"/>
                             <xctk:WatermarkTextBox Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="1" Watermark="State" Text="{Binding Job.PremiseState, Mode=TwoWay}"/>
-                            <xctk:WatermarkTextBox Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="1" Watermark="Postal" Text="{Binding Job.PremiseZip, Mode=TwoWay}"/>
+                            <xctk:WatermarkTextBox Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="1" Watermark="Postal" Text="{Binding Job.PremiseZip, Mode=TwoWay}"/>-->
                             
                             <!-- Additional Information Controls -->
-                            <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Content="Addition Information" FontSize="16" FontWeight="Bold"  />
+                            <!--<Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Content="Addition Information" FontSize="16" FontWeight="Bold"  />
                             <xctk:WatermarkTextBox Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Watermark="Contractor/Builder" />
                             <CheckBox Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Content="Include sales tax" />
-                            <xctk:WatermarkComboBox Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="1" Watermark="Project Type" />
+                            <xctk:WatermarkComboBox Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="1" Watermark="Project Type" />-->
                         </Grid>
                     </Border>
                 </ScrollViewer>
@@ -330,6 +438,7 @@
                                         <RowDefinition Height="28" />
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="28" />
+                                        <RowDefinition Height="28" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="15" />
@@ -404,6 +513,12 @@
                                     </ListView>
                                     <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new panel to this room" FontSize="16" Content=" + " Command="{Binding Command_AddPanel, Mode=OneWay}" />
                                     <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected panel" FontSize="18" Content=" - " Command="{Binding PanelViewModel.RemoveCommand}" CommandParameter="{Binding ElementName=PanelListView,Path=SelectedItem}" />
+                                    <Label Grid.Row="5" Grid.Column="1">
+                                        <TextBlock>
+                                            <Run Text="Panel Count: " />
+                                            <Run Text="{Binding PanelViewModel.TotalQuantity}" />
+                                        </TextBlock>
+                                    </Label>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
