@@ -13,6 +13,7 @@ namespace TCC_MVVM.ViewModel
     public class AccessoryVM : INotifyPropertyChanged
     {
         DataTable AccessoryData;
+        DataTable ExtraAccessoryData;
 
         decimal _TotalPrice;
         public decimal TotalPrice
@@ -50,6 +51,10 @@ namespace TCC_MVVM.ViewModel
             DataSet dataset = new DataSet();
             dataset.ReadXml("AccessoryData.xml");
             AccessoryData = dataset.Tables[0];
+
+            dataset = new DataSet();
+            dataset.ReadXml("ExtraAccessoryDataSet.xml");
+            ExtraAccessoryData = dataset.Tables[0];
 
             // Create dictionary of prices by accessory name
             AllAccessories = AccessoryData.AsEnumerable().Select(row => new Accessory()
@@ -152,13 +157,23 @@ namespace TCC_MVVM.ViewModel
                         foreach (Accessory accessoryModel in Accessories)
                             TotalPrice += accessoryModel.Price;
                         break;
+                    case "NonRoundedPrice":
+                        accessory.Price = accessory.Price;
+                        break;
                 }
                 if(!e.PropertyName.Equals("Price")
                     && !string.IsNullOrEmpty(accessory.Color)
                     && !string.IsNullOrEmpty(accessory.Width)
                     && !string.IsNullOrEmpty(accessory.Depth)
                     && !string.IsNullOrEmpty(accessory.Height))
-                    accessory.Price = SetPrice(accessory);
+                {
+                    accessory.Price = 0 + SetPrice(accessory);
+                    foreach(var price in GetExtraPrice(accessory.Name))
+                    {
+                        accessory.Price += decimal.Parse(price);
+                    }
+                }
+                    
             }
             catch(Exception ex)
             {
@@ -284,6 +299,11 @@ namespace TCC_MVVM.ViewModel
              where row.Field<string>("ItemName") == AccessoryName
                 && row.Field<string>("Color") == Color
              select row.Field<string>("Depth")).Distinct().ToList();
+
+        List<string> GetExtraPrice(string AccessoryName) =>
+            (from row in ExtraAccessoryData.AsEnumerable()
+             where row.Field<string>("ItemName") == AccessoryName
+             select row.Field<string>("ExtraPrice")).Distinct().ToList();
 
     }
 }

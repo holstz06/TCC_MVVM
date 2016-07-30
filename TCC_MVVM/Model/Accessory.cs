@@ -15,13 +15,7 @@ namespace TCC_MVVM.Model
         public string Height { get; set; } = "N/A";
         public string Depth { get; set; } = "N/A";
         public double Length { get; set; } = 0;
-
-        decimal _Price;
-        public decimal Price
-        {
-            get { return Math.Round(_Price, 2, MidpointRounding.AwayFromZero); }
-            set { _Price = value; OnPropertyChanged("Price"); }
-        }
+        public decimal Price { get; set; }
 
         public ObservableCollection<string> Accessories { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> ColorValues { get; set; } = new ObservableCollection<string>();
@@ -61,6 +55,26 @@ namespace TCC_MVVM.Model
                 case "Depth": Depth = PropertyValue; break;
                 case "Length": Length = double.Parse(PropertyValue); break;
                 case "Price": Price = decimal.Parse(PropertyValue); break;
+            }
+        }
+
+        string _DisplayName;
+        public string DisplayName
+        {
+            get
+            {
+                _DisplayName = Name;
+                if (Color != "N/A")
+                    _DisplayName += ", " + Color;
+                if (Width != "N/A")
+                    _DisplayName += ", " + Width + " in.";
+                if (Height != "N/A")
+                    _DisplayName += ", " + Height + " in.";
+                if (Depth != "N/A")
+                    _DisplayName += ", " + Depth + " in.";
+                if (Length != 0)
+                    _DisplayName += ", " + Length + "in. ";
+                return _DisplayName;
             }
         }
     }
