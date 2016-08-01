@@ -53,7 +53,7 @@ namespace TCC_MVVM.ViewModel
             AccessoryData = dataset.Tables[0];
 
             dataset = new DataSet();
-            dataset.ReadXml("ExtraAccessoryDataSet.xml");
+            dataset.ReadXml("ExtraAccessoryData.xml");
             ExtraAccessoryData = dataset.Tables[0];
 
             // Create dictionary of prices by accessory name

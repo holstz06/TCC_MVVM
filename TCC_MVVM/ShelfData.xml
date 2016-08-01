@@ -1,12 +1,12 @@
 <?xml version="1.0" standalone="yes"?>
-<ShelfDataSet>
+<NewDataSet>
   <ShelfData>
     <Category>Shelf</Category>
     <ItemName>Cam Post</ItemName>
     <WoodColor>White</WoodColor>
     <Color>White</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -14,7 +14,7 @@
     <WoodColor>Sunset Grey</WoodColor>
     <Color>White</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -22,7 +22,7 @@
     <WoodColor>Canadian Grey</WoodColor>
     <Color>White</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -30,7 +30,7 @@
     <WoodColor>Black</WoodColor>
     <Color>White</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -38,7 +38,7 @@
     <WoodColor>Antique White</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -46,7 +46,7 @@
     <WoodColor>New England Almond</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -54,7 +54,7 @@
     <WoodColor>Classic Maple</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -62,7 +62,7 @@
     <WoodColor>Hardrock Maple</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -70,7 +70,7 @@
     <WoodColor>Pear</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -78,7 +78,7 @@
     <WoodColor>Chocolate Apple</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -86,7 +86,7 @@
     <WoodColor>Wild Apple</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -94,7 +94,7 @@
     <WoodColor>Wild Apple Rust</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -102,7 +102,7 @@
     <WoodColor>Alabama Cherry</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -110,7 +110,7 @@
     <WoodColor>Stainless</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -118,7 +118,7 @@
     <WoodColor>Navajo Red</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -126,7 +126,7 @@
     <WoodColor>(EW) Silva</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -134,7 +134,7 @@
     <WoodColor>(EW) Zahara</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -142,7 +142,7 @@
     <WoodColor>(EW) Ember</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -150,7 +150,7 @@
     <WoodColor>(EW) Skye</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -158,7 +158,7 @@
     <WoodColor>(EW) Dritwood</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
   <ShelfData>
     <Category>Shelf</Category>
@@ -166,9 +166,9 @@
     <WoodColor>Veneer</WoodColor>
     <Color>Almond</Color>
     <Wholesale>0.01</Wholesale>
-    <Price>0.01</Price>
+    <Price>0.42</Price>
   </ShelfData>
-<ShelfData>
+  <ShelfData>
     <Category>Shelf</Category>
     <ItemName>Fence</ItemName>
     <WoodColor>N/A</WoodColor>
@@ -176,7 +176,7 @@
     <Wholesale>4.12</Wholesale>
     <Price>4.12</Price>
   </ShelfData>
-<ShelfData>
+  <ShelfData>
     <Category>Shelf</Category>
     <ItemName>Fence</ItemName>
     <WoodColor>N/A</WoodColor>
@@ -184,7 +184,7 @@
     <Wholesale>4.06</Wholesale>
     <Price>4.06</Price>
   </ShelfData>
-<ShelfData>
+  <ShelfData>
     <Category>Shelf</Category>
     <ItemName>Fence</ItemName>
     <WoodColor>N/A</WoodColor>
@@ -192,7 +192,6 @@
     <Wholesale>3.77</Wholesale>
     <Price>3.77</Price>
   </ShelfData>
-  
   <ShelfData>
     <Category>Shelf</Category>
     <ItemName>Top Connector</ItemName>
@@ -204,7 +203,7 @@
   <ShelfData>
     <Category>Shelf</Category>
     <ItemName>Top Connector</ItemName>
-    <WoodColor></WoodColor>
+    <WoodColor />
     <Color>MN</Color>
     <Wholesale>5</Wholesale>
     <Price>5</Price>
@@ -217,4 +216,4 @@
     <Wholesale>6</Wholesale>
     <Price>6</Price>
   </ShelfData>
-</ShelfDataSet>
+</NewDataSet>

@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
-<WoodDataSet>
-<WoodData>
+<NewDataSet>
+  <WoodData>
     <WoodColor>White</WoodColor>
     <WoodPrice>0.0176547181372549</WoodPrice>
   </WoodData>
@@ -84,4 +84,4 @@
     <WoodColor>Veneer</WoodColor>
     <WoodPrice>0.0337648080065359</WoodPrice>
   </WoodData>
-</WoodDataSet>
+</NewDataSet>
