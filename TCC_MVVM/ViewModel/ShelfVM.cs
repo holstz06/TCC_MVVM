@@ -30,6 +30,8 @@ namespace TCC_MVVM.ViewModel
             set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
         }
 
+        public int TotalQuantity { get; set; }
+
         /// <summary>
         /// Command to remove shelf from the room
         /// </summary>
@@ -57,14 +59,14 @@ namespace TCC_MVVM.ViewModel
         }
 
         /// <summary>
-        /// Removes a shelf from the collection
+        ///     Removes a shelf from the collection
         /// </summary>
-        public void Remove(Shelf Shelf)
+        public void Remove(Shelf shelf)
         {
-            // Remove the price before you remove the shelf, otherwise the price will stay the same
-            TotalPrice -= Shelf.Price;
-            if (Shelves.Contains(Shelf))
-                Shelves.Remove(Shelf);
+            TotalPrice -= shelf.Price;
+            TotalQuantity -= shelf.Quantity;
+            if (Shelves.Contains(shelf))
+                Shelves.Remove(shelf);
         }
 
         /// <summary>
@@ -96,6 +98,8 @@ namespace TCC_MVVM.ViewModel
             shelf.Wood.WoodValues = GetWoodValues();
             shelf.Banding.BandingValues = GetBandingValues();
 
+            TotalQuantity += 1;
+
             shelf.PropertyChanged += Shelf_PropertyChanged;
 
             if (Color != null)
@@ -115,6 +119,7 @@ namespace TCC_MVVM.ViewModel
             shelf.ShelfTypeValues = new ObservableCollection<string>(GetShelfTypeNames());
             shelf.Wood.WoodValues = GetWoodValues();
             shelf.Banding.BandingValues = GetBandingValues();
+            TotalQuantity += shelf.Quantity;
             shelf.PropertyChanged += Shelf_PropertyChanged;
             Shelves.Add(shelf);
         }

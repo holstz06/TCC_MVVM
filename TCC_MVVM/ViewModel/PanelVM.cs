@@ -7,7 +7,6 @@ using System.Data;
 using TCC_MVVM.Model;
 using PropertyChanged;
 using System;
-using System.Windows;
 
 namespace TCC_MVVM.ViewModel
 {
@@ -42,7 +41,7 @@ namespace TCC_MVVM.ViewModel
 
         // Commands
         //=================================
-        private ICommand _RemoveCommand;
+        ICommand _RemoveCommand;
         public ICommand RemoveCommand
         {
             get
@@ -90,7 +89,7 @@ namespace TCC_MVVM.ViewModel
         /// <returns>
         /// A list of panel items
         /// </returns>
-        private List<PanelItem> GetPanelItems()
+        List<PanelItem> GetPanelItems()
         {
             return PanelData.AsEnumerable().Select(row =>
                 new PanelItem
@@ -111,7 +110,7 @@ namespace TCC_MVVM.ViewModel
         /// <returns>
         /// Dictionary of wood values
         /// </returns>
-        private Dictionary<string, decimal> GetWoodValues()
+        Dictionary<string, decimal> GetWoodValues()
             => WoodData.AsEnumerable()
                 .ToDictionary(
                     row => row.Field<string>("WoodColor"),
@@ -125,29 +124,31 @@ namespace TCC_MVVM.ViewModel
         /// <returns>
         /// Dictionary of banding values
         /// </returns>
-        private Dictionary<string, decimal> GetBandingValues()
+        Dictionary<string, decimal> GetBandingValues()
             => BandingData.AsEnumerable()
                 .ToDictionary(
                     row => row.Field<string>("BandingColor"),
                     row => decimal.Parse(row.Field<string>("BandingPrice")));
 
         /// <summary>
-        /// Retrieves a list of wood color values.
-        /// These values are generated from the WoodData.xml
+        ///     Retrieves a list of wood color values.
+        ///     These values are generated from the WoodData.xml
         /// </summary>
+        /// 
         /// <returns>
-        /// List of wood color values
+        ///     List of wood color values
         /// </returns>
-        private List<string> GetColorValues() => WoodData.AsEnumerable().Select(row => row.Field<string>("WoodColor")).Distinct().ToList();
+        List<string> GetColorValues() => WoodData.AsEnumerable().Select(row => row.Field<string>("WoodColor")).Distinct().ToList();
 
         /// <summary>
-        /// Retrieves a list of height values. 
-        /// These values are generated from the PanelHeightData.xml
+        ///     Retrieves a list of height values. 
+        ///     These values are generated from the PanelHeightData.xml
         /// </summary>
+        /// 
         /// <returns>
-        /// List of height values
+        ///     List of height values
         /// </returns>
-        private List<string> GetHeightValues() => PanelHeightData.AsEnumerable().Select(row => row.Field<string>("PanelHeight")).Distinct().ToList();
+        List<string> GetHeightValues() => PanelHeightData.AsEnumerable().Select(row => row.Field<string>("PanelHeight")).Distinct().ToList();
 
 
         /// <summary>
@@ -157,7 +158,7 @@ namespace TCC_MVVM.ViewModel
         /// <returns>
         /// List of depth values
         /// </returns>
-        private List<string> GetDepthValues() => ShelvingDepthData.AsEnumerable().Select(row => row.Field<string>("ShelvingDepth")).Distinct().ToList();
+        List<string> GetDepthValues() => ShelvingDepthData.AsEnumerable().Select(row => row.Field<string>("ShelvingDepth")).Distinct().ToList();
 
         
 
@@ -185,6 +186,8 @@ namespace TCC_MVVM.ViewModel
                 PanelItemsList = GetPanelItems()
             };
 
+            TotalQuantity += 1;
+
             panel.PropertyChanged += Panel_PropertyChanged;
             if(Color != null)
                 Color_PropertyChange(panel);
@@ -197,6 +200,7 @@ namespace TCC_MVVM.ViewModel
             panel.HeightValues = new ObservableCollection<string>(GetHeightValues());
             panel.DepthValues = new ObservableCollection<string>(GetDepthValues());
             panel.PanelItemsList = GetPanelItems();
+            TotalQuantity += panel.Quantity;
             panel.PropertyChanged += Panel_PropertyChanged;
             Panels.Add(panel);
         }
@@ -204,15 +208,15 @@ namespace TCC_MVVM.ViewModel
         /// <summary>
         /// Removes a panel from the collection
         /// </summary>
-        /// <param name="Panel">
+        /// <param name="panel">
         /// The panel to remove
         /// </param>
-        public void Remove(Panel Panel)
+        public void Remove(Panel panel)
         {
-            // Remove the price before you remove the panel, otherwise the price will stay the same
-            TotalPrice -= Panel.Price;
-            if (Panels.Contains(Panel))
-                Panels.Remove(Panel);
+            TotalPrice -= panel.Price;
+            TotalQuantity -= panel.Quantity;
+            if (Panels.Contains(panel))
+                Panels.Remove(panel);
         }
 
         /// <summary>
@@ -246,7 +250,7 @@ namespace TCC_MVVM.ViewModel
         /// <param name="propertyName">
         /// The name of the property
         /// </param>
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -254,9 +258,8 @@ namespace TCC_MVVM.ViewModel
         /// <summary>
         /// Creates a new listener so the observer of this object can see this property
         /// </summary>
-        void Panel_PropertyChanged(object SenderPanel, PropertyChangedEventArgs e)
+        void Panel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Panel sender = (Panel)SenderPanel;
             switch(e.PropertyName)
             {
                 case "Price":
@@ -265,7 +268,7 @@ namespace TCC_MVVM.ViewModel
                         TotalPrice += panel.Price;
                     break;
                 case "Color":
-                    Color_PropertyChange(sender);
+                    Color_PropertyChange(sender as Panel);
                     break;
                 case "Quantity":
                     TotalQuantity = 0;

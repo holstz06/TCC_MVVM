@@ -117,7 +117,7 @@
                     </Setter>
                 </Style>
             </TabControl.Resources>
-
+            
             <!--========================================================================================
                                                         Job Information
             ==========================================================================================-->
@@ -239,7 +239,7 @@
                     </ScrollViewer>
                 </TabItem>
 
-                <!--========================================================================================
+            <!--========================================================================================
                                                         Room Information
             ==========================================================================================-->
                 <TabItem Header="Rooms" Margin="-2,-2,0,0" Padding="7,7,7,7">
@@ -288,7 +288,8 @@
                     </ScrollViewer>
                 </TabItem>
 
-                <!--========================================================================================
+
+            <!--========================================================================================
                                                         Strip Information
             ==========================================================================================-->
                 <TabItem Header="Strip" Margin="-2,-2,0,0" Padding="7,7,7,7">
@@ -371,10 +372,10 @@
                     </ScrollViewer>
                 </TabItem>
 
-                <!--========================================================================================
+            <!--========================================================================================
                                                         Panel Information
             ==========================================================================================-->
-                <TabItem Header="Panel" Margin="-2,-2,0,0" Padding="7,7,7,7">
+            <TabItem Header="Panel" Margin="-2,-2,0,0" Padding="7,7,7,7">
                     <ScrollViewer VerticalScrollBarVisibility="Visible">
                         <ItemsControl ItemsSource="{Binding Rooms}">
                             <ItemsControl.ItemTemplate>
@@ -490,6 +491,7 @@
                                         <RowDefinition Height="28" />
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="28" />
+                                        <RowDefinition Height="28" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="15" />
@@ -569,6 +571,12 @@
                                     </ListView>
                                     <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new panel to this room" FontSize="16" Content=" + " Command="{Binding Command_AddShelf, Mode=OneWay}" />
                                     <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected panel" FontSize="18" Content=" - " Command="{Binding ShelfViewModel.RemoveCommand}" CommandParameter="{Binding ElementName=ShelfViewList,Path=SelectedItem}" />
+                                    <Label Grid.Row="5" Grid.Column="1">
+                                        <TextBlock>
+                                            <Run Text="Panel Count: " />
+                                            <Run Text="{Binding ShelfViewModel.TotalQuantity}" />
+                                        </TextBlock>
+                                    </Label>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -579,7 +587,7 @@
             <!--========================================================================================
                                                         Accessory Information
             ==========================================================================================-->
-                <TabItem Header="Accessory" Margin="-2,-2,0,0" Padding="7,7,7,7">
+            <TabItem Header="Accessory" Margin="-2,-2,0,0" Padding="7,7,7,7">
                     <ScrollViewer VerticalScrollBarVisibility="Visible">
                         <ItemsControl ItemsSource="{Binding Rooms}">
                             <ItemsControl.ItemTemplate>

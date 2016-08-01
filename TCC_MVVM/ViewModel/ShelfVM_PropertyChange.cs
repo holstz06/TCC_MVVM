@@ -29,17 +29,21 @@ namespace TCC_MVVM.ViewModel
         /// </summary>
         void Shelf_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Shelf shelf = (Shelf)sender;
             switch (e.PropertyName)
             {
                 case "Price":
                     Price_PropertyChanged();
                     break;
                 case "ShelfTypeName":
-                    ShelfTypeName_PropertyChanged(shelf);
+                    ShelfTypeName_PropertyChanged(sender as Shelf);
                     break;
                 case "Color":
-                    Color_PropertyChanged(shelf);
+                    Color_PropertyChanged(sender as Shelf);
+                    break;
+                case "Quantity":
+                    TotalQuantity = 0;
+                    foreach (Shelf shelf in Shelves)
+                        TotalQuantity += shelf.Quantity;
                     break;
             }
         }
