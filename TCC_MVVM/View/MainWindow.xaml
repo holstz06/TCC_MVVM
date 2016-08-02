@@ -8,6 +8,7 @@
         xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Name="window" 
         x:Class="TCC_MVVM.View.MainWindow"
         Title="The Closet Company - Quoting Tool" Height="800" Width="1300">
+    
     <Window.Resources>
         <JobVM:JobVM x:Key="JobViewModel" />
     </Window.Resources>
@@ -133,79 +134,12 @@
                             </Grid.Resources>
 
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="60" />
                                 <RowDefinition Height="0.30*" />
                                 <RowDefinition Height="0.10*" />
                                 <RowDefinition Height="0.60*" />
                             </Grid.RowDefinitions>
-
-                            <Grid Grid.Row="0">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TabItem}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type TabItem}">
-                                                    <Grid>
-                                                        <Border x:Name="Border" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrush}}" BorderThickness="0,0,0,5" BorderBrush="#fff">
-                                                            <ContentPresenter x:Name="ContentSite" ContentSource="Header" />
-                                                        </Border>
-                                                    </Grid>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsSelected" Value="False">
-                                                            <Setter Property="HeaderTemplate">
-                                                                <Setter.Value>
-                                                                    <DataTemplate>
-                                                                        <Label FontFamily="Segoe UI" FontSize="15" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                                                                    </DataTemplate>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </Trigger>
-                                                        <Trigger Property="IsFocused" Value="True" >
-                                                            <Setter Property="BorderBrush" TargetName="Border" Value="#3D8EB9" />
-                                                            <Setter Property="HeaderTemplate">
-                                                                <Setter.Value>
-                                                                    <DataTemplate>
-                                                                        <Label FontFamily="Segoe UI" FontSize="15" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                                                                    </DataTemplate>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </Trigger>
-                                                        <Trigger Property="IsMouseOver" Value="True" >
-                                                            <Setter Property="BorderBrush" TargetName="Border" Value="#3D8EB9" />
-                                                            <Setter Property="HeaderTemplate">
-                                                                <Setter.Value>
-                                                                    <DataTemplate>
-                                                                        <Label FontFamily="Segoe UI" FontSize="15" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                                                                    </DataTemplate>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </Trigger>
-                                                        <Trigger Property="IsSelected" Value="True" >
-                                                            <Setter Property="BorderBrush" TargetName="Border" Value="#3D8EB9" />
-                                                            <Setter Property="HeaderTemplate">
-                                                                <Setter.Value>
-                                                                    <DataTemplate>
-                                                                        <Label FontFamily="Segoe UI" FontSize="15" Content="{Binding}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                                                                    </DataTemplate>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-
-                                </Grid.Resources>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50*" />
-                                    <ColumnDefinition Width="50*" />
-                                </Grid.ColumnDefinitions>
-                                <TabItem Grid.Column="0" Header="Customer Profile" BorderThickness="0,0,0,0" Background="#fff" FontFamily="Segoe UI" FontSize="15" />
-                                <TabItem Grid.Column="1" Header="Premise Profile" BorderThickness="0,0,0,0" Background="#fff" FontFamily="Segoe UI" FontSize="15"/>
-
-                            </Grid>
-                            <Grid Grid.Row="1" Background="#444">
+                           
+                            <Grid Grid.Row="0" Background="#444">
                                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <xctk:WatermarkTextBox Watermark="Full Name" Text="{Binding Job.FullName}" FontSize="26.667" VerticalContentAlignment="Center" Background="#444" Foreground="#fff" HorizontalContentAlignment="Center" Padding="3,5" />
                                     <xctk:WatermarkTextBox Watermark="Email Address" Text="{Binding Job.Email}" FontSize="13.333" VerticalContentAlignment="Center" Background="#444" Foreground="#fff" HorizontalContentAlignment="Center" Padding="3,5" />
@@ -213,7 +147,7 @@
                                     <Label Content="Load Preset Profile" Foreground="#3D8EB9" FontWeight="Bold" HorizontalContentAlignment="Center"/>
                                 </StackPanel>
                             </Grid>
-                            <Grid Grid.Row="2">
+                            <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0.50*" />
                                     <ColumnDefinition Width="0.50*" />
@@ -221,7 +155,7 @@
                                 <Label Grid.Column="0" Content="Customer" Background="#3D8EB9" Foreground="#fff" FontFamily="Segoe UI Light" FontSize="21.333" BorderThickness="0" HorizontalContentAlignment="Center" />
                                 <Label Grid.Column="1" Content="Premise" Background="#3D8EB9" Foreground="#fff" FontFamily="Segoe UI Light" FontSize="21.333" BorderThickness="0" HorizontalContentAlignment="Center" />
                             </Grid>
-                            <Grid Grid.Row="3">
+                            <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0.50*" />
                                     <ColumnDefinition Width="0.50*" />
