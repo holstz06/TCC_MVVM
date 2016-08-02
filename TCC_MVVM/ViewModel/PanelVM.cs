@@ -48,7 +48,7 @@ namespace TCC_MVVM.ViewModel
             try
             {
                 DataSet dataset = new DataSet();
-                dataset.ReadXml("PanelDatal.xml");
+                dataset.ReadXml("PanelData.xml");
                 PanelData = dataset.Tables[0];
 
                 dataset = new DataSet();
