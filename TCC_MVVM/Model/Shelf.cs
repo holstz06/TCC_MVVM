@@ -131,7 +131,7 @@ namespace TCC_MVVM.Model
                 tempPrice += ShelfType.TopConnectorPrice;
 
             if(ShelfType.IsToeKick)
-                tempPrice += width * 3 /*HEIGHT*/ * Wood.Price;
+                tempPrice += width * 4 /*HEIGHT*/ * Wood.Price;
 
             tempPrice *= (decimal)Wood.MARKUP;
 

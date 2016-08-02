@@ -7,33 +7,27 @@ using System.Data;
 using TCC_MVVM.Model;
 using PropertyChanged;
 using System;
+using System.Windows;
 
 namespace TCC_MVVM.ViewModel
 {
     [ImplementPropertyChanged]
     public class PanelVM : INotifyPropertyChanged
     {
-        // Data Tables Vairables
-        //================================
+        public ObservableCollection<Panel> Panels { get; set; } = new ObservableCollection<Panel>();
+
         DataTable PanelData;
         DataTable PanelHeightData;
         DataTable ShelvingDepthData;
         DataTable WoodData;
         DataTable BandingData;
-
-        // Collections Variables
-        //=================================
-        public ObservableCollection<Panel> Panels { get; set; } = new ObservableCollection<Panel>();
         List<PanelItem> PanelItems { get; set; } = new List<PanelItem>();
         Dictionary<string, decimal> Woodvalues;
         Dictionary<string, decimal> BandingValues;
 
         public int TotalQuantity { get; set; }
         public decimal TotalPrice { get; set; }
-        public double TotalSqIn { get; set; }
 
-        // Commands
-        //=================================
         ICommand _RemoveCommand;
         public ICommand RemoveCommand
         {
@@ -46,34 +40,46 @@ namespace TCC_MVVM.ViewModel
         }
 
         /// <summary>
-        /// Create a new instance of an Panel View Model
+        ///     Create a new instance of an Panel View Model
         /// </summary>
         public PanelVM()
         {
-            DataSet dataset = new DataSet();
-            dataset.ReadXml("PanelData.xml");
-            PanelData = dataset.Tables[0];
+            bool isValid = false;
+            try
+            {
+                DataSet dataset = new DataSet();
+                dataset.ReadXml("PanelDatal.xml");
+                PanelData = dataset.Tables[0];
 
-            dataset = new DataSet();
-            dataset.ReadXml("PanelHeightData.xml");
-            PanelHeightData = dataset.Tables[0];
+                dataset = new DataSet();
+                dataset.ReadXml("PanelHeightData.xml");
+                PanelHeightData = dataset.Tables[0];
 
-            dataset = new DataSet();
-            dataset.ReadXml("ShelvingDepthData.xml");
-            ShelvingDepthData = dataset.Tables[0];
+                dataset = new DataSet();
+                dataset.ReadXml("ShelvingDepthData.xml");
+                ShelvingDepthData = dataset.Tables[0];
 
-            dataset = new DataSet();
-            dataset.ReadXml("WoodData.xml");
-            WoodData = dataset.Tables[0];
+                dataset = new DataSet();
+                dataset.ReadXml("WoodData.xml");
+                WoodData = dataset.Tables[0];
 
-            dataset = new DataSet();
-            dataset.ReadXml("BandingData.xml");
-            BandingData = dataset.Tables[0];
+                dataset = new DataSet();
+                dataset.ReadXml("BandingData.xml");
+                BandingData = dataset.Tables[0];
 
-            // Initialize the panel items
-            PanelItems = GetPanelItems();
-            Woodvalues = GetWoodValues();
-            BandingValues = GetBandingValues();
+                isValid = true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("XML Data files are either missing, changed, or bad code.\n" + ex.ToString());
+            }
+
+            if(isValid)
+            {
+                PanelItems = GetPanelItems();
+                Woodvalues = GetWoodValues();
+                BandingValues = GetBandingValues();
+            }
         }
 
         /// <summary>
@@ -194,42 +200,53 @@ namespace TCC_MVVM.ViewModel
             panel.DepthValues = new ObservableCollection<string>(GetDepthValues());
             panel.PanelItemsList = GetPanelItems();
             TotalQuantity += panel.Quantity;
-            TotalSqIn += (double.Parse(panel.SizeDepth) * double.Parse(panel.SizeHeight));
             panel.PropertyChanged += Panel_PropertyChanged;
             Panels.Add(panel);
         }
 
+        ///**********************************************************************************
         /// <summary>
-        /// Removes a panel from the collection
+        ///     Removes a panel from the collection
         /// </summary>
+        /// 
         /// <param name="panel">
-        /// The panel to remove
+        ///     The panel to remove
         /// </param>
+        ///**********************************************************************************
         public void Remove(Panel panel)
         {
-            TotalPrice -= panel.Price;
-            TotalQuantity -= panel.Quantity;
-            TotalSqIn -= (double.Parse(panel.SizeHeight) * double.Parse(panel.SizeDepth));
             if (Panels.Contains(panel))
+            {
+                TotalPrice -= panel.Price;
+                TotalQuantity -= panel.Quantity;
                 Panels.Remove(panel);
+            }
         }
 
+        ///**********************************************************************************
         /// <summary>
-        /// Sets all the panels in the collection to the same color
+        ///     Sets all the panels in the collection to the same color
         /// </summary>
+        /// 
         /// <param name="Color">
-        /// The color to set the panel to
+        ///     The color to set the panels to
         /// </param>
+        ///**********************************************************************************
         public void SetAllPanelColor(string Color)
         {
             foreach (Panel panel in Panels)
                 panel.Color = Color;
         }
 
+        ///**********************************************************************************
         /// <summary>
-        /// Set all the same panels the same depth
+        ///     Sets all the panels in the collection to the same depth
         /// </summary>
-        /// <param name="SizeDepth"></param>
+        /// 
+        /// <param name="SizeDepth">
+        ///     The depth to set the panels to
+        /// </param>
+        ///**********************************************************************************
         public void SetAllPanelDepth(string SizeDepth)
         {
             foreach (Panel panel in Panels)
@@ -269,16 +286,6 @@ namespace TCC_MVVM.ViewModel
                     TotalQuantity = 0;
                     foreach (Panel panel in Panels)
                         TotalQuantity += panel.Quantity;
-                    break;
-                case "SizeDepth":
-                    TotalSqIn = 0;
-                    foreach (Panel panel in Panels)
-                        TotalSqIn += (double.Parse(panel.SizeDepth) * double.Parse(panel.SizeHeight));
-                    break;
-                case "SizeHeight":
-                    TotalSqIn = 0;
-                    foreach (Panel panel in Panels)
-                        TotalSqIn += (double.Parse(panel.SizeDepth) * double.Parse(panel.SizeHeight));
                     break;
             }
         }
