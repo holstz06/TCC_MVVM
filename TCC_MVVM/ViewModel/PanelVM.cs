@@ -28,16 +28,9 @@ namespace TCC_MVVM.ViewModel
         Dictionary<string, decimal> Woodvalues;
         Dictionary<string, decimal> BandingValues;
 
-        // Total Price of all panels
-        //=================================
-        decimal _TotalPrice;
-        public decimal TotalPrice
-        {
-            get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
-            set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
-        }
-
         public int TotalQuantity { get; set; }
+        public decimal TotalPrice { get; set; }
+        public double TotalSqIn { get; set; }
 
         // Commands
         //=================================
@@ -201,6 +194,7 @@ namespace TCC_MVVM.ViewModel
             panel.DepthValues = new ObservableCollection<string>(GetDepthValues());
             panel.PanelItemsList = GetPanelItems();
             TotalQuantity += panel.Quantity;
+            TotalSqIn += (double.Parse(panel.SizeDepth) * double.Parse(panel.SizeHeight));
             panel.PropertyChanged += Panel_PropertyChanged;
             Panels.Add(panel);
         }
@@ -215,6 +209,7 @@ namespace TCC_MVVM.ViewModel
         {
             TotalPrice -= panel.Price;
             TotalQuantity -= panel.Quantity;
+            TotalSqIn -= (double.Parse(panel.SizeHeight) * double.Parse(panel.SizeDepth));
             if (Panels.Contains(panel))
                 Panels.Remove(panel);
         }
@@ -274,6 +269,16 @@ namespace TCC_MVVM.ViewModel
                     TotalQuantity = 0;
                     foreach (Panel panel in Panels)
                         TotalQuantity += panel.Quantity;
+                    break;
+                case "SizeDepth":
+                    TotalSqIn = 0;
+                    foreach (Panel panel in Panels)
+                        TotalSqIn += (double.Parse(panel.SizeDepth) * double.Parse(panel.SizeHeight));
+                    break;
+                case "SizeHeight":
+                    TotalSqIn = 0;
+                    foreach (Panel panel in Panels)
+                        TotalSqIn += (double.Parse(panel.SizeDepth) * double.Parse(panel.SizeHeight));
                     break;
             }
         }

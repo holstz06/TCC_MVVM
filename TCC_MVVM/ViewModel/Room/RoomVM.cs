@@ -23,33 +23,10 @@ namespace TCC_MVVM.ViewModel.Room
 
         // Cost Variables
         //====================================
-        decimal _TotalPrice;
-        public decimal TotalPrice
-        {
-            get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
-            set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
-        }
-
-        decimal _ShelvingCost;
-        public decimal ShelvingCost
-        {
-            get { return Math.Round(_ShelvingCost, 2, MidpointRounding.AwayFromZero); }
-            set { _ShelvingCost = value; OnPropertyChanged("ShelvingCost"); }
-        }
-
-        decimal _StripCost;
-        public decimal StripCost
-        {
-            get { return Math.Round(_StripCost, 2, MidpointRounding.AwayFromZero); }
-            set { _StripCost = value; OnPropertyChanged("StripCost"); }
-        }
-
-        decimal _AccessoryCost;
-        public decimal AccessoryCost
-        {
-            get { return Math.Round(_AccessoryCost, 2, MidpointRounding.AwayFromZero); }
-            set { _AccessoryCost = value; OnPropertyChanged("AccessoryCost"); }
-        }
+        public decimal TotalPrice { get; set; }
+        public decimal ShelvingCost { get; set; }
+        public decimal StripCost { get; set; }
+        public decimal AccessoryCost { get; set; }
 
         // Model
         public Model.Room Room { get; set; }

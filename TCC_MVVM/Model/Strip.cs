@@ -27,15 +27,7 @@ namespace TCC_MVVM.Model
         public int RoomNumber { get; set; }
         public string Color { get; set; }
         public double Length { get; set; }
-        
-
-        decimal _Price;
-        public decimal Price
-        {
-            // Return the price to two decimal places
-            get { return Math.Round(_Price, 2, MidpointRounding.AwayFromZero); }
-            set { _Price = value; OnPropertyChanged("Price"); }
-        }
+        public decimal Price { get; set; }
 
         public ObservableCollection<string> ColorValues { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<StripItem> StripItems { get; set; } = new ObservableCollection<StripItem>();

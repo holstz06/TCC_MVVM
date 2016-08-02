@@ -20,17 +20,8 @@ namespace TCC_MVVM.ViewModel
         /// </summary>
         public ObservableCollection<Shelf> Shelves { get; set; } = new ObservableCollection<Shelf>();
 
-        /// <summary>
-        /// The total price of all the shelves
-        /// </summary>
-        decimal _TotalPrice;
-        public decimal TotalPrice
-        {
-            get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
-            set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
-        }
-
         public int TotalQuantity { get; set; }
+        public decimal TotalPrice { get; set; }
 
         /// <summary>
         /// Command to remove shelf from the room

@@ -21,13 +21,7 @@ namespace TCC_MVVM.Model
         public decimal LaborFees { get; set; } = 2M;
         public decimal EquipmentFees { get; set; } = 0.5M;
         public string ShelfTypeName { get; set; }
-
-        decimal _Price;
-        public decimal Price
-        {
-            get { return Math.Round(_Price, 2, MidpointRounding.AwayFromZero); }
-            set { _Price = value; OnPropertyChanged("Price"); }
-        }
+        public decimal Price { get; set; }
 
         public readonly string[] Properties =
         {

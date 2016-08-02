@@ -35,13 +35,7 @@ namespace TCC_MVVM.Model
         public string SizeDepth { get; set; }
         public string Color { get; set; } = null;
         public bool IsHutch { get; set; } = false;
-
-        decimal _Price;
-        public decimal Price
-        {
-            get { return Math.Round(_Price, 2, MidpointRounding.AwayFromZero); }
-            set { _Price = value; OnPropertyChanged("Price"); }
-        }
+        public decimal Price { get; set; }
 
         public Wood Wood { get; set; } = new Wood();
         public Banding Banding { get; set; } = new Banding();

@@ -46,7 +46,7 @@
                 </Label>-->
                 <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="2" Background="#444">
                     <Label Foreground="#fff" FontFamily="Segoe UI Light" FontSize="22" VerticalContentAlignment="Center">
-                        <TextBlock><Run Text="{Binding Job.FullName}" /><Run Text=" "/><Run Text=": $" /><Run Text=" "/><Run Text="{Binding TotalPrice}" /></TextBlock>
+                        <TextBlock><Run Text="{Binding Job.FullName}" /><Run Text=" "/><Run Text=": $" /><Run Text=" "/><Run Text="{Binding TotalPrice, StringFormat=N2}" /></TextBlock>
                     </Label>
                 </StackPanel>
                 <Button Grid.Column="2" Content="Load" Command="{Binding Binding LoadCommand}" />
@@ -368,7 +368,7 @@
                                                     </Grid.ColumnDefinitions>
                                                     <ComboBox Grid.Column="0" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}" ToolTip="Select the color of the strip." />
                                                     <TextBox Grid.Column="1" Text="{Binding Length, Mode=TwoWay}" ToolTip="Type in the length of the strip." />
-                                                    <TextBlock Grid.Column="2"><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price}" /></TextBlock>
+                                                    <TextBlock Grid.Column="2"><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price, StringFormat=N2}" /></TextBlock>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
@@ -462,7 +462,7 @@
                                                     <ComboBox Grid.Column="2" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}" />
                                                     <CheckBox Grid.Column="3" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding IsHutch}"/>
                                                     <xctk:IntegerUpDown Grid.Column="4" Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    <TextBlock Grid.Column="5"><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price}" /></TextBlock>
+                                                    <TextBlock Grid.Column="5"><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price, StringFormat=N2}" /></TextBlock>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
@@ -565,7 +565,7 @@
                                                     <ComboBox Grid.Column="2" ItemsSource="{Binding WidthValues}" SelectedItem="{Binding SizeWidth, Mode=TwoWay}"/>
                                                     <ComboBox Grid.Column="3" ItemsSource="{Binding ShelfTypeValues}" SelectedItem="{Binding ShelfTypeName, Mode=TwoWay}" />
                                                     <xctk:IntegerUpDown Grid.Column="4" Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    <TextBlock Grid.Column="5"><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price}" /></TextBlock>
+                                                    <TextBlock Grid.Column="5"><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price, StringFormat=N2}" /></TextBlock>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
@@ -693,7 +693,7 @@
                     <StackPanel Orientation="Vertical">
                         <Label Content="Shelving Costs" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
                         <Label HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333">
-                            <TextBlock><Run Text="$" /><Run Text=" "/><Run Text="{Binding ShelvingCost}" /></TextBlock>
+                            <TextBlock><Run Text="$" /><Run Text=" "/><Run Text="{Binding ShelvingCost, StringFormat=N2}" /></TextBlock>
                         </Label>
                         <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
                     </StackPanel>
@@ -702,7 +702,7 @@
                     <StackPanel Orientation="Vertical">
                         <Label Content="Strip Costs" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
                         <Label HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333">
-                            <TextBlock><Run Text="$" /><Run Text=" "/><Run Text="{Binding StripCost}" /></TextBlock>
+                            <TextBlock><Run Text="$" /><Run Text=" "/><Run Text="{Binding StripCost, StringFormat=N2}" /></TextBlock>
                         </Label>
                         <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
                     </StackPanel>
@@ -711,7 +711,7 @@
                     <StackPanel Orientation="Vertical">
                         <Label Content="Accessory Costs" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
                         <Label HorizontalContentAlignment="Center" FontFamily="Segoe UI Light" FontSize="20" Foreground="#333">
-                            <TextBlock><Run Text="$"/><Run Text=" "/><Run Text="{Binding AccessoryCost}" /></TextBlock>
+                            <TextBlock><Run Text="$"/><Run Text=" "/><Run Text="{Binding AccessoryCost, StringFormat=N2}" /></TextBlock>
                         </Label>
                         <Label Content="Cost already included" HorizontalContentAlignment="Center" FontFamily="Segoe UI" FontSize="9" Foreground="#555" />
                     </StackPanel>
@@ -726,7 +726,7 @@
                                 <!--Background="#49c5d4"-->
                                 <Label Content="{Binding Room.RoomName}" FontFamily="Segoe UI" FontSize="16" Foreground="#444" />
                                 <Label FontFamily="Segoe UI" FontSize="16" Foreground="#444" >
-                                    <TextBlock><Run Text="-  $" /><Run Text=" "/><Run Text="{Binding TotalPrice}" /></TextBlock>
+                                    <TextBlock><Run Text="-  $" /><Run Text=" "/><Run Text="{Binding TotalPrice, StringFormat=N2}" /></TextBlock>
                                 </Label>
                             </StackPanel>
 
@@ -735,7 +735,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
-                                            <TextBlock><Run Text="{Binding DisplayName}" /><Run Text=" "/><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price}" /></TextBlock>
+                                            <TextBlock><Run Text="{Binding DisplayName}" /><Run Text=" "/><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price, StringFormat=N2}" /></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -746,7 +746,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
-                                            <TextBlock><Run Text="{Binding DisplayName}" /><Run Text=" "/><Run Text=" - $" /><Run Text=" "/><Run Text="{Binding Price}" /></TextBlock>
+                                            <TextBlock><Run Text="{Binding DisplayName}" /><Run Text=" "/><Run Text=" - $" /><Run Text=" "/><Run Text="{Binding Price, StringFormat=N2}" /></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -757,7 +757,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
-                                            <TextBlock><Run Text="{Binding DisplayName, Mode=OneWay}" /><Run Text=" "/><Run Text=" - $"/><Run Text=" "/><Run Text="{Binding Price}" /></TextBlock>
+                                            <TextBlock><Run Text="{Binding DisplayName, Mode=OneWay}" /><Run Text=" "/><Run Text=" - $"/><Run Text=" "/><Run Text="{Binding Price, StringFormat=N2}" /></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
