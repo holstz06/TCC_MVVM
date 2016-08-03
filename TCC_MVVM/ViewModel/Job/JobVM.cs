@@ -13,9 +13,21 @@ namespace TCC_MVVM.ViewModel.Job
     {
         int CurrentRoomNumber { get; set; } = 0;
 
+        /// <summary>
+        /// The total price of all the rooms
+        /// </summary>
         public decimal TotalPrice { get; set; }
+        /// <summary>
+        /// The cost of shelving alone
+        /// </summary>
         public decimal ShelvingCost { get; set; }
+        /// <summary>
+        /// The cost of strip alone
+        /// </summary>
         public decimal StripCost { get; set; }
+        /// <summary>
+        /// The cost of accessories alone
+        /// </summary>
         public decimal AccessoryCost { get; set; }
 
         public int DisplayState { get; set; } = 0;
@@ -25,24 +37,39 @@ namespace TCC_MVVM.ViewModel.Job
         public int TabControlColumnSpan { get; set; } = 1;
         public int ProposalDisplayColumnSpan { get; set; } = 1;
 
+
         public Model.Job Job { get; set; } = new Model.Job();
 
-        public ObservableCollection<RoomVM> Rooms { get; set; } 
-            = new ObservableCollection<RoomVM>();
+        /// <summary>
+        /// A collection of rooms
+        /// </summary>
+        public ObservableCollection<RoomVM> Rooms { get; set; } = new ObservableCollection<RoomVM>();
 
         //==========================================================
         // Job Commands
         //==========================================================
-        public ICommand BrowseCommand { get; private set; }
-        public ICommand CreateJobCommand { get; private set; }
+
+        /// <summary>
+        /// Command to create a proposal
+        /// </summary>
         public ICommand CreateProposalCommand { get; private set; }
-        public ICommand SamePremiseAddressCommand { get; private set; }
+        /// <summary>
+        /// Command to load an existing job
+        /// </summary>
         public ICommand LoadCommand { get; private set; }
+        /// <summary>
+        /// Command to add new room to the job
+        /// </summary>
         public ICommand AddRoomCommand { get; private set; }
-        
+        /// <summary>
+        /// Command to toggle the display's view
+        /// </summary>
         public ICommand ToggleDisplayCommand { get; private set; }
 
         ICommand _RemoveCommand;
+        /// <summary>
+        /// Command to remove a room from the job (calls the 'Remove' Function)
+        /// </summary>
         public ICommand RemoveCommand
         {
             get
@@ -53,6 +80,10 @@ namespace TCC_MVVM.ViewModel.Job
             }
         }
 
+        /// <summary>
+        /// Removes a room from the job
+        /// </summary>
+        /// <param name="roomToDelete">The room that needs to be deleted</param>
         public void Remove(RoomVM roomToDelete)
         {
             if (MessageBox.Show("Deleting this room will delete all items contained in it. \nAre you sure you want to continue?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -89,16 +120,12 @@ namespace TCC_MVVM.ViewModel.Job
         public JobVM()
         {
             // Initialize job commands
-            BrowseCommand = new BrowseCommand(this);
-            CreateJobCommand = new CreateJobCommand(this);
-            SamePremiseAddressCommand = new SamePremiseAddressCommand(this);
             CreateProposalCommand = new CreateProposalCommand(this);
             LoadCommand = new LoadCommand(this);
             AddRoomCommand = new AddRoomCommand(this);
             ToggleDisplayCommand = new ToggleDisplayCommand(this);
         }
 
-        ///===============================================================================
         /// <summary>
         ///     Adds a new room to the collection
         /// </summary>
@@ -106,7 +133,6 @@ namespace TCC_MVVM.ViewModel.Job
         /// <param name="RoomName">
         ///     (Optional) The name of the room
         /// </param>
-        ///===============================================================================
         public void AddRoom(string RoomName = null)
         {
             bool HasRoomName = false || RoomName != null;
@@ -119,11 +145,9 @@ namespace TCC_MVVM.ViewModel.Job
             CurrentRoomNumber++;
         }
 
-        ///===============================================================================
         /// <summary>
         ///     Creates a proposal based on this job
         /// </summary>
-        ///===============================================================================
         public void CreateProposal()
         {
             SaveFile savefile = new SaveFile();
@@ -134,23 +158,19 @@ namespace TCC_MVVM.ViewModel.Job
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        ///===============================================================================
         /// <summary>
         ///     Method is called by the 'set' accessory of each property
         /// </summary>
-        ///===============================================================================
         void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         
 
-        ///===============================================================================
         /// <summary>
         ///     Property changed event handeler for 'room model'. Once subscribed, the
         ///     view model is aware of all the room's property changes
         /// </summary>
-        ///===============================================================================
         void Room_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
