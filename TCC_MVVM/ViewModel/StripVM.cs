@@ -15,91 +15,118 @@ namespace TCC_MVVM.ViewModel
     [ImplementPropertyChanged]
     public class StripVM : INotifyPropertyChanged
     {
-        // Data Table Variables
-        //=====================================
-        DataTable StripData;
-        DataTable StripColorData;
-
-        public ObservableCollection<Strip> Strips { get; set; } = new ObservableCollection<Strip>();
-
-        decimal _TotalPrice;
-        public decimal TotalPrice
-        {
-            get { return Math.Round(_TotalPrice, 2, MidpointRounding.AwayFromZero); }
-            set { _TotalPrice = value; OnPropertyChanged("TotalPrice"); }
-        }
-
         /// <summary>
-        /// (Command) Removes strip from the collection
+        /// The room number all the strip in the collection will have
         /// </summary>
-        ICommand _RemoveCommand;
-        public ICommand RemoveCommand
-        {
-            get
-            {
-                if (_RemoveCommand == null)
-                    _RemoveCommand = new CollectionChangeCommand(param => Remove((Strip)param));
-                return _RemoveCommand;
-            }
-        }
+        public int RoomNumber { get; set; }
+        /// <summary>
+        /// The default strip color for this room
+        /// </summary>
+        public string DefaultStripColor { get; set; } = null;
+        /// <summary>
+        /// The datatable that hold the strip items
+        /// </summary>
+        DataTable StripData;
+        /// <summary>
+        /// The datatable that hold the strip color values
+        /// </summary>
+        DataTable StripColorData;
+        /// <summary>
+        /// A collection of strip
+        /// </summary>
+        public ObservableCollection<Strip> Strips { get; set; } = new ObservableCollection<Strip>();
+        /// <summary>
+        /// A list of all the strip colors
+        /// </summary>
+        List<string> stripColors = new List<string>();
+        /// <summary>
+        /// A list of all the strip items
+        /// </summary>
+        List<StripItem> stripItems = new List<StripItem>();
+        /// <summary>
+        /// The price of all the strip in the collection
+        /// </summary>
+        public decimal TotalPrice { get; set; }
+        /// <summary>
+        /// Command to duplicate strip
+        /// </summary>
+        public ICommand DuplicateStripCommand { get; private set; }
+        /// <summary>
+        /// Command to remove a strip from the collection
+        /// </summary>
+        public ICommand RemoveCommand { get; private set; }
+        /// <summary>
+        /// Command to add a strip to the collection
+        /// </summary>
+        public ICommand AddCommand { get; private set; }
 
         /// <summary>
         /// Create new instance of strip view model
         /// </summary>
         public StripVM()
         {
-            DataSet dataset = new DataSet();
-            dataset.ReadXml("StripData.xml");
-            StripData = dataset.Tables[0];
+            Initialize();
 
-            dataset = new DataSet();
-            dataset.ReadXml("StripColorData.xml");
-            StripColorData = dataset.Tables[0];
+            // Create commands
+            DuplicateStripCommand = new StripCommands.AddCommand(this);
+            RemoveCommand = new StripCommands.RemoveCommand(this);
+            AddCommand = new StripCommands.AddCommand(this);
         }
 
         /// <summary>
-        /// Gets a list of strip items
+        /// Initialize the strip view model by setting up datatables and initializing lists
         /// </summary>
-        /// <returns>
-        /// A list of strip items
-        /// </returns>
-        public List<StripItem> GetStripItems()
+        void Initialize()
         {
-            return StripData.AsEnumerable().Select(row =>
-                new StripItem
-                {
-                    Name = row.Field<string>("ItemName"),
-                    Color = row.Field<string>("Color"),
-                    Quantity = int.Parse(row.Field<string>("Quantity")),
-                    Price = decimal.Parse(row.Field<string>("Price"))
-                }).ToList();
+            try
+            {
+                StripData = CreateDataTable("StripData.xml");
+                StripColorData = CreateDataTable("StripColorData.xml");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            // Initialize all the strip colors by querying the StripColor datatable
+            stripColors = StripColorData.AsEnumerable().Select(row =>
+                row.Field<string>("StripColor")).Distinct().ToList();
+
+            // Initialize all the strip items by querying the StripData datatable
+            stripItems = StripData.AsEnumerable().Select(row => new StripItem
+            {
+                Name = row.Field<string>("ItemName"),
+                Color = row.Field<string>("Color"),
+                Quantity = int.Parse(row.Field<string>("Quantity")),
+                Price = decimal.Parse(row.Field<string>("Price"))
+            }).ToList();
         }
 
         /// <summary>
-        /// Creates a list of color values from the data table
+        /// Creates a data table from an XML file
         /// </summary>
-        /// <returns></returns>
-        List<string> GetStripColors() 
-            => StripColorData.AsEnumerable().Select(row => row.Field<string>("StripColor")).Distinct().ToList();
+        /// <param name="path">The path of the XML fle</param>
+        /// <returns>The datatable read from the file</returns>
+        DataTable CreateDataTable(string path)
+        {
+            DataSet dataset = new DataSet();
+            dataset.ReadXml(path);
+            return dataset.Tables[0];
+        }
 
         /// <summary>
         /// Sets the properties of a new strip then adds it to the collection
         /// </summary>
-        /// <param name="RoomNumber"></param>
-        /// <param name="Color"></param>
-        public void Add(int RoomNumber, string Color = null)
+        public void AddStrip()
         {
-            bool HasColor = false;
-            if(Color != null) HasColor = true;
+            var strip = new Strip(RoomNumber, DefaultStripColor)
+            {
+                StripItems = GetListofStripItems(DefaultStripColor),
+                ColorValues = new ObservableCollection<string>(stripColors),
+                viewmodel = this,
 
-            Strip strip = new Strip(RoomNumber,  HasColor ? Color : null);
-            strip.StripItemList = GetStripItems();
-            strip.ColorValues = new ObservableCollection<string>(GetStripColors());
-
-            // Subscribe to property change events that happen in the strip model
+            };
             strip.PropertyChanged += Strip_PropertyChanged;
-
-            // Add strip to the collection
             Strips.Add(strip);
         }
 
@@ -107,10 +134,11 @@ namespace TCC_MVVM.ViewModel
         /// Adds a strip to the collection
         /// </summary>
         /// <param name="strip"></param>
-        public void Add(Strip strip)
+        public void AddStrip(Strip strip)
         {
-            strip.StripItemList = GetStripItems();
-            strip.ColorValues = new ObservableCollection<string>(GetStripColors());
+            strip.StripItems = GetListofStripItems(DefaultStripColor);
+            strip.ColorValues = new ObservableCollection<string>(stripColors);
+            strip.viewmodel = this;
             strip.PropertyChanged += Strip_PropertyChanged;
             Strips.Add(strip);
         }
@@ -118,7 +146,7 @@ namespace TCC_MVVM.ViewModel
         /// <summary>
         /// Removes a strip from the collection
         /// </summary>
-        /// <param name="StripModel">
+        /// <param name="Strip">
         /// The strip to remove from the collection
         /// </param>
         public void Remove(Strip Strip)
@@ -136,11 +164,9 @@ namespace TCC_MVVM.ViewModel
         }
 
         /// <summary>
-        /// Sets each strip in the collection to the same color
+        /// Sets each of the strip in the collection to the same color
         /// </summary>
-        /// <param name="Color">
-        /// The color to set the strip to
-        /// </param>
+        /// <param name="Color">The color to set the strip to</param>
         public void SetAllStripColor(string Color)
         {
             foreach(Strip strip in Strips)
@@ -157,25 +183,31 @@ namespace TCC_MVVM.ViewModel
 
         void Strip_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Strip senderStrip = (Strip)sender;
             switch(e.PropertyName)
             {
+                // Strip's price changed
                 case "Price":
                     TotalPrice = 0;
                     foreach (Strip strip in Strips)
                         TotalPrice += strip.Price;
                     break;
+
+                // Strip's color changed
+                case "Color":
+                    (sender as Strip).StripItems = GetListofStripItems((sender as Strip).Color);
+                    break;
             }
         }
 
-        void SetPrice()
+        List<StripItem> GetListofStripItems(string stripColor)
         {
-
-        }
-
-        void SetLength()
-        {
-
+            List<StripItem> newStripItems = new List<StripItem>();
+            foreach (var item in stripItems)
+            {
+                if (item.Color == stripColor || item.Color == "N/A")
+                    newStripItems.Add(item);
+            }
+            return newStripItems;
         }
         #endregion
     }

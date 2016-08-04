@@ -273,7 +273,7 @@ namespace TCC_MVVM.Model
                     foreach (RoomVM roomvm in newJob.Rooms)
                     {
                         if (roomvm.Room.RoomNumber == strip.RoomNumber)
-                            roomvm.StripViewModel.Add(strip);
+                            roomvm.StripViewModel.AddStrip(strip);
                     }
                 }
             }

@@ -284,11 +284,19 @@
                                         </ListView.Resources>
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
-                                                <Grid>
+                                                <Grid ToolTip="{Binding DisplayName}">
+                                                    <Grid.ContextMenu>
+                                                        <ContextMenu>
+                                                            <MenuItem Header="Duplicate" Command="{Binding viewmodel.DuplicateStripCommand, Mode=OneWay}" CommandParameter="{Binding}" />
+                                                            <Separator />
+                                                            <MenuItem Header="Remove" Command="{Binding viewmodel.RemoveCommand, Mode=OneWay}" CommandParameter="{Binding}" />
+                                                        </ContextMenu>
+                                                    </Grid.ContextMenu>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="100" />
                                                         <ColumnDefinition Width="100" />
                                                         <ColumnDefinition Width="100" />
+                                                        <ColumnDefinition Width="*" />
                                                     </Grid.ColumnDefinitions>
                                                     <ComboBox Grid.Column="0" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}" ToolTip="Select the color of the strip." />
                                                     <TextBox Grid.Column="1" Text="{Binding Length, Mode=TwoWay}" ToolTip="Type in the length of the strip." />
@@ -297,8 +305,8 @@
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
-                                    <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new strip to this room." FontSize="16" Content=" + " Command="{Binding Command_AddStrip, Mode=OneWay}" />
-                                    <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected strip" FontSize="18" Content=" - " Command="{Binding StripViewModel.RemoveCommand}" CommandParameter="{Binding SelectedItem, ElementName=StripListView}" />
+                                    <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new strip to this room." FontSize="16" Content=" + " Command="{Binding StripViewModel.AddCommand, Mode=OneWay}" />
+                                    <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected strip" FontSize="18" Content=" - " Command="{Binding StripViewModel.RemoveCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem, ElementName=StripListView}" />
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -659,7 +667,12 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">
-                                            <TextBlock><Run Text="{Binding DisplayName}" /><Run Text=" "/><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price, StringFormat=N2}" /></TextBlock>
+                                            <TextBlock>
+                                                <Run Text="{Binding DisplayName, Mode=OneWay}" />
+                                                <Run Text=" "/>
+                                                <Run Text="$" />
+                                                <Run Text="{Binding Price, StringFormat=N2}" />
+                                            </TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

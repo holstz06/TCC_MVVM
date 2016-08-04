@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TCC_MVVM.Model;
 
-namespace TCC_MVVM.ViewModel.Commands
+namespace TCC_MVVM.ViewModel.ShelfCommands
 {
     public class AddAdjustableShelfCommand : ICommand
     {

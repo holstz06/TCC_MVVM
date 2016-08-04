@@ -75,7 +75,7 @@ namespace TCC_MVVM.ViewModel.Room
                 StripColorValues = new ObservableCollection<string>(GetStripColorValues()),
                 ShelvingDepthValues = new ObservableCollection<string>(GetShelvingDepthValues())
             };
-
+            Room.PropertyChanged += Room_PropertyChanged;
         }
 
         List<string> GetWoodColorVales()
@@ -205,7 +205,7 @@ namespace TCC_MVVM.ViewModel.Room
                      break;
 
                 case Model.ShelvingType.Strip:
-                    StripViewModel.Add(Room.RoomNumber, IsStripSameColor ? Room.StripColor : null);
+                    //StripViewModel.Add(Room.RoomNumber, IsStripSameColor ? Room.StripColor : null);
                     break;
 
                 case Model.ShelvingType.Shelf:
@@ -252,6 +252,21 @@ namespace TCC_MVVM.ViewModel.Room
                 AccessoryCost += AccessoryViewModel.TotalPrice;
             }
         }
+
+        void Room_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch(e.PropertyName)
+            {
+                case "ShelvingDepth":
+                    break;
+                case "StripColor":
+                    StripViewModel.DefaultStripColor = (sender as Model.Room).StripColor;
+                    break;
+                case "ShelvingColor": break;
+            }
+
+        }
+
         #endregion
     }
 }

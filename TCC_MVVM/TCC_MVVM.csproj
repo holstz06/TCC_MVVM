@@ -93,7 +93,7 @@
     <Compile Include="Model\Wire.cs" />
     <Compile Include="Model\Wood.cs" />
     <Compile Include="ViewModel\AccessoryVM.cs" />
-    <Compile Include="ViewModel\Commands\AddAdjustableShelfCommand.cs" />
+    <Compile Include="ViewModel\ShelfCommands\AddAdjustableShelfCommand.cs" />
     <Compile Include="ViewModel\Job\RemoveRoomCommand.cs" />
     <Compile Include="ViewModel\Job\BrowseCommand.cs" />
     <Compile Include="ViewModel\Job\CreateJobCommand.cs" />
@@ -113,6 +113,9 @@
     <Compile Include="ViewModel\ShelfVM.cs" />
     <Compile Include="ViewModel\ShelfVM_Data.cs" />
     <Compile Include="ViewModel\ShelfVM_PropertyChange.cs" />
+    <Compile Include="ViewModel\StripCommands\RemoveCommand.cs" />
+    <Compile Include="ViewModel\StripCommands\AddCommand.cs" />
+    <Compile Include="ViewModel\StripCommands\DuplicateStripCommand.cs" />
     <Compile Include="ViewModel\StripVM.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -197,6 +200,7 @@
   <ItemGroup>
     <Analyzer Include="..\packages\RefactoringEssentials.4.2.0\analyzers\dotnet\RefactoringEssentials.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.1.29.4\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

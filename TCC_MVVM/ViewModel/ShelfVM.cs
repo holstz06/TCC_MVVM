@@ -8,7 +8,7 @@ using System.Linq;
 using PropertyChanged;
 using System;
 using System.Windows;
-using TCC_MVVM.ViewModel.Commands;
+using TCC_MVVM.ViewModel.ShelfCommands;
 
 namespace TCC_MVVM.ViewModel
 {
@@ -108,6 +108,7 @@ namespace TCC_MVVM.ViewModel
             shelf.WidthValues = new ObservableCollection<string>(GetWidthValues());
             shelf.DepthValues = new ObservableCollection<string>(GetDepthValues());
             shelf.ShelfTypeValues = new ObservableCollection<string>(GetShelfTypeNames());
+            shelf.viewmodel = this;
             shelf.Wood.WoodValues = GetWoodValues();
             shelf.Banding.BandingValues = GetBandingValues();
             TotalQuantity += shelf.Quantity;

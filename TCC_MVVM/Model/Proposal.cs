@@ -108,7 +108,7 @@ namespace TCC_MVVM.Model
                         Color = WorkSheet.Cells[row, COLOR_COL],
                         Length = WorkSheet.Cells[row, LENGTH_COL]
                     };
-                    currentRoom.StripViewModel.Add(strip);
+                    currentRoom.StripViewModel.AddStrip(strip);
                 } 
             }
 
