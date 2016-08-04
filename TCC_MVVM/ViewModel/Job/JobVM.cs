@@ -11,8 +11,10 @@ namespace TCC_MVVM.ViewModel.Job
     [ImplementPropertyChanged]
     public class JobVM : INotifyPropertyChanged
     {
+        /// <summary>
+        /// The current room number, increments everytime a room is created
+        /// </summary>
         int CurrentRoomNumber { get; set; } = 0;
-
         /// <summary>
         /// The total price of all the rooms
         /// </summary>
@@ -30,24 +32,43 @@ namespace TCC_MVVM.ViewModel.Job
         /// </summary>
         public decimal AccessoryCost { get; set; }
 
+        /// <summary>
+        /// <para>The state that the display is in (Data Entry View - Proposal View)</para>
+        /// <para>0 = Split view (Data Entry / Proposal View)</para>
+        /// <para>1 = Data Entry View only</para>
+        /// <para>2 = Proposal View only </para>
+        /// </summary>
         public int DisplayState { get; set; } = 0;
+        /// <summary>
+        /// Is the proposal display visible
+        /// </summary>
         public Visibility IsProposalDisplayVisible { get; set; } = Visibility.Visible;
+        /// <summary>
+        /// Is the tab control display (Data Entry View) visible
+        /// </summary>
         public Visibility IsTabControlDisplayVisible { get; set; } = Visibility.Visible;
+        /// <summary>
+        /// The column number for the proposal display
+        /// </summary>
         public int ProposalDisplayColumn { get; set; } = 1;
+        /// <summary>
+        /// The column span for the tab control
+        /// </summary>
         public int TabControlColumnSpan { get; set; } = 1;
+        /// <summary>
+        /// The column span for the proposal display
+        /// </summary>
         public int ProposalDisplayColumnSpan { get; set; } = 1;
 
-
+        /// <summary>
+        /// The application's job model - information about the job
+        /// </summary>
         public Model.Job Job { get; set; } = new Model.Job();
 
         /// <summary>
         /// A collection of rooms
         /// </summary>
         public ObservableCollection<RoomVM> Rooms { get; set; } = new ObservableCollection<RoomVM>();
-
-        //==========================================================
-        // Job Commands
-        //==========================================================
 
         /// <summary>
         /// Command to create a proposal
@@ -86,7 +107,9 @@ namespace TCC_MVVM.ViewModel.Job
         /// <param name="roomToDelete">The room that needs to be deleted</param>
         public void Remove(RoomVM roomToDelete)
         {
-            if (MessageBox.Show("Deleting this room will delete all items contained in it. \nAre you sure you want to continue?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Deleting this room will delete all items contained in it. \nAre you sure you want to continue?", 
+                "Warning", 
+                MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 if (Rooms.Contains(roomToDelete))
                     Rooms.Remove(roomToDelete);
@@ -117,6 +140,9 @@ namespace TCC_MVVM.ViewModel.Job
             }
         }
 
+        /// <summary>
+        /// Creates a new instance of a job view model
+        /// </summary>
         public JobVM()
         {
             // Initialize job commands
@@ -126,13 +152,10 @@ namespace TCC_MVVM.ViewModel.Job
             ToggleDisplayCommand = new ToggleDisplayCommand(this);
         }
 
-        /// <summary>
-        ///     Adds a new room to the collection
-        /// </summary>
-        /// 
-        /// <param name="RoomName">
-        ///     (Optional) The name of the room
-        /// </param>
+       /// <summary>
+       /// Adds a new room to the collection
+       /// </summary>
+       /// <param name="RoomName">The name of the room</param>
         public void AddRoom(string RoomName = null)
         {
             bool HasRoomName = false || RoomName != null;
@@ -146,7 +169,7 @@ namespace TCC_MVVM.ViewModel.Job
         }
 
         /// <summary>
-        ///     Creates a proposal based on this job
+        /// Creates the job's proposal
         /// </summary>
         public void CreateProposal()
         {
@@ -155,44 +178,39 @@ namespace TCC_MVVM.ViewModel.Job
             MessageBox.Show("Saved!");
         }
 
-
+        #region INotifyPropertyChanged Members
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        ///     Method is called by the 'set' accessory of each property
-        /// </summary>
         void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        
-
-        /// <summary>
-        ///     Property changed event handeler for 'room model'. Once subscribed, the
-        ///     view model is aware of all the room's property changes
-        /// </summary>
+       
         void Room_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
+                // The room's total price changes
                 case "TotalPrice":
                     TotalPrice = 0;
                     foreach (RoomVM room in Rooms)
                         TotalPrice += room.TotalPrice;
                     break;
 
+                // The room's shelving cost changes
                 case "ShelvingCost":
                     ShelvingCost = 0;
                     foreach (RoomVM room in Rooms)
                         ShelvingCost += room.ShelvingCost;
                     break;
 
+                // The room's strip cost changes
                 case "StripCost":
                     StripCost = 0;
                     foreach (RoomVM room in Rooms)
                         StripCost += room.StripCost;
                     break;
 
+                // The room's accessory costs changes
                 case "AccessoryCost":
                     AccessoryCost = 0;
                     foreach (RoomVM room in Rooms)
@@ -200,5 +218,6 @@ namespace TCC_MVVM.ViewModel.Job
                     break;
             }
         }
+        #endregion
     }
 }
