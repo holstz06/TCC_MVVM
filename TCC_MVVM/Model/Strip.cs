@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System;
 using PropertyChanged;
 using System.Collections.Generic;
+using System.Data;
 
 namespace TCC_MVVM.Model
 {

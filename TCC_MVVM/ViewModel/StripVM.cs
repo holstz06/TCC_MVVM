@@ -22,7 +22,7 @@ namespace TCC_MVVM.ViewModel
         /// <summary>
         /// The default strip color for this room
         /// </summary>
-        public string DefaultStripColor { get; set; } = null;
+        public string DefaultStripColor { get; set; }
         /// <summary>
         /// The datatable that hold the strip items
         /// </summary>
@@ -169,7 +169,7 @@ namespace TCC_MVVM.ViewModel
         /// <param name="Color">The color to set the strip to</param>
         public void SetAllStripColor(string Color)
         {
-            foreach(Strip strip in Strips)
+            foreach(var strip in Strips)
                 strip.Color = Color;
         }
         

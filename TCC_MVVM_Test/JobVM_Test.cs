@@ -13,12 +13,7 @@ namespace TCC_MVVM_Test
         [TestMethod]
         public void CreateJobCommand_Test()
         {
-            StripVM viewmodel = new StripVM();
-
-            Strip strip01 = new Strip();
-            Strip strip02 = new Strip();
-
-            viewmodel.Strips.Add(new Strip());
+            StripVM stripVM = new StripVM();
         }
     }
 }
