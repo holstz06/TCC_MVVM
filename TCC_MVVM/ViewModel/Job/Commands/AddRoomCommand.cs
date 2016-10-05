@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Input;
 
-namespace TCC_MVVM.ViewModel.Job
+namespace TCC_MVVM.ViewModel.Job.Commands
 {
-    public class CreateJobCommand : ICommand
+    class AddRoomCommand : ICommand
     {
-        private JobVM ViewModel;
-        private Model.Job Job;
-        public CreateJobCommand(JobVM ViewModel)
+        readonly JobVM ViewModel;
+        public AddRoomCommand(JobVM ViewModel)
         {
             this.ViewModel = ViewModel;
-            Job = this.ViewModel.Job;
         }
-
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
@@ -23,6 +19,7 @@ namespace TCC_MVVM.ViewModel.Job
 
         public void Execute(object parameter)
         {
+            ViewModel.AddRoom();
         }
     }
 }

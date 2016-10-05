@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows.Input;
 
-namespace TCC_MVVM.ViewModel.Job
+namespace TCC_MVVM.ViewModel.Job.Commands
 {
-    class CreateProposalCommand : ICommand
+    class BrowseCommand : ICommand
     {
-        JobVM ViewModel;
-        public CreateProposalCommand(JobVM ViewModel)
+        private JobVM ViewModel;
+        public BrowseCommand(JobVM ViewModel)
         {
             this.ViewModel = ViewModel;
         }
@@ -15,12 +16,13 @@ namespace TCC_MVVM.ViewModel.Job
 
         public bool CanExecute(object parameter)
         {
+            // There is no instance where this command cannot be ran
             return true;
         }
 
         public void Execute(object parameter)
         {
-            ViewModel.CreateProposal();
+
         }
     }
 }

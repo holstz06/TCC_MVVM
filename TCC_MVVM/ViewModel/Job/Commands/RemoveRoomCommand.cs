@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace TCC_MVVM.ViewModel.Job
+namespace TCC_MVVM.ViewModel.Job.Commands
 {
     class RemoveRoomCommand : ICommand
     {

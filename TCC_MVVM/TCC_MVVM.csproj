@@ -94,15 +94,22 @@
     <Compile Include="Model\Wire.cs" />
     <Compile Include="Model\Wood.cs" />
     <Compile Include="ViewModel\AccessoryVM.cs" />
+    <Compile Include="ViewModel\Job\Commands\SwitchTabCommand.cs" />
+    <Compile Include="ViewModel\PanelCommands\AddCommand.cs" />
+    <Compile Include="ViewModel\PanelCommands\DecrementQuantityCommand.cs" />
+    <Compile Include="ViewModel\PanelCommands\IncrementQuantityCommand.cs" />
+    <Compile Include="ViewModel\PanelCommands\RemoveCommand.cs" />
+    <Compile Include="ViewModel\PanelCommands\SelectNextCommand.cs" />
+    <Compile Include="ViewModel\PanelCommands\SelectPreviousCommand.cs" />
     <Compile Include="ViewModel\ShelfCommands\AddAdjustableShelfCommand.cs" />
-    <Compile Include="ViewModel\Job\RemoveRoomCommand.cs" />
-    <Compile Include="ViewModel\Job\BrowseCommand.cs" />
-    <Compile Include="ViewModel\Job\CreateJobCommand.cs" />
-    <Compile Include="ViewModel\Job\CreateProposalCommand.cs" />
-    <Compile Include="ViewModel\Job\AddRoomCommand.cs" />
-    <Compile Include="ViewModel\Job\LoadCommand.cs" />
-    <Compile Include="ViewModel\Job\SamePremiseAddressCommand.cs" />
-    <Compile Include="ViewModel\Job\ToggleDisplayCommand.cs" />
+    <Compile Include="ViewModel\Job\Commands\RemoveRoomCommand.cs" />
+    <Compile Include="ViewModel\Job\Commands\BrowseCommand.cs" />
+    <Compile Include="ViewModel\Job\Commands\CreateJobCommand.cs" />
+    <Compile Include="ViewModel\Job\Commands\CreateProposalCommand.cs" />
+    <Compile Include="ViewModel\Job\Commands\AddRoomCommand.cs" />
+    <Compile Include="ViewModel\Job\Commands\LoadCommand.cs" />
+    <Compile Include="ViewModel\Job\Commands\SamePremiseAddressCommand.cs" />
+    <Compile Include="ViewModel\Job\Commands\ToggleDisplayCommand.cs" />
     <Compile Include="ViewModel\Room\Commands\Command_AddAccessory.cs" />
     <Compile Include="ViewModel\Room\Commands\Command_AddPanel.cs" />
     <Compile Include="ViewModel\Room\Commands\Command_AddShelf.cs" />
@@ -118,6 +125,12 @@
     <Compile Include="ViewModel\StripCommands\AddCommand.cs" />
     <Compile Include="ViewModel\StripCommands\DuplicateStripCommand.cs" />
     <Compile Include="ViewModel\StripVM.cs" />
+    <Compile Include="View\HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\JobControl.xaml.cs">
+      <DependentUpon>JobControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -125,7 +138,43 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="View\PanelControl.xaml.cs">
+      <DependentUpon>PanelControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RoomControl.xaml.cs">
+      <DependentUpon>RoomControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ShelfControl.xaml.cs">
+      <DependentUpon>ShelfControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StripControl.xaml.cs">
+      <DependentUpon>StripControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\HelpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\JobControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PanelControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RoomControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ShelfControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StripControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

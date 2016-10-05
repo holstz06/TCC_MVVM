@@ -4,6 +4,7 @@ using System.Windows.Input;
 using TCC_MVVM.ViewModel.Room;
 using PropertyChanged;
 using TCC_MVVM.Model;
+using TCC_MVVM.ViewModel.Job.Commands;
 using System.Windows;
 
 namespace TCC_MVVM.ViewModel.Job
@@ -86,6 +87,10 @@ namespace TCC_MVVM.ViewModel.Job
         /// Command to toggle the display's view
         /// </summary>
         public ICommand ToggleDisplayCommand { get; private set; }
+        /// <summary>
+        /// Command to display the help window
+        /// </summary>
+        public ICommand HelpCommand { get; private set; }
 
         ICommand _RemoveCommand;
         /// <summary>
@@ -156,7 +161,7 @@ namespace TCC_MVVM.ViewModel.Job
        /// Adds a new room to the collection
        /// </summary>
        /// <param name="RoomName">The name of the room</param>
-        public void AddRoom(string RoomName = null)
+        public RoomVM AddRoom(string RoomName = null)
         {
             bool HasRoomName = false || RoomName != null;
 
@@ -166,6 +171,8 @@ namespace TCC_MVVM.ViewModel.Job
             Rooms.Add(roomVM);
 
             CurrentRoomNumber++;
+
+            return roomVM;
         }
 
         /// <summary>

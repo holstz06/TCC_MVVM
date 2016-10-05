@@ -28,6 +28,7 @@ namespace TCC_MVVM.Model
     [ImplementPropertyChanged]
     public class Panel : INotifyPropertyChanged
     {
+        public ViewModel.PanelVM viewmodel { get; set; }
         public int Quantity { get; set; }
         public int RoomNumber { get; set; }
         public int PanelNumber { get; set; }

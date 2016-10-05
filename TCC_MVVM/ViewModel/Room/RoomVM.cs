@@ -32,8 +32,8 @@ namespace TCC_MVVM.ViewModel.Room
         public Model.Room Room { get; set; }
 
         // View Models
-        public StripVM StripViewModel { get; set; } = new StripVM();
-        public PanelVM PanelViewModel { get; set; } = new PanelVM();
+        public StripVM StripViewModel { get; set; }
+        public PanelVM PanelViewModel { get; set; }
         public ShelfVM ShelfViewModel { get; set; } = new ShelfVM();
         public AccessoryVM AccessoryViewModel { get; set; } = new AccessoryVM();
 
@@ -45,10 +45,11 @@ namespace TCC_MVVM.ViewModel.Room
         /// <summary>
         /// Creates a new instance of a room view model
         /// </summary>
-        public RoomVM(string RoomName, int RoomNumber = 0)
+        public RoomVM(string RoomName, int RoomNumber)
         {
             InitializeCommands();
-
+            StripViewModel = new StripVM() { RoomNumber = RoomNumber };
+            PanelViewModel = new PanelVM() { RoomNumber = RoomNumber };
             // Subscribe room to view model's properties
             StripViewModel.PropertyChanged += Shelving_PropertyChanged;
             PanelViewModel.PropertyChanged += Shelving_PropertyChanged;
@@ -91,17 +92,11 @@ namespace TCC_MVVM.ViewModel.Room
 
         public void InitializeCommands()
         {
-            Command_AddStrip = new Command_AddStrip(this);
-            Command_AddPanel = new Command_AddPanel(this);
             Command_AddShelf = new Command_AddShelf(this);
             Command_AddAccessory = new Command_AddAccessory(this);
         }
 
         public ICommand Command_SameStripColor { get; private set; }
-
-        // Add Commands
-        public ICommand Command_AddStrip { get; private set; }
-        public ICommand Command_AddPanel { get; private set; }
         public ICommand Command_AddShelf { get; private set; }
         public ICommand Command_AddWire { get; private set; }
         public ICommand Command_AddAccessory { get; private set; }
@@ -188,8 +183,6 @@ namespace TCC_MVVM.ViewModel.Room
             }
         }
 
-        int PanelIndex, ShelfIndex, StripIndex = 0;
-
         /// <summary>
         /// Adds shelving to one of the view model's collection
         /// </summary>
@@ -200,14 +193,6 @@ namespace TCC_MVVM.ViewModel.Room
         {
             switch(shelvingType)
             {
-                case Model.ShelvingType.Panel:
-                     PanelViewModel.Add(Room.RoomNumber, PanelIndex++, IsPanelSameColor ? Room.ShelvingColor : null, IsPanelSameDepth ? Room.ShelvingDepth : null);
-                     break;
-
-                case Model.ShelvingType.Strip:
-                    //StripViewModel.Add(Room.RoomNumber, IsStripSameColor ? Room.StripColor : null);
-                    break;
-
                 case Model.ShelvingType.Shelf:
                     ShelfViewModel.Add(Room.RoomNumber, IsShelfSameColor ? Room.ShelvingColor : null, IsPanelSameDepth ? Room.ShelvingDepth : null);
                     break;
@@ -258,11 +243,14 @@ namespace TCC_MVVM.ViewModel.Room
             switch(e.PropertyName)
             {
                 case "ShelvingDepth":
+                    PanelViewModel.DefaultDepth = (sender as Model.Room).ShelvingDepth;
                     break;
                 case "StripColor":
                     StripViewModel.DefaultStripColor = (sender as Model.Room).StripColor;
                     break;
-                case "ShelvingColor": break;
+                case "ShelvingColor":
+                    PanelViewModel.DefaultColor = (sender as Model.Room).ShelvingColor;
+                    break;
             }
 
         }

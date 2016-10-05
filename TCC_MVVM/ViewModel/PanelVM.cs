@@ -14,64 +14,107 @@ namespace TCC_MVVM.ViewModel
     [ImplementPropertyChanged]
     public class PanelVM : INotifyPropertyChanged
     {
+        /// <summary>
+        /// A collection of panels
+        /// </summary>
         public ObservableCollection<Panel> Panels { get; set; } = new ObservableCollection<Panel>();
-
+        /// <summary>
+        /// The default pane color
+        /// </summary>
+        public string DefaultColor { get; set; }
+        /// <summary>
+        /// The default panel dept
+        /// </summary>
+        public string DefaultDepth { get; set; }
+        /// <summary>
+        /// The default room number
+        /// </summary>
+        public int RoomNumber { get; set; }
+        /// <summary>
+        /// The data containing items for the panel
+        /// </summary>
         DataTable PanelData;
+        /// <summary>
+        /// Data for the height values
+        /// </summary>
         DataTable PanelHeightData;
+        /// <summary>
+        /// Data for the shelving depths
+        /// </summary>
         DataTable ShelvingDepthData;
+        /// <summary>
+        /// Data for the wood
+        /// </summary>
         DataTable WoodData;
+        /// <summary>
+        /// Data for the banding
+        /// </summary>
         DataTable BandingData;
+        /// <summary>
+        /// A list of panel items
+        /// </summary>
         List<PanelItem> PanelItems { get; set; } = new List<PanelItem>();
+        /// <summary>
+        /// Wood values by color and price
+        /// </summary>
         Dictionary<string, decimal> Woodvalues;
+        /// <summary>
+        /// Banding values by color and price
+        /// </summary>
         Dictionary<string, decimal> BandingValues;
-
+        /// <summary>
+        /// The total quantity of all the panel
+        /// </summary>
         public int TotalQuantity { get; set; }
+        /// <summary>
+        /// The total price of all the panels
+        /// </summary>
         public decimal TotalPrice { get; set; }
 
-        ICommand _RemoveCommand;
-        public ICommand RemoveCommand
-        {
-            get
-            {
-                if (_RemoveCommand == null)
-                    _RemoveCommand = new CollectionChangeCommand(param => Remove((Panel)param));
-                return _RemoveCommand;
-            }
-        }
+        /// <summary>
+        /// The panel selected in the view
+        /// </summary>
+        public Panel SelectedPanel { get; set; }
+        /// <summary>
+        /// The panel index selected in the view
+        /// </summary>
+        public int SelectedPanelIndex { get; set; }
+        /// <summary>
+        /// A list of panels selected in the view
+        /// </summary>
+        public List<Panel> SelectedPanels { get; set; }
+
+        public ICommand SelectNextCommand { get; private set; }
+        public ICommand SelectPreviousCommand { get; private set; }
+        public ICommand RemoveCommand { get; private set; }
+        public ICommand AddCommand { get; private set; }
+        public ICommand IncrementQuantityCommand { get; private set; }
+        public ICommand DecrementQuantityCommand { get; private set; }
 
         /// <summary>
-        ///     Create a new instance of an Panel View Model
+        /// Constructor - Creates new instance of panel view model
         /// </summary>
         public PanelVM()
         {
+            SelectNextCommand = new PanelCommands.SelectNextCommand(this);
+            SelectPreviousCommand = new PanelCommands.SelectPreviousCommand(this);
+            RemoveCommand = new PanelCommands.RemoveCommand(this);
+            AddCommand = new PanelCommands.AddCommand(this);
+            IncrementQuantityCommand = new PanelCommands.IncrementQuantityCommand(this);
+            DecrementQuantityCommand = new PanelCommands.DecrementQuantityCommand(this);
             bool isValid = false;
             try
             {
-                DataSet dataset = new DataSet();
-                dataset.ReadXml("PanelData.xml");
-                PanelData = dataset.Tables[0];
-
-                dataset = new DataSet();
-                dataset.ReadXml("PanelHeightData.xml");
-                PanelHeightData = dataset.Tables[0];
-
-                dataset = new DataSet();
-                dataset.ReadXml("ShelvingDepthData.xml");
-                ShelvingDepthData = dataset.Tables[0];
-
-                dataset = new DataSet();
-                dataset.ReadXml("WoodData.xml");
-                WoodData = dataset.Tables[0];
-
-                dataset = new DataSet();
-                dataset.ReadXml("BandingData.xml");
-                BandingData = dataset.Tables[0];
-
+                PanelData = GetDataTable("PanelData.xml");
+                PanelHeightData = GetDataTable("PanelHeightData.xml");
+                ShelvingDepthData = GetDataTable("ShelvingDepthData.xml");
+                WoodData = GetDataTable("WoodData.xml");
+                BandingData = GetDataTable("BandingData.xml");
                 isValid = true;
             }
             catch(Exception ex)
             {
-                MessageBox.Show("XML Data files are either missing, changed, or bad code.\n" + ex.ToString());
+                MessageBox.Show(ex.ToString());
             }
 
             if(isValid)
@@ -83,11 +126,21 @@ namespace TCC_MVVM.ViewModel
         }
 
         /// <summary>
-        /// Retrieves a list of panel items that belong to the panel.
+        /// Reads the value from xml files to datatables
         /// </summary>
-        /// <returns>
-        /// A list of panel items
-        /// </returns>
+        /// <param name="path">The path to the xml file</param>
+        /// <returns>The datatable read from the xml file</returns>
+        DataTable GetDataTable(string path)
+        {
+            DataSet dataset = new DataSet();
+            dataset.ReadXml(path);
+            return dataset.Tables[0];
+        }
+
+        /// <summary>
+        /// Gets a list of items that belong to the panel
+        /// </summary>
+        /// <returns></returns>
         List<PanelItem> GetPanelItems()
         {
             return PanelData.AsEnumerable().Select(row =>
@@ -102,13 +155,9 @@ namespace TCC_MVVM.ViewModel
         }
 
         /// <summary>
-        /// Retrieves a dictionary of wood colors and price
-        /// key = color
-        /// value = price
+        /// Retrieves the values of wood
         /// </summary>
-        /// <returns>
-        /// Dictionary of wood values
-        /// </returns>
+        /// <returns>A dictionary of wood colors and price</returns>
         Dictionary<string, decimal> GetWoodValues()
             => WoodData.AsEnumerable()
                 .ToDictionary(
@@ -116,13 +165,9 @@ namespace TCC_MVVM.ViewModel
                     row => decimal.Parse(row.Field<string>("WoodPrice")));
 
         /// <summary>
-        /// Retrieves a dictionary of banding colors and price
-        /// key = color
-        /// value = price
+        /// Retrieves the values of banding
         /// </summary>
-        /// <returns>
-        /// Dictionary of banding values
-        /// </returns>
+        /// <returns>A dictionary of banding color and prices</returns>
         Dictionary<string, decimal> GetBandingValues()
             => BandingData.AsEnumerable()
                 .ToDictionary(
@@ -130,45 +175,31 @@ namespace TCC_MVVM.ViewModel
                     row => decimal.Parse(row.Field<string>("BandingPrice")));
 
         /// <summary>
-        ///     Retrieves a list of wood color values.
-        ///     These values are generated from the WoodData.xml
+        /// Gets a list of wood colors
         /// </summary>
-        /// 
-        /// <returns>
-        ///     List of wood color values
-        /// </returns>
+        /// <returns></returns>
         List<string> GetColorValues() => WoodData.AsEnumerable().Select(row => row.Field<string>("WoodColor")).Distinct().ToList();
 
         /// <summary>
-        ///     Retrieves a list of height values. 
-        ///     These values are generated from the PanelHeightData.xml
+        /// Gets a list of height values
         /// </summary>
-        /// 
-        /// <returns>
-        ///     List of height values
-        /// </returns>
+        /// <returns></returns>
         List<string> GetHeightValues() => PanelHeightData.AsEnumerable().Select(row => row.Field<string>("PanelHeight")).Distinct().ToList();
 
 
         /// <summary>
-        /// Retrieves a list of depth values.
-        /// These values are generated from the ShelvingDepthData.xml
+        /// Gets a list of depth values
         /// </summary>
-        /// <returns>
-        /// List of depth values
-        /// </returns>
+        /// <returns></returns>
         List<string> GetDepthValues() => ShelvingDepthData.AsEnumerable().Select(row => row.Field<string>("ShelvingDepth")).Distinct().ToList();
 
-        
-
         /// <summary>
-        /// Add a new panel to the collection
+        /// Adds a new panel to the collection
         /// </summary>
-        /// <param name="RoomNumber"></param>
-        /// <param name="PanelNumber"></param>
-        /// <param name="Color"></param>
-        /// <param name="SizeDepth"></param>
-        public void Add(int RoomNumber, int PanelNumber, string Color = null, string SizeDepth = null)
+        /// <param name="RoomNumber">The panel's room number</param>
+        /// <param name="Color">The color of the panel</param>
+        /// <param name="SizeDepth">The depth of the panel</param>
+        public void Add(int RoomNumber, string Color = null, string SizeDepth = null)
         {
             bool HasColor = false;
             bool HasDepth = false;
@@ -182,6 +213,7 @@ namespace TCC_MVVM.ViewModel
                 ColorValues = new ObservableCollection<string>(GetColorValues()),
                 HeightValues = new ObservableCollection<string>(GetHeightValues()),
                 DepthValues = new ObservableCollection<string>(GetDepthValues()),
+                viewmodel = this,
                 PanelItemsList = GetPanelItems()
             };
 
@@ -193,12 +225,17 @@ namespace TCC_MVVM.ViewModel
             Panels.Add(panel);
         }
 
+        /// <summary>
+        /// Adds a new panel
+        /// </summary>
+        /// <param name="panel">The panel to add</param>
         public void Add(Panel panel)
         {
             panel.ColorValues = new ObservableCollection<string>(GetColorValues());
             panel.HeightValues = new ObservableCollection<string>(GetHeightValues());
             panel.DepthValues = new ObservableCollection<string>(GetDepthValues());
             panel.PanelItemsList = GetPanelItems();
+            panel.viewmodel = this;
             TotalQuantity += panel.Quantity;
             panel.PropertyChanged += Panel_PropertyChanged;
             Panels.Add(panel);

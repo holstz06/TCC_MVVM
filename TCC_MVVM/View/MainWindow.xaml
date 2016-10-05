@@ -6,12 +6,18 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Name="window" 
+        xmlns:controls="clr-namespace:TCC_MVVM.View"
         x:Class="TCC_MVVM.View.MainWindow"
         Title="The Closet Company - Quoting Tool" Height="800" Width="1300">
-    
+
     <Window.Resources>
         <JobVM:JobVM x:Key="JobViewModel" />
+        <BooleanToVisibilityConverter x:Key="b2v" />
     </Window.Resources>
+
+    <Window.InputBindings>
+        
+    </Window.InputBindings>
 
     <Grid HorizontalAlignment="Stretch">
         <Grid.DataContext>
@@ -107,415 +113,44 @@
             </TabControl.Resources>
 
             <!--========================================================================================
-                                                        Job Information
+                                                        Job
             ==========================================================================================-->
-            <TabItem Header="Job" Margin="-2,-2,0,0" Padding="7,7,7,7">
-                <ScrollViewer VerticalScrollBarVisibility="Visible">
-                    <Border BorderBrush="#dddddd" BorderThickness="0,1,0,0">
-                        <Grid>
-                            <Grid.Resources>
-                                <Style TargetType="{x:Type Label}">
-                                    <Setter Property="FontFamily" Value="Segoe UI" />
-                                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                                </Style>
-                                <Style TargetType="{x:Type xctk:WatermarkTextBox}">
-                                    <Setter Property="FontFamily" Value="Segoe UI" />
-                                    <Setter Property="BorderThickness" Value="0,0,0,0" />
-                                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                                    <Setter Property="FontWeight" Value="Normal" />
-                                </Style>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <Setter Property="FontFamily" Value="Segoe UI" />
-                                </Style>
-                                <Style TargetType="{x:Type CheckBox}">
-                                    <Setter Property="FontFamily" Value="Segoe UI" />
-                                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                                </Style>
-                            </Grid.Resources>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="0.30*" />
-                                <RowDefinition Height="0.10*" />
-                                <RowDefinition Height="0.60*" />
-                            </Grid.RowDefinitions>
-                           
-                            <Grid Grid.Row="0" Background="#444">
-                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <xctk:WatermarkTextBox Watermark="Full Name" Text="{Binding Job.FullName}" FontSize="26.667" VerticalContentAlignment="Center" Background="#444" Foreground="#fff" HorizontalContentAlignment="Center" Padding="3,5" />
-                                    <xctk:WatermarkTextBox Watermark="Email Address" Text="{Binding Job.Email}" FontSize="13.333" VerticalContentAlignment="Center" Background="#444" Foreground="#fff" HorizontalContentAlignment="Center" Padding="3,5" />
-                                    <xctk:WatermarkTextBox Watermark="Phone Number" Text="{Binding Job.PhoneNumber}" FontSize="13.333" VerticalContentAlignment="Center" Background="#444" Foreground="#fff" HorizontalContentAlignment="Center" Padding="3,5" />
-                                    <Label Content="Load Preset Profile" Foreground="#3D8EB9" FontWeight="Bold" HorizontalContentAlignment="Center"/>
-                                </StackPanel>
-                            </Grid>
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.50*" />
-                                    <ColumnDefinition Width="0.50*" />
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Content="Customer" Background="#3D8EB9" Foreground="#fff" FontFamily="Segoe UI Light" FontSize="21.333" BorderThickness="0" HorizontalContentAlignment="Center" />
-                                <Label Grid.Column="1" Content="Premise" Background="#3D8EB9" Foreground="#fff" FontFamily="Segoe UI Light" FontSize="21.333" BorderThickness="0" HorizontalContentAlignment="Center" />
-                            </Grid>
-                            <Grid Grid.Row="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.50*" />
-                                    <ColumnDefinition Width="0.50*" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0"  Orientation="Vertical">
-                                    <Label Content="Customer Information" HorizontalContentAlignment="Center" FontWeight="Bold" Padding="5,10" BorderThickness="0,0,0,1" BorderBrush="#666" Margin="15,0" />
-                                    <CheckBox Content="Is Builder" HorizontalAlignment="Center" Padding="4,5,0,5" />
-                                    <xctk:WatermarkTextBox Watermark="Mailing Address" Text="{Binding Job.MailingAddress01, Mode=TwoWay}" HorizontalAlignment="Center" Padding="3,5" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="1"  Orientation="Vertical">
-                                    <Label Content="Premise Information" HorizontalContentAlignment="Center" FontWeight="Bold" Padding="5,10" BorderThickness="0,0,0,1" BorderBrush="#666" Margin="15,0" />
-                                    <CheckBox Content="Is premise same address as mailing" HorizontalAlignment="Center" Padding="4,5,0,5" />
-                                    <xctk:WatermarkTextBox Watermark="Mailing Address" Text="{Binding Job.PremiseAddress01, Mode=TwoWay}" HorizontalAlignment="Center" Padding="3,5" />
-                                </StackPanel>
-                            </Grid>
-                        </Grid>
-                    </Border>
-                </ScrollViewer>
+            <TabItem x:Name="tabJob" Header="Job" Margin="-2,-2,0,0" Padding="7,7,7,7" >
+                <controls:JobControl />
             </TabItem>
 
             <!--========================================================================================
-                                                        Room Information
+                                                        Room
             ==========================================================================================-->
             <TabItem Header="Rooms" Margin="-2,-2,0,0" Padding="7,7,7,7">
-                <ScrollViewer VerticalScrollBarVisibility="Visible">
-                    <Grid Background="White">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".5*" />
-                            <ColumnDefinition Width=".5*" />
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Row="0" Grid.Column="0" Content="Add Room" Command="{Binding AddRoomCommand}" BorderThickness="0,0,0,1" BorderBrush="Green" Background="White" Foreground="Green" />
-                        <Button Grid.Row="0" Grid.Column="1" Content="Remove" Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedItem, ElementName=RoomListView}" BorderThickness="0,0,0,1" BorderBrush="Red" Background="White" Foreground="Red" />
-                        <ListView Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Rooms}" x:Name="RoomListView" >
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Margin="5,10,0,25">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="28" />
-                                            <RowDefinition Height="28" />
-                                            <RowDefinition Height="28" />
-                                            <RowDefinition Height="28" />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="15" />
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="250" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="15" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
-                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Wood Color" />
-                                        <ComboBox ToolTip="Select the default room color" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Room.ShelvingColor, Mode=TwoWay}" ItemsSource="{Binding Room.WoodColorValues}" />
-                                        <TextBlock Grid.Row="2" Grid.Column="1" Text="Strip Color" />
-                                        <ComboBox ToolTip="Select the default strip color" Grid.Row="2" Grid.Column="2" SelectedItem="{Binding Room.StripColor, Mode=TwoWay}" ItemsSource="{Binding Room.StripColorValues}" />
-                                        <TextBlock Grid.Row="3" Grid.Column="1" Text="Shelving Depth" />
-                                        <ComboBox ToolTip="Select the default room depth" Grid.Row="3" Grid.Column="2" SelectedItem="{Binding Room.ShelvingDepth, Mode=TwoWay}" ItemsSource="{Binding Room.ShelvingDepthValues}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-                </ScrollViewer>
+                <controls:RoomControl />
             </TabItem>
 
 
             <!--========================================================================================
-                                                        Strip Information
+                                                        Strip
             ==========================================================================================-->
             <TabItem Header="Strip" Margin="-2,-2,0,0" Padding="7,7,7,7">
-                <ScrollViewer VerticalScrollBarVisibility="Visible">
-                    <ItemsControl ItemsSource="{Binding Rooms}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="5,10,0,25">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="28" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="28" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="28" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="15" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="15" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
-                                    <!--<Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="#ccc" BorderThickness="0,0,0,0">
-                                        <StackPanel Orientation="Vertical" Margin="0,15,0,15">
-                                            <CheckBox Content="Same Color" FontWeight="Normal" ToolTip="When checked, all strip will be the same color" IsChecked="{Binding IsStripSameColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
-                                        </StackPanel>
-                                    </Border>-->
-                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,0,0,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="2"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,0,0,1" Content="Length" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="3"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,0,0,1" />
-                                    <ListView Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" ItemsSource="{Binding StripViewModel.Strips}" x:Name="StripListView" KeyboardNavigation.TabNavigation="Continue">
-                                        <ListView.Resources>
-                                            <Style TargetType="{x:Type ListViewItem}">
-                                                <Setter Property="Padding" Value="0,0,0,0" />
-                                                <Setter Property="FontFamily" Value="Calibri Light" />
-                                                <Setter Property="FontSize" Value="14" />
-                                                <Setter Property="IsSelected" Value="False" />
-                                                <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
-                                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                                <Setter Property="BorderThickness" Value="0,0,0,0" />
-                                            </Style>
-                                            <Style TargetType="{x:Type ListView}">
-                                                <Setter Property="BorderThickness" Value="0,0,0,0" />
-                                            </Style>
-                                            <Style TargetType="{x:Type ComboBox}">
-                                                <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                            </Style>
-                                            <Style TargetType="{x:Type TextBox}">
-                                                <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                            </Style>
-                                        </ListView.Resources>
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid ToolTip="{Binding DisplayName}">
-                                                    <Grid.ContextMenu>
-                                                        <ContextMenu>
-                                                            <MenuItem Header="Duplicate" Command="{Binding viewmodel.DuplicateStripCommand, Mode=OneWay}" CommandParameter="{Binding}" />
-                                                            <Separator />
-                                                            <MenuItem Header="Remove" Command="{Binding viewmodel.RemoveCommand, Mode=OneWay}" CommandParameter="{Binding}" />
-                                                        </ContextMenu>
-                                                    </Grid.ContextMenu>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <ComboBox Grid.Column="0" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}" ToolTip="Select the color of the strip." />
-                                                    <TextBox Grid.Column="1" Text="{Binding Length, Mode=TwoWay}" ToolTip="Type in the length of the strip." />
-                                                    <TextBlock Grid.Column="2"><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price, StringFormat=N2, Mode=TwoWay}" /></TextBlock>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                    <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new strip to this room." FontSize="16" Content=" + " Command="{Binding StripViewModel.AddCommand, Mode=OneWay}" />
-                                    <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected strip" FontSize="18" Content=" - " Command="{Binding StripViewModel.RemoveCommand, Mode=OneWay}" CommandParameter="{Binding SelectedItem, ElementName=StripListView}" />
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                <controls:StripControl />
             </TabItem>
 
             <!--========================================================================================
-                                                        Panel Information
+                                                        Panel
             ==========================================================================================-->
             <TabItem Header="Panel" Margin="-2,-2,0,0" Padding="7,7,7,7">
-                <ScrollViewer VerticalScrollBarVisibility="Visible">
-                    <ItemsControl ItemsSource="{Binding Rooms}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="5,10,0,25">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="28" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="28" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="28" />
-                                        <RowDefinition Height="28" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="15" />
-                                        <ColumnDefinition Width="104" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="15" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
-                                    <!--<Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" BorderBrush="#ccc" BorderThickness="0,0,0,0">
-                                        <StackPanel Orientation="Horizontal" Margin="0,15,0,15">
-                                            <CheckBox FontFamily="Calibri Light" FontSize="14" x:Name="cbIsSameColor" Margin="0,0,30,0" Content="Same Color" IsChecked="{Binding IsPanelSameColor, Mode=TwoWay}" ToolTip="When checked, all the panels will be the same color." />
-                                            <CheckBox FontFamily="Calibri Light" FontSize="14" x:Name="cbIsSameDepth"  Content="Same Depth" IsChecked="{Binding IsPanelSameDepth, Mode=TwoWay}" ToolTip="When checked, all the panels will be the same depth." />
-                                        </StackPanel>
-                                    </Border>-->
-                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Size Depth" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Size Height" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Hutch" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="5" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Quantity" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="6"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" />
-                                    <ListView Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="7" ItemsSource="{Binding PanelViewModel.Panels}" x:Name="PanelListView" KeyboardNavigation.TabNavigation="Continue">
-                                        <ListView.Resources>
-                                            <Style TargetType="{x:Type ListViewItem}">
-                                                <Setter Property="Padding" Value="0,0,0,0" />
-                                                <Setter Property="FontFamily" Value="Calibri Light" />
-                                                <Setter Property="FontSize" Value="14" />
-                                                <Setter Property="IsSelected" Value="False" />
-                                                <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
-                                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                                <Setter Property="BorderThickness" Value="0,0,0,0" />
-                                            </Style>
-                                            <Style TargetType="{x:Type ListView}">
-                                                <Setter Property="BorderThickness" Value="0,0,0,0" />
-                                            </Style>
-                                            <Style TargetType="{x:Type ComboBox}">
-                                                <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                            </Style>
-                                            <Style TargetType="{x:Type TextBox}">
-                                                <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                            </Style>
-                                        </ListView.Resources>
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <ComboBox Grid.Column="0" ItemsSource="{Binding DepthValues}" SelectedItem="{Binding SizeDepth, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="1" ItemsSource="{Binding HeightValues}" SelectedItem="{Binding SizeHeight, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="2" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}" />
-                                                    <CheckBox Grid.Column="3" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding IsHutch}"/>
-                                                    <xctk:IntegerUpDown Grid.Column="4" Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    <TextBlock Grid.Column="5"><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price, StringFormat=N2}" /></TextBlock>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                    <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new panel to this room" FontSize="16" Content=" + " Command="{Binding Command_AddPanel, Mode=OneWay}" />
-                                    <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected panel" FontSize="18" Content=" - " Command="{Binding PanelViewModel.RemoveCommand}" CommandParameter="{Binding SelectedItem, ElementName=PanelListView}" />
-                                    <Label Grid.Row="5" Grid.Column="1">
-                                        <TextBlock><Run Text="Panel Count: " /><Run Text=" "/><Run Text="{Binding PanelViewModel.TotalQuantity}" /></TextBlock>
-                                    </Label>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                <controls:PanelControl />
             </TabItem>
 
 
             <!--========================================================================================
-                                                        Shelf Information
+                                                        Shelf
             ==========================================================================================-->
             <TabItem Header="Shelf" Margin="-2,-2,0,0" Padding="7,7,7,7">
-                <ScrollViewer VerticalScrollBarVisibility="Visible">
-                    <ItemsControl ItemsSource="{Binding Rooms}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="5,10,0,25">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="28" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="28" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="28" />
-                                        <RowDefinition Height="28" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="15" />
-                                        <ColumnDefinition Width="104" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="15" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
-                                    <!--<Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#ccc" BorderThickness="0,0,0,0">
-                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
-                                            <CheckBox FontFamily="Calibri Light" FontSize="14" Margin="0,0,5,0" Content="Same Color" IsChecked="{Binding IsShelfSameColor}" ToolTip="When checked, all the shelves will be the same color." />
-                                            <CheckBox FontFamily="Calibri Light" FontSize="14" Content="Same Depth" IsChecked="{Binding IsShelfSameDepth}" ToolTip="When checked, all the shelves will be the same depth." />
-                                        </StackPanel>
-                                    </Border>-->
-                                    <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Size Depth" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Size Width" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Shelving Type" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="5" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Quantity" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
-                                    <Label Grid.Row="2" Grid.Column="6"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1"/>
-                                    <ListView Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" ItemsSource="{Binding ShelfViewModel.Shelves}" x:Name="ShelfViewList" KeyboardNavigation.TabNavigation="Continue">
-                                        <ListView.Resources>
-                                            <Style TargetType="{x:Type ListViewItem}">
-                                                <Setter Property="Padding" Value="0,0,0,0" />
-                                                <Setter Property="FontFamily" Value="Calibri Light" />
-                                                <Setter Property="FontSize" Value="14" />
-                                                <Setter Property="IsSelected" Value="False" />
-                                                <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
-                                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                                <Setter Property="BorderThickness" Value="0,0,0,0" />
-                                            </Style>
-                                            <Style TargetType="{x:Type ListView}">
-                                                <Setter Property="BorderThickness" Value="0,0,0,0" />
-                                            </Style>
-                                            <Style TargetType="{x:Type ComboBox}">
-                                                <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                            </Style>
-                                            <Style TargetType="{x:Type TextBox}">
-                                                <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                            </Style>
-                                        </ListView.Resources>
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid>
-                                                    <Grid.ContextMenu>
-                                                        <ContextMenu>
-                                                            <MenuItem Header="Add Adjustable" Command="{Binding viewmodel.AddAdjustableShelvingCommand, Mode=OneWay}" CommandParameter="{Binding}" />
-                                                        </ContextMenu>
-                                                    </Grid.ContextMenu>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="100" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <ComboBox Grid.Column="0" ItemsSource="{Binding DepthValues}" SelectedItem="{Binding SizeDepth, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="1" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="2" ItemsSource="{Binding WidthValues}" SelectedItem="{Binding SizeWidth, Mode=TwoWay}"/>
-                                                    <ComboBox Grid.Column="3" ItemsSource="{Binding ShelfTypeValues}" SelectedItem="{Binding ShelfTypeName, Mode=TwoWay}" />
-                                                    <xctk:IntegerUpDown Grid.Column="4" Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    <TextBlock Grid.Column="5"><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price, StringFormat=N2}" /></TextBlock>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                    <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new panel to this room" FontSize="16" Content=" + " Command="{Binding Command_AddShelf, Mode=OneWay}" />
-                                    <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected panel" FontSize="18" Content=" - " Command="{Binding ShelfViewModel.RemoveCommand}" CommandParameter="{Binding SelectedItem, ElementName=ShelfViewList}" />
-                                    <Label Grid.Row="5" Grid.Column="1">
-                                        <TextBlock><Run Text="Panel Count: " /><Run Text=" "/><Run Text="{Binding ShelfViewModel.TotalQuantity}" /></TextBlock>
-                                    </Label>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                <controls:ShelfControl />
             </TabItem>
 
             <!--========================================================================================
-                                                        Accessory Information
+                                                        Accessory
             ==========================================================================================-->
             <TabItem Header="Accessory" Margin="-2,-2,0,0" Padding="7,7,7,7">
                 <ScrollViewer VerticalScrollBarVisibility="Visible">

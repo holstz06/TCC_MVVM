@@ -60,6 +60,8 @@ namespace TCC_MVVM.ViewModel
         /// </summary>
         public ICommand AddCommand { get; private set; }
 
+        public Strip SelectedStrip { get; set; }
+
         /// <summary>
         /// Create new instance of strip view model
         /// </summary>

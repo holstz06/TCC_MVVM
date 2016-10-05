@@ -11,11 +11,11 @@ namespace TCC_MVVM.Model
     public class Accessory : INotifyPropertyChanged
     {
         /// <summary>
-        ///     The room number this accessory belongs to
+        /// The room number this accessory belongs to
         /// </summary>
         public int RoomNumber { get; set; }
         /// <summary>
-        ///     The name of this accessory
+        /// The name of this accessory
         /// </summary>
         public string Name { get; set; } = "N/A";
         /// <summary>

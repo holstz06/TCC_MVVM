@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="TCC_MVVM.View.PanelControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TCC_MVVM.View"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <ScrollViewer VerticalScrollBarVisibility="Visible">
+        <ItemsControl ItemsSource="{Binding Rooms}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5,10,0,25">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="15" />
+                            <ColumnDefinition Width="104" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="15" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.InputBindings>
+                            
+                        </Grid.InputBindings>
+
+                        <TextBox ToolTip="Type in the name of the room." Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="6" BorderBrush="#333" BorderThickness="0,0,0,1" Text="{Binding Room.RoomName}" VerticalContentAlignment="Center" FontFamily="Segoe UI" FontWeight="Normal" FontSize="16" />
+                        <Label Grid.Row="2" Grid.Column="1" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Size Depth" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                        <Label Grid.Row="2" Grid.Column="2" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Size Height" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                        <Label Grid.Row="2" Grid.Column="3" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Color" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                        <Label Grid.Row="2" Grid.Column="4" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Hutch" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                        <Label Grid.Row="2" Grid.Column="5" Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" Content="Quantity" HorizontalContentAlignment="Center" FontFamily="Segoe UI Semibold" Foreground="#333"/>
+                        <Label Grid.Row="2" Grid.Column="6"  Background="#f8f8f8" BorderBrush="#ccc" BorderThickness="0,1,0,1" />
+                        <ListView Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="7" ItemsSource="{Binding PanelViewModel.Panels}" x:Name="PanelListView" KeyboardNavigation.TabNavigation="Continue" SelectedItem="{Binding PanelViewModel.SelectedPanel, Mode=TwoWay}" SelectedIndex="{Binding PanelViewModel.SelectedPanelIndex}">
+                            <ListView.InputBindings>
+                                <KeyBinding Key="Delete" Command="{Binding PanelViewModel.RemoveCommand, Mode=OneWay}" CommandParameter="{Binding PanelViewModel.SelectedPanel}" />
+                                <KeyBinding Key="Up" Command="{Binding PanelViewModel.SelectPreviousCommand, Mode=OneWay}" CommandParameter="{Binding PanelViewModel.SelectedPanelIndex}" />
+                                <KeyBinding Key="Down" Command="{Binding PanelViewModel.SelectNextCommand, Mode=OneWay}" CommandParameter="{Binding PanelViewModel.SelectedPanelIndex}" />
+                                <KeyBinding Key="OemPlus" Command="{Binding PanelViewModel.IncrementQuantityCommand, Mode=OneWay}" CommandParameter="{Binding PanelViewModel.SelectedPanelIndex}" />
+                                <KeyBinding Key="OemMinus" Command="{Binding PanelViewModel.DecrementQuantityCommand, Mode=OneWay}" CommandParameter="{Binding PanelViewModel.SelectedPanelIndex}" />
+                            </ListView.InputBindings>
+                            <ListView.Resources>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Padding" Value="0,0,0,0" />
+                                    <Setter Property="FontFamily" Value="Calibri Light" />
+                                    <Setter Property="FontSize" Value="14" />
+                                    <Setter Property="IsSelected" Value="False" />
+                                    <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    <Setter Property="BorderThickness" Value="0,0,0,0" />
+                                </Style>
+                                <Style TargetType="{x:Type ListView}">
+                                    <Setter Property="BorderThickness" Value="0,0,0,0" />
+                                </Style>
+                                <Style TargetType="{x:Type ComboBox}">
+                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                </Style>
+                                <Style TargetType="{x:Type TextBox}">
+                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                </Style>
+                            </ListView.Resources>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                        </Grid.ColumnDefinitions>
+                                        <ComboBox Grid.Column="0" ItemsSource="{Binding DepthValues}" SelectedItem="{Binding SizeDepth, Mode=TwoWay}"/>
+                                        <ComboBox Grid.Column="1" ItemsSource="{Binding HeightValues}" SelectedItem="{Binding SizeHeight, Mode=TwoWay}"/>
+                                        <ComboBox Grid.Column="2" ItemsSource="{Binding ColorValues}" SelectedItem="{Binding Color, Mode=TwoWay}" />
+                                        <CheckBox Grid.Column="3" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding IsHutch}"/>
+                                        <xctk:IntegerUpDown Grid.Column="4" Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Grid.Column="5"><Run Text="$" /><Run Text=" "/><Run Text="{Binding Price, StringFormat=N2}" /></TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Button Grid.Row="4" Grid.Column="1" FontWeight="Normal" Background="White" BorderBrush="Green" BorderThickness="0,0,0,1" ToolTip="Add new panel to this room" FontSize="16" Content=" + " Command="{Binding PanelViewModel.AddCommand, Mode=OneWay}" />
+                        <Button Grid.Row="4" Grid.Column="2" FontWeight="Normal" Background="White" BorderBrush="Red" BorderThickness="0,0,0,1" ToolTip="Remove selected panel" FontSize="18" Content=" - " Command="{Binding PanelViewModel.RemoveCommand}" CommandParameter="{Binding SelectedItem, ElementName=PanelListView}" />
+                        <Label Grid.Row="5" Grid.Column="1">
+                            <TextBlock><Run Text="Count: " /><Run Text=" "/><Run Text="{Binding PanelViewModel.TotalQuantity}" /></TextBlock>
+                        </Label>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+</UserControl>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace TCC_MVVM.ViewModel.Job
+namespace TCC_MVVM.ViewModel.Job.Commands
 {
     class LoadCommand : ICommand
     {

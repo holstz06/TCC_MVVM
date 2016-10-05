@@ -17,6 +17,7 @@ namespace TCC_MVVM.ViewModel.StripCommands
         /// A reference to the viewmodel that contains this command
         /// </summary>
         StripVM viewmodel;
+
         /// <summary>
         /// Creates a new instance of a remove command
         /// </summary>
@@ -25,10 +26,12 @@ namespace TCC_MVVM.ViewModel.StripCommands
         {
             this.viewmodel = viewmodel;
         }
+
         /// <summary>
         /// Can execute event
         /// </summary>
         public event EventHandler CanExecuteChanged;
+
         /// <summary>
         /// Determines if the command can be executed
         /// </summary>
@@ -38,6 +41,7 @@ namespace TCC_MVVM.ViewModel.StripCommands
         {
             return true;
         }
+
         /// <summary>
         /// Executes the command
         /// </summary>
